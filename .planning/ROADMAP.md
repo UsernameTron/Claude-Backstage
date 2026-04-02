@@ -54,10 +54,10 @@ Plans:
   2. Cross-package deps resolve: yolo-classifier imports from permission-system, auto-compact from token-estimation
   3. `make scaffold-check` reports 16/16 extract packages present
   4. dangerous-command-detection correctly depends on both permission-system and path-validation
-**Plans:** 2 plans
+**Plans:** 1/2 plans executed
 
 Plans:
-- [ ] 03-01-PLAN.md — Standalone extract packages (Wave 1): state-store, streaming-tool-executor, token-estimation, subprocess-env-scrubbing, config-migration, path-validation, read-only-validation, analytics-killswitch, claudemd-memory
+- [x] 03-01-PLAN.md — Standalone extract packages (Wave 1): state-store, streaming-tool-executor, token-estimation, subprocess-env-scrubbing, config-migration, path-validation, read-only-validation, analytics-killswitch, claudemd-memory
 - [ ] 03-02-PLAN.md — Dependent extract packages (Wave 2): yolo-classifier, auto-compact, sandbox-config, dangerous-command-detection
 
 ### Phase 4: Build + Translate Completion
@@ -84,5 +84,5 @@ Plans:
 |-------|----------------|--------|-----------|
 | 1. Monorepo Scaffold | 2/2 | Complete   | 2026-04-02 |
 | 2. P0 Package Stubs | 3/3 | Complete | 2026-04-02 |
-| 3. Extract Tier Completion | 0/2 | In Progress | - |
+| 3. Extract Tier Completion | 1/2 | In Progress|  |
 | 4. Build + Translate Completion | 0/4 | Not started | - |
