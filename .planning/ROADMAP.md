@@ -74,8 +74,8 @@ Plans:
 
 Plans:
 - [ ] 04-01-PLAN.md — Dependent build packages (Wave 2): mcp-integration, agent-dialogue-loop, skills-system, multi-agent-coordinator
-- [ ] 04-02-PLAN.md — Standalone build packages (Wave 1): vim-mode-fsm, keyboard-shortcuts, ink-renderer, cli-startup-optimization
-- [ ] 04-03-PLAN.md — Translate packages (Wave 1): ivr-call-flow-validator, agent-skill-routing
+- [x] 04-02-PLAN.md — Standalone build packages (Wave 1): vim-mode-fsm, keyboard-shortcuts, ink-renderer, cli-startup-optimization
+- [x] 04-03-PLAN.md — Translate packages (Wave 1): ivr-call-flow-validator, agent-skill-routing
 - [ ] 04-04-PLAN.md — Documentation and linting (Wave 3): Ruff config, DEVOPS-HANDOFF.md, README verification
 
 ## Progress
