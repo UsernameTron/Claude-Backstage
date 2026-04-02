@@ -66,6 +66,10 @@ Progress: [██████████] 100%
 
 ## Accumulated Context
 
+### Roadmap Evolution
+
+- Phase 5 added: Scaffold expansion — add 12 new packages (#32-43) from gap analysis
+
 ### Decisions
 
 Decisions are logged in PROJECT.md Key Decisions table.

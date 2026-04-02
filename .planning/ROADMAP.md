@@ -86,3 +86,13 @@ Plans:
 | 2. P0 Package Stubs | 3/3 | Complete | 2026-04-02 |
 | 3. Extract Tier Completion | 2/2 | Complete | 2026-04-02 |
 | 4. Build + Translate Completion | 4/4 | Complete   | 2026-04-02 |
+
+### Phase 5: Scaffold expansion — add 12 new packages (#32-43) from gap analysis
+
+**Goal:** [To be planned]
+**Requirements**: TBD
+**Depends on:** Phase 4
+**Plans:** 0 plans
+
+Plans:
+- [ ] TBD (run /gsd:plan-phase 5 to break down)
