@@ -41,9 +41,9 @@ Plans:
 **Plans:** 3 plans
 
 Plans:
-- [ ] 02-01-PLAN.md — Extract tier P0: permission-system, denial-tracking, cost-tracker
-- [ ] 02-02-PLAN.md — Build tier P0: prompt-system, context-injection
-- [ ] 02-03-PLAN.md — Translate tier P0: consecutive-breach-tracker, cost-per-interaction, prompt-cache-optimizer
+- [x] 02-01-PLAN.md — Extract tier P0: permission-system, denial-tracking, cost-tracker
+- [x] 02-02-PLAN.md — Build tier P0: prompt-system, context-injection
+- [x] 02-03-PLAN.md — Translate tier P0: consecutive-breach-tracker, cost-per-interaction, prompt-cache-optimizer
 
 ### Phase 3: Extract Tier Completion
 **Goal**: All 16 extract/ packages scaffolded with correct dependency wiring
