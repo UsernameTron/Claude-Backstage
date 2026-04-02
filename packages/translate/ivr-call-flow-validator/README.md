@@ -1,4 +1,4 @@
-# ivr-call-flow-validator
+# @claude-patterns/ivr-call-flow-validator
 
 Exhaustive transition validation for IVR call flow state machines, translated from Claude Code's Vim FSM pattern.
 

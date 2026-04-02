@@ -1,4 +1,4 @@
-# prompt-cache-optimizer
+# @claude-patterns/prompt-cache-optimizer
 
 Prompt cache optimization for API cost reduction, translated from Claude Code's cache-stable ordering pattern.
 
