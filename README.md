@@ -1,6 +1,6 @@
 # claude-code-patterns
 
-A monorepo organizing 43 buildable systems extracted from Claude Code's source tree (~1,900 files, 512K+ LOC TypeScript) and Knowledge Base v2.1. Each package provides type stubs, source file references, and dependency mappings -- a pattern library for building skills, agents, and operational tools.
+A monorepo organizing 43 buildable systems extracted from 1,900 files, 512K+ LOC TypeScript and Knowledge Base v2.1. Each package provides type stubs, source file references, and dependency mappings -- a pattern library for building skills, agents, and operational tools.
 
 **This is NOT a fork of Claude Code.** It is a build reference with type stubs only.
 
