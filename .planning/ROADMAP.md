@@ -10,7 +10,7 @@ Build a type-stub monorepo organizing 31 Claude Code subsystems across 3 tiers. 
 - [x] **Phase 2: P0 Package Stubs** - 8 foundation packages across all 3 tiers (completed 2026-04-02)
 - [x] **Phase 3: Extract Tier Completion** - Remaining 13 extract/ packages (P1-P3) (completed 2026-04-02)
 - [x] **Phase 4: Build + Translate Completion** - Remaining 8 build/ + 3 translate/ packages, docs finalization (completed 2026-04-02)
-- [ ] **Phase 5: Scaffold Expansion** - Add 12 new packages (#32-43) from gap analysis
+- [x] **Phase 5: Scaffold Expansion** - Add 12 new packages (#32-43) from gap analysis (completed 2026-04-02)
 
 ## Phase Details
 
@@ -89,13 +89,13 @@ Plans:
   3. `pip install -e` succeeds for all 4 Python packages
   4. #34 multi-step-ivr-input-validator imports types from #28 ivr-call-flow-validator
   5. All root docs (CLAUDE.md, README.md, dependency-graph.md, KB inventory) reflect 43 packages
-**Plans:** 4 plans
+**Plans:** 4/4 plans complete
 
 Plans:
 - [x] 05-01-PLAN.md — Translate tier: #32 workforce-scheduling-coordinator, #33 genesys-flow-security-validator, #34 multi-step-ivr-input-validator
 - [x] 05-02-PLAN.md — Build tier P2: #35 tool-schema-cache, #36 tool-registry, #37 dialogue-history-manager, #38 system-reminder-injection, #39 plugin-lifecycle-manager
 - [x] 05-03-PLAN.md — Build tier P3: #40 sdk-bridge, #41 voice-input-gating, #42 output-style-system, #43 onboarding-flow-engine
-- [ ] 05-04-PLAN.md — Root config updates, governance docs, full validation
+- [x] 05-04-PLAN.md — Root config updates, governance docs, full validation
 
 ## Progress
 
@@ -105,4 +105,4 @@ Plans:
 | 2. P0 Package Stubs | 3/3 | Complete | 2026-04-02 |
 | 3. Extract Tier Completion | 2/2 | Complete | 2026-04-02 |
 | 4. Build + Translate Completion | 4/4 | Complete   | 2026-04-02 |
-| 5. Scaffold Expansion | 0/4 | Planning | - |
+| 5. Scaffold Expansion | 4/4 | Complete | 2026-04-02 |
