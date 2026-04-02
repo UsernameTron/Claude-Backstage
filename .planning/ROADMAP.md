@@ -7,8 +7,8 @@ Build a type-stub monorepo organizing 31 Claude Code subsystems across 3 tiers. 
 ## Phases
 
 - [x] **Phase 1: Monorepo Scaffold** - Root tooling, configs, and validation infrastructure (completed 2026-04-02)
-- [ ] **Phase 2: P0 Package Stubs** - 8 foundation packages across all 3 tiers
-- [ ] **Phase 3: Extract Tier Completion** - Remaining 14 extract/ packages (P1-P3)
+- [x] **Phase 2: P0 Package Stubs** - 8 foundation packages across all 3 tiers (completed 2026-04-02)
+- [ ] **Phase 3: Extract Tier Completion** - Remaining 13 extract/ packages (P1-P3)
 - [ ] **Phase 4: Build + Translate Completion** - Remaining 8 build/ + 3 translate/ packages, docs finalization
 
 ## Phase Details
@@ -38,7 +38,7 @@ Plans:
   3. prompt-cache-optimizer (TS translate) compiles with `tsc --noEmit`
   4. `make scaffold-check` reports 8/31 packages present
   5. Each package has README.md with source refs, entry point stub, and manifest
-**Plans:** 3 plans
+**Plans:** 3/3 plans complete
 
 Plans:
 - [x] 02-01-PLAN.md — Extract tier P0: permission-system, denial-tracking, cost-tracker
@@ -54,11 +54,11 @@ Plans:
   2. Cross-package deps resolve: yolo-classifier imports from permission-system, auto-compact from token-estimation
   3. `make scaffold-check` reports 16/16 extract packages present
   4. dangerous-command-detection correctly depends on both permission-system and path-validation
-**Plans**: TBD
+**Plans:** 2 plans
 
 Plans:
-- [ ] 03-01: Standalone extract packages — state-store, streaming-tool-executor, token-estimation, subprocess-env-scrubbing, config-migration, path-validation, read-only-validation, analytics-killswitch, claudemd-memory
-- [ ] 03-02: Dependent extract packages — yolo-classifier, auto-compact, sandbox-config, dangerous-command-detection
+- [ ] 03-01-PLAN.md — Standalone extract packages (Wave 1): state-store, streaming-tool-executor, token-estimation, subprocess-env-scrubbing, config-migration, path-validation, read-only-validation, analytics-killswitch, claudemd-memory
+- [ ] 03-02-PLAN.md — Dependent extract packages (Wave 2): yolo-classifier, auto-compact, sandbox-config, dangerous-command-detection
 
 ### Phase 4: Build + Translate Completion
 **Goal**: All 31 packages present, full monorepo compiles, documentation finalized
@@ -83,6 +83,6 @@ Plans:
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Monorepo Scaffold | 2/2 | Complete   | 2026-04-02 |
-| 2. P0 Package Stubs | 1/3 | In Progress | - |
-| 3. Extract Tier Completion | 0/2 | Not started | - |
+| 2. P0 Package Stubs | 3/3 | Complete | 2026-04-02 |
+| 3. Extract Tier Completion | 0/2 | In Progress | - |
 | 4. Build + Translate Completion | 0/4 | Not started | - |
