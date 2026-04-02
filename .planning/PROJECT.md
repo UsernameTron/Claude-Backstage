@@ -2,7 +2,7 @@
 
 ## What This Is
 
-A monorepo organizing 43 buildable systems extracted from Claude Code's source tree (~1,900 files, 512K+ LOC TypeScript) and Knowledge Base v2.1. Each package provides type stubs, source file references, and dependency mappings — a pattern library for building skills, agents, and operational tools. This is NOT a fork of Claude Code. It is a build reference with type stubs only.
+A type-stub monorepo organizing 43 Claude Code subsystems across 3 tiers (extract/16 TS, build/19 TS, translate/4 Python + 4 TS). Each package provides type signatures, source file references, and dependency mappings — a pattern library for building skills, agents, and operational tools from Claude Code's architecture.
 
 ## Core Value
 
@@ -12,20 +12,20 @@ Every package maps directly to a real Claude Code subsystem with exact source pa
 
 ### Validated
 
-(None yet — ship to validate)
+- Monorepo root with Bun workspaces for 39 TypeScript packages — v2.1
+- Tiered package structure: extract/ (16 TS), build/ (19 TS), translate/ (4 Python + 4 TS) — v2.1
+- Each package has README.md, entry point stub, manifest, tsconfig (TS only) — v2.1
+- Type stubs compile with strict mode (`tsc --noEmit` passes all 39 TS packages) — v2.1
+- Python packages install via `pip install -e` (4 packages, verified structurally) — v2.1
+- CLAUDE.md under 2K tokens provides useful context injection — v2.1
+- dependency-graph.md maps all 9 cross-package dependency chains — v2.1
+- ARCHITECTURE.md documents ADR for Option B (Tiered packages/) — v2.1
+- Makefile with scaffold-check (43/43), type-check, lint targets — v2.1
+- 12 expansion packages (#32-43) from KB v2.1 gap analysis — v2.1
 
 ### Active
 
-- [ ] Monorepo root with Bun workspaces for 35 TypeScript packages
-- [ ] Tiered package structure: extract/ (16 TS), build/ (19 TS), translate/ (4 Python + 4 TS)
-- [ ] Each package has README.md, entry point stub, manifest, tsconfig (TS only)
-- [ ] Type stubs compile with strict mode (`tsc --noEmit` passes)
-- [ ] Python packages install via `pip install -e`
-- [ ] CLAUDE.md under 2K tokens provides useful context injection
-- [ ] dependency-graph.md maps all cross-package relationships
-- [ ] ARCHITECTURE.md documents ADR for Option B (Tiered packages/)
-- [ ] Makefile with scaffold-check, type-check, lint targets
-- [ ] P0 packages (7 items) compile and resolve correctly
+(None — next milestone requirements TBD)
 
 ### Out of Scope
 
@@ -37,30 +37,33 @@ Every package maps directly to a real Claude Code subsystem with exact source pa
 
 ## Context
 
-- Source tree at `~/projects/Inside Claude Code/claude-code/src/` provides exact file paths and type signatures
-- Knowledge Base v2.1 (83.6 KB) identifies 31 systems across 3 tiers with 14 design patterns and 6 recipes
-- Build Inventory maps each system to priority (P0-P3), LOC estimate, dependencies, and KB sections
-- The operator thinks in Extract/Build/Translate terms — the tier tells HOW to use each package
-- Cross-package deps resolve via `@claude-patterns/` workspace names — tier directory is invisible to imports
+- 43 packages across 3 tiers: 16 extract (copy-adapt-ship), 19 build (design reference), 8 translate (cross-domain patterns)
+- 3,748 lines of type stubs across 263 files
+- 9 cross-package dependency chains verified (workspace:* references)
+- Knowledge Base v2.1 (83.6 KB) provided all 43 system mappings
+- Codebase map: 7 documents in `.planning/codebase/`
 
 ## Constraints
 
 - **Tech stack**: Bun workspaces for TypeScript, pip for Python — no npm, no yarn
-- **Language split**: 28 TypeScript packages + 3 Python packages, managed independently
+- **Language split**: 39 TypeScript packages + 4 Python packages, managed independently
 - **No implementations**: All packages contain type stubs and TODO comments only
 - **Compilation**: `tsc --noEmit` with strict mode must pass for all TS packages
 - **Context budget**: CLAUDE.md must stay under 2K tokens for efficient injection
-- **Source access**: claude-code/src/ may not be directly accessible; stubs based on KB v2.1 and plan specifications
+- **Source access**: claude-code/src/ not directly accessible; stubs based on KB v2.1 and plan specifications
 
 ## Key Decisions
 
 | Decision | Rationale | Outcome |
 |----------|-----------|---------|
-| Option B: Tiered packages/ | 1:1 KB v2.1 mapping, ~80 token context injection, matches operator mental model | — Pending |
-| Bun over npm/yarn | Faster installs, native workspace support, TypeScript-first | — Pending |
-| Type stubs only | Reduces scope to ~120 files, validates structure before investing in implementations | — Pending |
-| @claude-patterns/ scope | Workspace references ignore tier directory, clean import paths | — Pending |
-| Mixed TS/Python | 3 translate packages are Python (contact center domain), rest TypeScript | — Pending |
+| Option B: Tiered packages/ | 1:1 KB v2.1 mapping, ~80 token context injection, matches operator mental model | Good — clean discoverability |
+| Bun over npm/yarn | Faster installs, native workspace support, TypeScript-first | Good — zero issues |
+| Type stubs only | Reduces scope to ~120 files, validates structure before investing in implementations | Good — shipped 263 files in 2 days |
+| @claude-patterns/ scope | Workspace references ignore tier directory, clean import paths | Good — all 9 dep chains resolve |
+| Mixed TS/Python | 4 translate packages are Python (contact center domain), rest TypeScript | Good — clean separation |
+| tsconfig 3-level extends | packages/tier/name/ requires ../../../tsconfig.base.json | Good — all 3 agents auto-corrected |
+| setuptools.build_meta | Python 3.14 breaks legacy backend | Good — all 4 Python packages install |
+| Worktree isolation for independent plans only | Dependent plans need prior-wave commits visible | Learned — Wave 2+ runs without isolation |
 
 ---
-*Last updated: 2026-04-01 after project initialization*
+*Last updated: 2026-04-02 after v2.1 milestone*
