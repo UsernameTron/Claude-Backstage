@@ -10,6 +10,7 @@ Build a type-stub monorepo organizing 31 Claude Code subsystems across 3 tiers. 
 - [x] **Phase 2: P0 Package Stubs** - 8 foundation packages across all 3 tiers (completed 2026-04-02)
 - [x] **Phase 3: Extract Tier Completion** - Remaining 13 extract/ packages (P1-P3) (completed 2026-04-02)
 - [x] **Phase 4: Build + Translate Completion** - Remaining 8 build/ + 3 translate/ packages, docs finalization (completed 2026-04-02)
+- [x] **Phase 5: Scaffold Expansion** - Add 12 new packages (#32-43) from gap analysis (completed 2026-04-02)
 
 ## Phase Details
 
@@ -78,6 +79,24 @@ Plans:
 - [x] 04-03-PLAN.md — Translate packages (Wave 1): ivr-call-flow-validator, agent-skill-routing
 - [x] 04-04-PLAN.md — Documentation and linting (Wave 3): Ruff config, DEVOPS-HANDOFF.md, README verification
 
+### Phase 5: Scaffold Expansion
+**Goal**: Expand monorepo from 31 to 43 packages by scaffolding 12 new packages from KB v2.1 gap analysis, updating all root configs and governance docs
+**Depends on**: Phase 4
+**Requirements**: EXP-32, EXP-33, EXP-34, EXP-35, EXP-36, EXP-37, EXP-38, EXP-39, EXP-40, EXP-41, EXP-42, EXP-43, EXP-ROOT, EXP-DOCS, EXP-VALIDATE
+**Success Criteria** (what must be TRUE):
+  1. `make scaffold-check` reports 43/43 packages present
+  2. `make type-check` passes for all 35 TS packages
+  3. `pip install -e` succeeds for all 4 Python packages
+  4. #34 multi-step-ivr-input-validator imports types from #28 ivr-call-flow-validator
+  5. All root docs (CLAUDE.md, README.md, dependency-graph.md, KB inventory) reflect 43 packages
+**Plans:** 4/4 plans complete
+
+Plans:
+- [x] 05-01-PLAN.md — Translate tier: #32 workforce-scheduling-coordinator, #33 genesys-flow-security-validator, #34 multi-step-ivr-input-validator
+- [x] 05-02-PLAN.md — Build tier P2: #35 tool-schema-cache, #36 tool-registry, #37 dialogue-history-manager, #38 system-reminder-injection, #39 plugin-lifecycle-manager
+- [x] 05-03-PLAN.md — Build tier P3: #40 sdk-bridge, #41 voice-input-gating, #42 output-style-system, #43 onboarding-flow-engine
+- [x] 05-04-PLAN.md — Root config updates, governance docs, full validation
+
 ## Progress
 
 | Phase | Plans Complete | Status | Completed |
@@ -86,3 +105,4 @@ Plans:
 | 2. P0 Package Stubs | 3/3 | Complete | 2026-04-02 |
 | 3. Extract Tier Completion | 2/2 | Complete | 2026-04-02 |
 | 4. Build + Translate Completion | 4/4 | Complete   | 2026-04-02 |
+| 5. Scaffold Expansion | 4/4 | Complete | 2026-04-02 |

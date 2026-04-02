@@ -1,33 +1,34 @@
 # @claude-patterns/dialogue-history-manager
 
-Full message lifecycle management with JSONL persistence, crash-safe writes, and compact boundary windowing.
+Dialogue history management with JSONL persistence and crash-safe write-before-response semantics.
 
 ## Tier
 
-**Build** — Design reference. Architectural patterns for new builds.
+**Build** — Design reference. Architectural pattern for new builds.
 
 ## Priority
 
-**P2** — Critical for multi-round dialogue and context management.
+**P2** — Supporting subsystem for conversation state management.
 
-## Source Reference
+## Source Pattern
 
-- **Source pattern**: Dialogue history management (Section 19)
-- **KB sections**: Section 19 (Multi-Round Dialogue History Management), Section 18.3 (200K Token Handling)
+- **KB sections**: Section 19 — Message lifecycle, JSONL persistence, crash-safe writes
 
 ## Architecture
 
-Manages the full message lifecycle: message types (User, Assistant, Attachment, System, CompactBoundary, ToolUseSummary, Progress), persistence to JSONL, transcript write-before-response for crash safety, large paste external storage via hash, image caching, and `getMessagesAfterCompactBoundary()` for effective message windowing.
+The dialogue history manager tracks all messages exchanged during a session. Key design patterns:
 
-The write-before-response pattern ensures no data loss on crash: every message is persisted to the JSONL transcript before the model response is generated. Compact boundaries act as virtual start points, allowing the system to trim history while preserving continuity.
+- **Write-before-response** — Messages are persisted to JSONL on disk before the assistant response is returned, ensuring crash safety
+- **Compact boundaries** — When context compaction occurs, a `CompactBoundaryMessage` is inserted that summarizes the discarded messages. Only messages after the last boundary are sent to the model.
+- **Message types** — Seven types cover all dialogue participants: user, assistant, attachment, system, compact_boundary, tool_use_summary, progress
 
 ## Exports
 
-- `MessageType` — Union of all message type strings
-- `DialogueMessage` — Interface for a single message with type, content, timestamp, metadata
-- `CompactBoundaryMessage` — Extended message marking a compaction point
-- `HistoryConfig` — Configuration for max records, store path, external storage threshold
-- `DialogueHistoryManager` — Class managing the full message lifecycle
+- `MessageType` — Union of 7 message type identifiers
+- `DialogueMessage` — Single message with type, content, timestamp, metadata
+- `CompactBoundaryMessage` — Boundary marker with summary and original count
+- `HistoryConfig` — Storage configuration (maxRecords, storePath, threshold)
+- `DialogueHistoryManager` — Manager class with add/persist/load/compact operations
 
 ## Dependencies
 
@@ -35,4 +36,4 @@ None
 
 ## Status
 
-Type stubs only. All functions throw `Error("TODO: ...")`.
+Type stubs only. All methods throw `Error`.

@@ -1,6 +1,6 @@
 # workforce-scheduling-coordinator
 
-WFM scheduling engine translated from Claude Code's multi-agent coordinator pattern.
+Workforce scheduling coordination translated from Claude Code's multi-agent coordinator pattern.
 
 ## Tier
 
@@ -8,34 +8,39 @@ WFM scheduling engine translated from Claude Code's multi-agent coordinator patt
 
 ## Priority
 
-**P1** — Core translate package. Multi-agent coordinator is a foundational orchestration pattern.
+**P1** — Translate tier completion.
 
 ## Source Pattern
 
-- **Source pattern**: Multi-agent coordinator (coordinatorMode.ts, 369 LOC)
-- **KB sections**: Section 24 (Multi-Agent Orchestration), Section 43 (Contact Center — Workforce scheduling)
+- **Pattern**: Multi-agent coordinator
+- **Source file**: `coordinator/coordinatorMode.ts` (369 LOC)
+- **KB sections**: Section 24 (Multi-Agent Orchestration), Section 43 (Contact Center)
 
 ## Domain Translation
 
-| Claude Code Concept | WFM Concept |
-|---------------------|-------------|
-| Coordinator mode | Scheduling engine |
-| Sub-agent (AgentTool) | Specialist worker (forecaster, scheduler, adherence monitor) |
-| Task dispatch | Scheduling job dispatch (generate forecast, optimize shifts, check adherence) |
-| XML task-notification | Job completion callback with results |
-| Scratchpad directory | Shared schedule context (demand forecast shared across workers) |
+Maps Claude Code's multi-agent coordinator to contact center workforce scheduling:
 
-## Key Insight
-
-The coordinator dispatches jobs to specialist workers the same way Claude Code's coordinator mode dispatches tasks to sub-agents. Each worker type (forecaster, shift optimizer, adherence monitor) maps to a sub-agent with a focused skill set. The shared schedule context mirrors the scratchpad directory pattern where agents share intermediate results.
+| Claude Code Concept | Contact Center Concept |
+|---------------------|----------------------|
+| Agent coordinator | Scheduling coordinator |
+| Sub-agent | Scheduling worker |
+| Task dispatch | Job dispatch (forecast, optimize, adherence) |
+| Shared context | Scheduling constraints propagation |
+| Task lifecycle | Job lifecycle (dispatch -> execute -> collect) |
+| Concurrent agent limit | Max concurrent workers |
+| Task timeout | Job timeout |
 
 ## Exports
 
-- `SchedulingCoordinator` — Main coordinator class. Dispatches jobs to specialist workers.
+- `SchedulingCoordinator` — Main coordinator class
 - `SchedulingJob` — Dataclass: job_id, job_type, status, parameters, result
-- `JobType` — Enum: FORECAST, OPTIMIZE_SHIFTS, CHECK_ADHERENCE, GENERATE_REPORT, INTRADAY_REBALANCE
 - `WorkerResult` — Dataclass: worker_id, job_id, status, output, duration_seconds
 - `CoordinatorConfig` — Dataclass: max_concurrent_workers, job_timeout_seconds
+- `JobType` — Enum: FORECAST, OPTIMIZE_SHIFTS, CHECK_ADHERENCE, GENERATE_REPORT, INTRADAY_REBALANCE
+
+## Dependencies
+
+None.
 
 ## Status
 

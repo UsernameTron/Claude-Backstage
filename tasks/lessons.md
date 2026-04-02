@@ -18,5 +18,8 @@
 - [2026-04-02] [Workspace Deps]: When a package imports from another package in the monorepo, its package.json MUST include `"dependencies": { "@claude-patterns/{dep}": "workspace:*" }`. Without this, tsc --noEmit fails with TS2307. Triggered by: multi-step-ivr-input-validator missing dep on ivr-call-flow-validator.
 - [2026-04-02] [Reference Docs]: IMPLEMENTATION-PLAYBOOK.md and KB-v2.1-Build-Inventory.md live in the parent project directory, not the worktree. KB file is gitignored by pattern `KB-v2.1-*.md`. Copy into worktree before editing. Triggered by: assumed files didn't exist when they were in parent dir.
 
+- [2026-04-02] [Worktree]: Do NOT use `isolation: "worktree"` for Wave 2+ plans that depend on Wave 1 output. Worktrees branch from a point-in-time snapshot and won't have the Wave 1 commits. Run dependent-wave plans without isolation or inline. Triggered by: 05-04 agent stalled in worktree without Wave 1 packages.
+- [2026-04-02] [Agents]: When a background agent stalls (output stops growing for >2 min), stop it and complete the work inline rather than waiting indefinitely. Check git diff to see what partial work exists and finish from there. Triggered by: 05-04 agent stalled during validation, output frozen at 506 lines.
+
 ## Archived
 <!-- Rules that no longer apply -->

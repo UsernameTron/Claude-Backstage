@@ -1,6 +1,6 @@
 # claude-code-patterns
 
-A monorepo organizing 43 buildable systems extracted from 1,900 files, 512K+ LOC TypeScript and Knowledge Base v2.1. Each package provides type stubs, source file references, and dependency mappings -- a pattern library for building skills, agents, and operational tools.
+A monorepo organizing 43 buildable systems extracted from Claude Code's source tree (~1,900 files, 512K+ LOC TypeScript) and Knowledge Base v2.1. Each package provides type stubs, source file references, and dependency mappings -- a pattern library for building skills, agents, and operational tools.
 
 **This is NOT a fork of Claude Code.** It is a build reference with type stubs only.
 
@@ -49,8 +49,8 @@ make type-check
 |----------|-------|-------------|------------|
 | **P0** | 8 | Foundation packages | First -- everything else depends on these |
 | **P1** | 10 | High-value systems | After P0 -- strong portfolio and interview value |
-| **P2** | 15 | Extended capabilities | As needed -- solid engineering value |
-| **P3** | 10 | Nice-to-have | When time permits |
+| **P2** | 17 | Extended capabilities | As needed -- solid engineering value |
+| **P3** | 8 | Nice-to-have | When time permits |
 
 ## Full Package Inventory
 
@@ -89,15 +89,15 @@ make type-check
 | 24 | mcp-integration | P2 | 12,310 | `services/mcp/` (23 files) | none |
 | 25 | multi-agent-coordinator | P1 | 369 | `coordinator/coordinatorMode.ts` | mcp-integration |
 | 26 | cli-startup-optimization | P2 | ~2,000 | `main.tsx` + `setup.ts` | none |
-| 35 | tool-schema-cache | P2 | — | Tool schema caching (Section 21.3) | none |
-| 36 | tool-registry | P2 | — | Tool system + three-layer filtering (Section 6.2-6.3) | none |
-| 37 | dialogue-history-manager | P2 | — | Dialogue history management (Section 19) | none |
-| 38 | system-reminder-injection | P2 | — | System reminder mechanism (Section 20) | none |
-| 39 | plugin-lifecycle-manager | P2 | — | Plugin system lifecycle (Section 25) | none |
-| 40 | sdk-bridge | P3 | — | Server and SDK mode (Section 26) | none |
-| 41 | voice-input-gating | P3 | — | Voice input system (Section 34) | none |
-| 42 | output-style-system | P3 | — | Output styles + markdown rendering (Section 35) | none |
-| 43 | onboarding-flow-engine | P3 | — | Onboarding flow (Section 36) | none |
+| 35 | tool-schema-cache | P2 | ~500 | Tool schema caching (Sec 21.3) | none |
+| 36 | tool-registry | P2 | ~1,000 | Tool system (Sec 6.2-6.3) | none |
+| 37 | dialogue-history-manager | P2 | ~800 | Dialogue history (Sec 19) | none |
+| 38 | system-reminder-injection | P2 | ~600 | System reminder mechanism (Sec 20) | none |
+| 39 | plugin-lifecycle-manager | P2 | ~1,200 | Plugin system (Sec 25) | none |
+| 40 | sdk-bridge | P3 | ~800 | Server/SDK mode (Sec 26) | none |
+| 41 | voice-input-gating | P3 | ~400 | Voice input system (Sec 34) | none |
+| 42 | output-style-system | P3 | ~600 | Output styles + markdown (Sec 35) | none |
+| 43 | onboarding-flow-engine | P3 | ~500 | Onboarding flow (Sec 36) | none |
 
 ### Translate Tier (4 Python + 4 TypeScript)
 
@@ -108,9 +108,9 @@ make type-check
 | 29 | agent-skill-routing | P1 | Python | Permission system (Recipe 1) | none |
 | 30 | cost-per-interaction | P0 | Python | Cost tracker (Pattern + source) | none |
 | 31 | prompt-cache-optimizer | P0 | TypeScript | Cache-stable ordering (Pattern 4) | none |
-| 32 | workforce-scheduling-coordinator | P1 | Python | Multi-agent coordinator (Section 24) | none |
-| 33 | genesys-flow-security-validator | P1 | TypeScript | Security audit patterns (Sections 8-10, 38) | none |
-| 34 | multi-step-ivr-input-validator | P2 | TypeScript | Compound command decomposition (Section 8.6) | ivr-call-flow-validator |
+| 32 | workforce-scheduling-coordinator | P1 | Python | Multi-agent coordinator (Sec 24) | none |
+| 33 | genesys-flow-security-validator | P1 | TypeScript | Security audit patterns (Sec 8-10, 38) | none |
+| 34 | multi-step-ivr-input-validator | P2 | TypeScript | Compound command decomposition (Sec 8.6) | ivr-call-flow-validator |
 
 ## Architecture
 

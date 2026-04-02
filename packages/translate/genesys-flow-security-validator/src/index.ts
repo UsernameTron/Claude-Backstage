@@ -1,24 +1,28 @@
 /**
- * Genesys Flow Security Validator — security validation for Architect call flows.
+ * Genesys Flow Security Validator — security audit for Genesys Architect call flows.
  *
- * Translate tier — applies Claude Code's permission and threat model patterns
- * to Genesys Architect flow vulnerability detection.
- * Source Pattern: Security audit patterns (Sections 8-10, Section 38 Threat Model).
+ * Translate tier — applies Claude Code's security audit patterns (Sections 8-10, 38)
+ * to Genesys Cloud Architect flow validation. Checks flows for common security
+ * vulnerabilities such as unprotected data actions, missing encryption on sensitive
+ * variables, and exposed PII in logging nodes.
+ *
+ * Source Pattern: Security audit patterns (dangerous command detection, path validation)
  * Tier: Translate P1.
  *
- * Key insight: Claude Code's layered deny→ask→allow permission chain translates
- * directly into a flow validation rule chain where each rule checks for dangerous
- * patterns (open transfers, unvalidated data actions, missing error handling,
- * PII exposure in logs, unauthorized queue routing).
+ * Key insight: Genesys Architect flows are directed graphs where each node can
+ * introduce security vulnerabilities. Unprotected data action calls, PII logged
+ * in debug nodes, and unvalidated external inputs mirror the security concerns
+ * Claude Code addresses through its dangerous command detection and path validation
+ * subsystems.
  */
 
 /**
- * Severity levels for flow validation issues.
+ * Severity levels for flow validation findings.
  */
 export type ValidationSeverity = "critical" | "warning" | "info";
 
 /**
- * A single node in a Genesys Architect flow.
+ * A node in a Genesys Architect flow.
  */
 export interface ArchitectNode {
   id: string;
@@ -36,22 +40,22 @@ export interface ArchitectFlow {
   name: string;
   type: string;
   nodes: ArchitectNode[];
-  edges: Array<{ source: string; target: string; label?: string }>;
+  edges: Array<{ source: string; target: string }>;
   version: string;
 }
 
 /**
- * A single validation rule that checks for a specific vulnerability pattern.
+ * A security validation rule that checks a flow for a specific vulnerability.
  */
 export interface FlowValidationRule {
   id: string;
   severity: ValidationSeverity;
-  description: string;
   check: (flow: ArchitectFlow) => FlowVulnerability[];
+  description: string;
 }
 
 /**
- * A detected vulnerability in a flow.
+ * A security vulnerability found in a flow.
  */
 export interface FlowVulnerability {
   ruleId: string;
@@ -63,43 +67,36 @@ export interface FlowVulnerability {
 }
 
 /**
- * Aggregated validation result for an entire flow.
+ * Result of validating a flow against all security rules.
  */
 export interface FlowValidationResult {
   valid: boolean;
   vulnerabilities: FlowVulnerability[];
-  checkedRules: string[];
+  checkedRules: number;
   flowName: string;
 }
 
 /**
- * Validate an Architect flow against all built-in security rules.
- *
- * Checks for: open transfers, unvalidated data actions, missing error handling,
- * infinite loop detection, PII exposure in logs, unauthorized queue routing.
+ * Validate a Genesys Architect flow against all built-in security rules.
  *
  * @param flow - The Architect flow to validate
- * @returns Validation result with vulnerabilities and checked rules
+ * @returns Validation result with any vulnerabilities found
  */
 export function validateFlow(flow: ArchitectFlow): FlowValidationResult {
-  // TODO: translate from security audit patterns (Sections 8-10, Threat Model)
+  // TODO: translate from security audit patterns (Sections 8-10, 38)
   throw new Error(
-    "TODO: translate from security audit patterns (Sections 8-10, Threat Model)"
+    "TODO: translate from security audit patterns (Sections 8-10, 38)"
   );
 }
 
 /**
- * Returns the set of built-in security validation rules.
- *
- * Built-in rules cover: open transfers, unvalidated data actions,
- * missing error handling, infinite loop detection, PII exposure in logs,
- * unauthorized queue routing.
+ * Return the set of built-in security validation rules.
  *
  * @returns Array of built-in validation rules
  */
 export function getBuiltInRules(): FlowValidationRule[] {
-  // TODO: translate from security audit patterns (Sections 8-10, Threat Model)
+  // TODO: translate from security audit patterns (Sections 8-10, 38)
   throw new Error(
-    "TODO: translate from security audit patterns (Sections 8-10, Threat Model)"
+    "TODO: translate from security audit patterns (Sections 8-10, 38)"
   );
 }

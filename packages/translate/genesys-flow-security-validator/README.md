@@ -1,45 +1,49 @@
 # @claude-patterns/genesys-flow-security-validator
 
-Security validation for Genesys Architect call flows, translating Claude Code's permission and threat model patterns into flow vulnerability detection.
+Security audit for Genesys Architect call flows, translated from Claude Code's security audit patterns.
 
 ## Tier
 
-**Translate** — New builds from pattern adaptation.
+**Translate** — New build from pattern adaptation.
 
 ## Priority
 
-**P1** — Security validation is foundational for any Genesys Architect deployment pipeline.
+**P1** — Translate tier completion.
 
 ## Source Pattern
 
-- **Source pattern**: Security audit patterns (Sections 8-10, Section 38 Threat Model)
-- **KB sections**: Section 8 (Permission System), Section 9 (Sandbox), Section 10 (File System Security), Section 38 (Threat Model), Section 43 (Genesys flow security)
+- **Pattern**: Security audit (dangerous command detection, path validation)
+- **Source files**: Security subsystems (Sections 8-10, 38)
+- **KB sections**: Section 8 (Permission System), Section 9 (Dangerous Commands), Section 10 (Path Validation), Section 38 (Security Patterns)
 
 ## Domain Translation
 
-| Claude Code Concept | Genesys Architect Concept |
-|---------------------|--------------------------|
-| Permission check chain (deny->ask->allow) | Flow validation rule chain |
-| Dangerous command patterns | Dangerous flow patterns (open transfer, unvalidated external data) |
-| Path validation (traversal, injection) | Data action URL validation |
-| Sandbox write deny list | Protected flow element deny list (production queues, trunk configs) |
-| Threat model attack vectors | Architect flow vulnerability patterns |
+Maps Claude Code's security audit patterns to Genesys Architect flow security validation:
 
-## Key Insight
-
-Claude Code's security model uses a layered deny-then-ask-then-allow permission chain to prevent dangerous operations. Genesys Architect flows have an analogous problem: flows can contain dangerous patterns like open transfers to external numbers, unvalidated data action URLs, missing error handling on critical paths, and PII exposure in logging nodes. By translating Claude Code's permission check chain into a flow validation rule chain, each rule acts as a security gate that identifies vulnerabilities by severity before the flow reaches production.
+| Claude Code Concept | Contact Center Concept |
+|---------------------|----------------------|
+| Dangerous command detection | Unprotected data action calls |
+| Path validation | Flow variable scope validation |
+| Permission rules | Data access authorization checks |
+| Input sanitization | External input validation in flows |
+| Audit logging | PII exposure in debug/logging nodes |
+| Security scan | Flow security vulnerability scan |
 
 ## Exports
 
-- `FlowValidationRule` — Interface for a single validation rule with check function
-- `FlowVulnerability` — A detected vulnerability in a flow
-- `FlowValidationResult` — Aggregated validation result for an entire flow
-- `ValidationSeverity` — Severity type: "critical" | "warning" | "info"
-- `ArchitectFlow` — Interface representing a Genesys Architect flow
-- `ArchitectNode` — Interface representing a single node in an Architect flow
-- `validateFlow` — Validate an Architect flow against all built-in rules
-- `getBuiltInRules` — Returns the set of built-in security validation rules
+- `validateFlow(flow)` — Validate flow against all built-in security rules
+- `getBuiltInRules()` — Return set of built-in validation rules
+- `ValidationSeverity` — Type: critical, warning, info
+- `ArchitectNode` — Interface: id, type, label, properties, outgoingEdges
+- `ArchitectFlow` — Interface: id, name, type, nodes, edges, version
+- `FlowValidationRule` — Interface: id, severity, check, description
+- `FlowVulnerability` — Interface: ruleId, severity, nodeId, flowName, description, remediation
+- `FlowValidationResult` — Interface: valid, vulnerabilities, checkedRules, flowName
+
+## Dependencies
+
+None.
 
 ## Status
 
-Type stubs only. All functions throw `Error("TODO: ...")`.
+Type stubs only. All functions throw `Error("TODO")`.

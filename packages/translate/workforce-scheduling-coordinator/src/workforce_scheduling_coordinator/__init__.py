@@ -1,22 +1,23 @@
-"""WFM scheduling engine translated from Claude Code multi-agent coordinator.
+"""Workforce scheduling coordination translated from multi-agent coordinator pattern.
 
-Dispatches scheduling jobs (forecast, optimize shifts, check adherence) to
-specialist workers. Shared schedule context allows workers to coordinate
-on demand forecasts and staffing plans.
+Translates Claude Code's multi-agent coordinator (Section 24) to WFM scheduling:
+- Coordinator dispatches jobs to specialized workers (forecast, optimize, adherence)
+- Shared context propagates scheduling constraints across workers
+- Job lifecycle: dispatch -> execute -> collect results
 
-Source pattern: coordinatorMode.ts (369 LOC)
-KB reference: Section 24 (Multi-Agent Orchestration), Section 43
+Source pattern: coordinator/coordinatorMode.ts (369 LOC)
+KB reference: Section 24 (Multi-Agent Orchestration), Section 43 (Contact Center)
 """
 
 from __future__ import annotations
 
 from dataclasses import dataclass, field
 from enum import Enum
-from typing import Any, Optional
+from typing import Optional
 
 
 class JobType(Enum):
-    """Types of scheduling jobs that can be dispatched to workers."""
+    """Types of scheduling jobs that can be dispatched."""
     FORECAST = "forecast"
     OPTIMIZE_SHIFTS = "optimize_shifts"
     CHECK_ADHERENCE = "check_adherence"
@@ -26,57 +27,57 @@ class JobType(Enum):
 
 @dataclass
 class SchedulingJob:
-    """A scheduling job to be dispatched to a specialist worker."""
-    job_id: str = ""
-    job_type: JobType = JobType.FORECAST
-    status: str = "pending"
-    parameters: dict[str, Any] = field(default_factory=dict)
-    result: Optional[Any] = None
+    """A unit of scheduling work to be dispatched to a worker."""
+    job_id: str
+    job_type: JobType
+    status: str
+    parameters: dict
+    result: Optional[dict] = None
 
 
 @dataclass
 class WorkerResult:
-    """Result returned by a specialist worker after completing a job."""
-    worker_id: str = ""
-    job_id: str = ""
-    status: str = "complete"
-    output: Any = None
-    duration_seconds: float = 0.0
+    """Result returned by a worker after executing a scheduling job."""
+    worker_id: str
+    job_id: str
+    status: str
+    output: dict
+    duration_seconds: float
 
 
 @dataclass
 class CoordinatorConfig:
     """Configuration for the scheduling coordinator."""
-    max_concurrent_workers: int = 4
-    job_timeout_seconds: float = 300.0
+    max_concurrent_workers: int = 5
+    job_timeout_seconds: int = 300
 
 
 class SchedulingCoordinator:
-    """Dispatch scheduling jobs to specialist workers.
+    """Coordinate workforce scheduling jobs across specialized workers.
 
-    Translates Claude Code's multi-agent coordinator pattern to WFM
-    workforce scheduling orchestration.
+    Translates Claude Code's multi-agent coordinator pattern to contact center
+    workforce management scheduling.
     """
 
     def __init__(self, config: CoordinatorConfig) -> None:
-        # TODO: initialize coordinator with worker pool and shared context
+        # TODO: translate from multi-agent coordinator pattern
         raise NotImplementedError("TODO: translate from multi-agent coordinator pattern")
 
     def dispatch_job(self, job: SchedulingJob) -> WorkerResult:
-        """Dispatch a scheduling job to the appropriate specialist worker.
+        """Dispatch a scheduling job to an appropriate worker.
 
         Args:
             job: The scheduling job to dispatch.
 
         Returns:
-            WorkerResult with output from the specialist worker.
+            Result from the worker that executed the job.
         """
-        # TODO: route job to correct worker based on job_type
+        # TODO: translate from multi-agent coordinator pattern
         raise NotImplementedError("TODO: translate from multi-agent coordinator pattern")
 
     def get_active_jobs(self) -> list[SchedulingJob]:
         """Return all currently active (in-progress) jobs."""
-        # TODO: return jobs with status == "active"
+        # TODO: translate from multi-agent coordinator pattern
         raise NotImplementedError("TODO: translate from multi-agent coordinator pattern")
 
     def cancel_job(self, job_id: str) -> bool:
@@ -88,14 +89,10 @@ class SchedulingCoordinator:
         Returns:
             True if the job was found and cancelled, False otherwise.
         """
-        # TODO: find job and signal cancellation to worker
+        # TODO: translate from multi-agent coordinator pattern
         raise NotImplementedError("TODO: translate from multi-agent coordinator pattern")
 
     def get_shared_context(self) -> dict:
-        """Return the shared schedule context accessible to all workers.
-
-        This mirrors the scratchpad directory pattern where agents share
-        intermediate results (e.g., demand forecast shared with shift optimizer).
-        """
-        # TODO: return shared context dict
+        """Return the shared context propagated across all workers."""
+        # TODO: translate from multi-agent coordinator pattern
         raise NotImplementedError("TODO: translate from multi-agent coordinator pattern")

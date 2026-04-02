@@ -1,35 +1,41 @@
 # @claude-patterns/system-reminder-injection
 
-Injects `<system-reminder>` tags into user messages, tool results, and attachments from multiple sources.
+System reminder mechanism using `<system-reminder>` tag injection into user messages, tool results, and attachments.
 
 ## Tier
 
-**Build** — Design reference. Architectural patterns for new builds.
+**Build** — Design reference. Architectural pattern for new builds.
 
 ## Priority
 
-**P2** — Key mechanism for runtime context injection into the dialogue stream.
+**P2** — Supporting subsystem for context reinforcement.
 
-## Source Reference
+## Source Pattern
 
-- **Source pattern**: System reminder mechanism (Section 20)
-- **KB sections**: Section 20 (System Reminder Mechanism)
+- **KB sections**: Section 20 — System reminder injection mechanism
 
 ## Architecture
 
-`<system-reminder>` tags are injected into user messages, tool results, and attachment messages. Sources include: user context injection, tool results, TodoWrite reminders, deferred tool notifications, and MCP connection status changes.
+System reminders are injected into the conversation at strategic points to reinforce context that might be lost during long sessions. Reminders are wrapped in `<system-reminder>` XML tags and can be injected from six sources:
 
-The system prompt instructs the model that these tags are automatically added and bear no direct relation to the messages in which they appear. This allows runtime context to be surfaced without polluting the dialogue history or requiring separate system message slots.
+- **user_context** — CLAUDE.md and project context
+- **tool_result** — Appended to tool output
+- **attachment** — Included with file attachments
+- **todo_write** — TodoWrite tool reminders
+- **deferred_tools** — Deferred tool execution reminders
+- **mcp_status** — MCP server status updates
+
+The `shouldInjectReminder` function controls injection frequency based on source type and turn count, preventing over-saturation.
 
 ## Exports
 
-- `SystemReminderSource` — Union type of all reminder sources
-- `SystemReminder` — Interface for a single reminder with source, content, target index
-- `ReminderInjectionConfig` — Configuration for tag wrapping behavior
-- `injectReminder` — Inject a reminder into a message string
-- `wrapInReminderTags` — Wrap content in system-reminder XML tags
-- `extractReminders` — Parse existing reminders from message text
-- `shouldInjectReminder` — Determine whether a reminder should be injected given source and turn count
+- `SystemReminderSource` — Union of 6 reminder source types
+- `SystemReminder` — Reminder with source, content, target index
+- `ReminderInjectionConfig` — Injection config (wrapInTags, tagName)
+- `injectReminder(message, reminder)` — Inject reminder into message
+- `wrapInReminderTags(content, tagName?)` — Wrap in XML tags
+- `extractReminders(message)` — Parse reminders from tagged content
+- `shouldInjectReminder(source, turnCount)` — Injection decision logic
 
 ## Dependencies
 
@@ -37,4 +43,4 @@ None
 
 ## Status
 
-Type stubs only. All functions throw `Error("TODO: ...")`.
+Type stubs only. All functions throw `Error`.

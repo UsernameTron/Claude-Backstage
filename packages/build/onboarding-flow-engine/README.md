@@ -1,38 +1,51 @@
 # @claude-patterns/onboarding-flow-engine
 
-Dynamic multi-step onboarding with conditional step assembly based on auth method and environment.
+**Tier:** Build | **Priority:** P3 | **KB:** Section 36
 
-## Tier
+Dynamic multi-step onboarding with conditional step assembly and dependency ordering.
 
-**Build** — Design reference. Architectural patterns for new builds.
+## Source Pattern
 
-## Priority
-
-**P3** — Configurable step pipeline pattern for onboarding flows.
-
-## Source Reference
-
-- **Source pattern**: Onboarding flow (Section 36)
-- **KB sections**: Section 36 (Onboarding Flow)
+- Section 36: Onboarding flow engine — conditional step assembly based on auth method and environment
+- Standard flow: preflight -> theme -> oauth -> api-key -> security -> terminal-setup
 
 ## Architecture
 
-Dynamic multi-step onboarding with conditional assembly. Steps: `preflight` then `theme` then `oauth` then `api-key` then `security` then `terminal-setup`. Steps are dynamically assembled based on authentication method and environment -- not all steps run for all users.
+The onboarding flow engine assembles and executes a sequence of onboarding steps tailored to the user's authentication method and environment. Steps declare dependencies on other steps and can be conditionally skipped.
 
-The pattern is a configurable step pipeline where each step can conditionally skip based on runtime state. Steps declare dependencies on other step IDs, enabling the engine to validate ordering and skip dependent steps when a prerequisite is skipped.
+### Conditional Assembly
+
+Not all steps apply to every user. The engine filters steps based on:
+
+- **Auth method** — OAuth users skip the api-key step; API key users skip oauth
+- **Environment** — Terminal setup is skipped in non-terminal environments
+- **Dependencies** — Steps are ordered to respect their `dependsOn` declarations
+
+### Execution Model
+
+Steps execute sequentially in dependency order. Each step returns a `StepResult` indicating success or failure. On failure, the error is recorded but execution continues with remaining steps. The `skipTo` method allows jumping ahead, marking intermediate steps as skipped.
+
+### State Tracking
+
+`OnboardingState` tracks completed steps, skipped steps, and errors throughout the flow. The engine exposes state via `getState()` for progress reporting.
 
 ## Exports
 
-- `OnboardingStep` — Interface for a step with id, label, execute function, skip predicate, dependencies
-- `OnboardingConfig` — Configuration with steps, auth method, and environment
-- `OnboardingState` — Runtime state tracking current, completed, skipped steps, and errors
-- `StepResult` — Interface for step execution outcome with optional next-step override
-- `OnboardingFlowEngine` — Class orchestrating the step pipeline
+### Types
+
+- `StepResult` — step outcome with success flag, next step, and error
+- `OnboardingStep` — step definition with id, label, execute, shouldSkip, dependsOn
+- `OnboardingConfig` — steps array, auth method, and environment
+- `OnboardingState` — current step, completed/skipped lists, and error array
+
+### Classes
+
+- `OnboardingFlowEngine` — constructor, assembleSteps, runStep, run, getState, skipTo
 
 ## Dependencies
 
-None
+None.
 
 ## Status
 
-Type stubs only. All functions throw `Error("TODO: ...")`.
+Type stubs only. All methods throw `TODO` errors referencing implementation notes.

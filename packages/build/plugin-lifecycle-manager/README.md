@@ -1,32 +1,38 @@
 # @claude-patterns/plugin-lifecycle-manager
 
-Four-phase plugin lifecycle: Discovery, Cache, Cleanup, and Telemetry.
+Plugin system lifecycle management with four-phase lifecycle: Discovery, Cache, Cleanup, Telemetry.
 
 ## Tier
 
-**Build** — Design reference. Architectural patterns for new builds.
+**Build** — Design reference. Architectural pattern for new builds.
 
 ## Priority
 
-**P2** — Manages plugin installation, versioning, cache invalidation, and session activation.
+**P2** — Supporting subsystem for plugin ecosystem management.
 
-## Source Reference
+## Source Pattern
 
-- **Source pattern**: Plugin system lifecycle (Section 25)
-- **KB sections**: Section 25 (Plugin System)
+- **KB sections**: Section 25 — Plugin system lifecycle
 
 ## Architecture
 
-Four-phase lifecycle: Discovery (`getPluginSeedDirs()`) then Cache (`loadAllPluginsCacheOnly()`) then Cleanup (`cleanupOrphanedPluginVersionsInBackground()`) then Telemetry (`logPluginsEnabledForSession()`). Manages plugin installation, versioning, cache invalidation, and session-level activation tracking.
+The plugin lifecycle follows four phases:
 
-Each phase is independently executable, allowing partial lifecycle runs (e.g., cache-only load on fast startup, full discovery on first run). Orphan cleanup runs in the background to avoid blocking session start.
+1. **Discovery** — Scan seed directories (user, project, system) for plugin manifests
+2. **Cache** — Persist discovered manifests for fast startup on subsequent sessions
+3. **Cleanup** — Remove orphaned plugins that are cached but no longer present in seed directories
+4. **Telemetry** — Log which plugins are active in each session for analytics
+
+### Plugin States
+
+Plugins transition through states: `discovered` -> `cached` -> `active`. Plugins that disappear from seed dirs become `orphaned` and are cleaned up. Failed plugins enter `error` state.
 
 ## Exports
 
-- `PluginManifest` — Interface for plugin metadata including name, version, skills, hooks
-- `PluginState` — Union type tracking plugin through lifecycle stages
-- `PluginLifecycleConfig` — Configuration for seed directories, cache location, max age
-- `PluginLifecycleManager` — Class managing the four-phase lifecycle
+- `PluginState` — Union of 5 lifecycle states
+- `PluginManifest` — Plugin descriptor (name, version, skills, mcpServers, hooks)
+- `PluginLifecycleConfig` — Manager config (seedDirs, cacheDir, maxCacheAge)
+- `PluginLifecycleManager` — Manager class with discover/cache/cleanup/telemetry operations
 
 ## Dependencies
 
@@ -34,4 +40,4 @@ None
 
 ## Status
 
-Type stubs only. All functions throw `Error("TODO: ...")`.
+Type stubs only. All methods throw `Error`.

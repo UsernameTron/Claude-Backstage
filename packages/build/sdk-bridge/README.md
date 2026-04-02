@@ -1,37 +1,40 @@
 # @claude-patterns/sdk-bridge
 
-WebSocket-based session management for SDK/Direct Connect mode with NDJSON framing and control requests.
+**Tier:** Build | **Priority:** P3 | **KB:** Section 26
 
-## Tier
+WebSocket session management for SDK and Direct Connect mode with NDJSON message framing.
 
-**Build** — Design reference. Architectural patterns for new builds.
+## Source Pattern
 
-## Priority
-
-**P3** — SDK and remote connection patterns.
-
-## Source Reference
-
-- **Source pattern**: Server and SDK mode (Section 26)
-- **KB sections**: Section 26 (Server and SDK Mode)
+- Section 26: SDK bridge architecture — NDJSON message framing, SDKMessage dispatch, control_request permission prompts
+- Three connection modes: SDK (full integration), Direct Connect (simplified), REPL Bridge (development)
 
 ## Architecture
 
-WebSocket-based session management for SDK/Direct Connect mode. `DirectConnectSessionManager` handles NDJSON message framing, SDKMessage dispatch, and `control_request` permission prompts. REPL bridge connects local instance to remote Claude.ai with optional `replBridgeOutboundOnly` mode.
+The SDK bridge manages WebSocket lifecycle between Claude Code and a host application. Messages are framed using NDJSON (newline-delimited JSON) for streaming compatibility. Control requests (tool use, file edits) are surfaced to the host as permission prompts, allowing the host to approve or deny actions.
 
-The bridge pattern abstracts transport details so consumers interact with a unified message interface regardless of whether the session is local SDK, direct connect, or REPL bridge mode.
+### Connection Modes
+
+1. **SDK** — Full bidirectional integration with message dispatch and control requests
+2. **Direct Connect** — Simplified connection for headless operation
+3. **REPL Bridge** — Development mode for interactive testing
 
 ## Exports
 
-- `SDKMessage` — Interface for messages with type, payload, and messageId
-- `SessionConfig` — Configuration for connection mode, URL, and outbound-only flag
-- `ControlRequest` — Interface for permission prompts requiring approval
-- `SDKBridge` — Class managing WebSocket session lifecycle
+### Types
+
+- `SDKMessage` — message with type, payload, and messageId
+- `SessionConfig` — connection mode, URL, and outbound-only flag
+- `ControlRequest` — permission request with action description and approval requirement
+
+### Classes
+
+- `SDKBridge` — WebSocket bridge with connect, send, onMessage, handleControlRequest, disconnect
 
 ## Dependencies
 
-None
+None.
 
 ## Status
 
-Type stubs only. All functions throw `Error("TODO: ...")`.
+Type stubs only. All methods throw `TODO` errors referencing implementation notes.

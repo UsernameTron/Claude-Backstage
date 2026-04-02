@@ -6,7 +6,7 @@ Accepted
 
 ## Context
 
-31 Claude Code subsystems extracted from source (~1,900 files, 512K LOC) and Knowledge Base v2.1 need organizing into a buildable monorepo. Packages are type stubs only — no implementations. Three tiers reflect HOW each package is used:
+43 Claude Code subsystems extracted from source (~1,900 files, 512K LOC) and Knowledge Base v2.1 need organizing into a buildable monorepo. Packages are type stubs only — no implementations. Three tiers reflect HOW each package is used:
 
 - **Extract** — Copy from source, adapt imports, ship. Direct extraction targets.
 - **Build** — Use source as design reference. Architectural patterns for new builds.
@@ -18,14 +18,14 @@ The organization must support Bun workspaces (TypeScript), pip (Python), and Cla
 
 ### Option A — Flat
 
-All 31 packages in `packages/` directly.
+All 43 packages in `packages/` directly.
 
 ```
 packages/
   permission-system/
   denial-tracking/
   cost-tracker/
-  ... (31 directories)
+  ... (43 directories)
 ```
 
 ### Option B — Tiered (Selected)
@@ -55,11 +55,11 @@ packages/
 
 | Criteria | Option A (Flat) | Option B (Tiered) | Option C (Domain) |
 |----------|-----------------|--------------------|--------------------|
-| **Discoverability** | Poor — 31 dirs to scan | Excellent — tier = usage intent | Medium — domain boundaries unclear |
+| **Discoverability** | Poor — 43 dirs to scan | Excellent — tier = usage intent | Medium — domain boundaries unclear |
 | **Package independence** | High | High — tier invisible to imports | Medium — cross-domain deps murky |
 | **Dependency management** | Simple | Simple — workspace refs ignore tier | Complex — cross-domain refs |
 | **Mixed language support** | Awkward — Python mixed with TS | Clean — Python isolated in translate/ | Unclear placement |
-| **Context injection cost** | ~150 tokens (long flat list) | ~80 tokens (3 tiers, not 31 names) | ~120 tokens |
+| **Context injection cost** | ~150 tokens (long flat list) | ~80 tokens (3 tiers, not 43 names) | ~120 tokens |
 | **KB v2.1 alignment** | None | 1:1 mapping | Partial |
 
 ## Decision

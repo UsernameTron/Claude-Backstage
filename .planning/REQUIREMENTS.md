@@ -7,9 +7,9 @@ Generated: 2026-04-01
 ### FR-1: Monorepo Infrastructure
 | REQ | Description | Priority | Acceptance Criteria |
 |-----|-------------|----------|-------------------|
-| FR-1.1 | Bun workspace root with `@claude-patterns/` scope | P0 | `bun install` resolves all 28 TS packages |
+| FR-1.1 | Bun workspace root with `@claude-patterns/` scope | P0 | `bun install` resolves all 39 TS packages |
 | FR-1.2 | Shared tsconfig.base.json (strict, ES2022, Bun types) | P0 | All packages extend base config successfully |
-| FR-1.3 | Makefile with scaffold-check, type-check, lint targets | P0 | `make scaffold-check` validates 31 packages |
+| FR-1.3 | Makefile with scaffold-check, type-check, lint targets | P0 | `make scaffold-check` validates 43 packages |
 | FR-1.4 | ARCHITECTURE.md with full ADR for Option B | P0 | Documents evaluation of 3 options against 6 criteria |
 | FR-1.5 | dependency-graph.md with cross-package relationships | P1 | Shows all 6 dependency chains accurately |
 | FR-1.6 | Biome v2 linter config for TS packages | P2 | `make lint` passes on all TS stubs |
@@ -35,7 +35,7 @@ Generated: 2026-04-01
 | FR-2.15 | analytics-killswitch | P3 | Event logger, killswitch check, telemetry sink |
 | FR-2.16 | claudemd-memory | P1 | `getMemoryFiles()`, `getClaudeMds()`, `MAX_MEMORY_CHARACTER_COUNT` |
 
-### FR-3: Build Tier (10 TypeScript Packages)
+### FR-3: Build Tier (19 TypeScript Packages)
 | REQ | Package | Priority | Key Exports |
 |-----|---------|----------|-------------|
 | FR-3.1 | prompt-system | P0 | `getSystemPrompt()`, `SystemPromptSection`, `SYSTEM_PROMPT_DYNAMIC_BOUNDARY` |
@@ -49,7 +49,7 @@ Generated: 2026-04-01
 | FR-3.9 | multi-agent-coordinator | P1 | `isCoordinatorMode()`, `getCoordinatorSystemPrompt()` (depends: FR-3.8) |
 | FR-3.10 | cli-startup-optimization | P2 | `main()`, `setup()`, lazy loading strategies |
 
-### FR-4: Translate Tier (3 Python + 2 TypeScript)
+### FR-4: Translate Tier (4 Python + 4 TypeScript)
 | REQ | Package | Priority | Language | Key Exports |
 |-----|---------|----------|----------|-------------|
 | FR-4.1 | consecutive-breach-tracker | P0 | Python | `ConsecutiveBreachTracker` class, `record_breach()`, `get_action()` |
@@ -62,7 +62,7 @@ Generated: 2026-04-01
 | REQ | Description | Priority | Acceptance Criteria |
 |-----|-------------|----------|-------------------|
 | FR-5.1 | CLAUDE.md under 2K tokens | P0 | Provides useful context when injected into Claude Code session |
-| FR-5.2 | README.md with full 31-package inventory | P0 | Tier legend, priority matrix, quick start |
+| FR-5.2 | README.md with full 43-package inventory | P0 | Tier legend, priority matrix, quick start |
 | FR-5.3 | Per-package README.md with source refs | P1 | Description, source paths, LOC, deps, KB section |
 | FR-5.4 | docs/DEVOPS-HANDOFF.md | P1 | Environment, how to run, security, known debt |
 
@@ -70,11 +70,30 @@ Generated: 2026-04-01
 
 | REQ | Description | Priority | Acceptance Criteria |
 |-----|-------------|----------|-------------------|
-| NFR-1 | `tsc --noEmit` passes all 28 TS packages | P0 | Zero compilation errors in strict mode |
-| NFR-2 | `pip install -e` works for all 3 Python packages | P0 | Each Python package installs successfully |
+| NFR-1 | `tsc --noEmit` passes all 39 TS packages | P0 | Zero compilation errors in strict mode |
+| NFR-2 | `pip install -e` works for all 4 Python packages | P0 | Each Python package installs successfully |
 | NFR-3 | Cross-package workspace imports resolve | P0 | `@claude-patterns/permission-system` importable from dependent packages |
-| NFR-4 | Scaffold validation covers all 31 packages | P1 | Each has README.md + entry point + manifest |
+| NFR-4 | Scaffold validation covers all 43 packages | P1 | Each has README.md + entry point + manifest |
 | NFR-5 | No runtime code — type stubs only | P0 | All implementations are TODO comments |
+
+### FR-6: Expansion Packages (#32-43)
+| REQ | Package | Priority | Tier | Language | Key Exports |
+|-----|---------|----------|------|----------|-------------|
+| EXP-32 | workforce-scheduling-coordinator | P1 | Translate | Python | `SchedulingCoordinator`, `SchedulingJob`, `JobType`, `WorkerResult` |
+| EXP-33 | genesys-flow-security-validator | P1 | Translate | TypeScript | `validateFlow`, `getBuiltInRules`, `FlowValidationRule`, `FlowVulnerability` |
+| EXP-34 | multi-step-ivr-input-validator | P2 | Translate | TypeScript | `validateSequence`, `decomposeInput`, `DTMFSequence` (depends: FR-4.2) |
+| EXP-35 | tool-schema-cache | P2 | Build | TypeScript | `ToolSchemaCache`, `CachedToolSchema`, `CachePolicy` |
+| EXP-36 | tool-registry | P2 | Build | TypeScript | `ToolRegistry`, `ToolDefinition`, `ToolFilter` |
+| EXP-37 | dialogue-history-manager | P2 | Build | TypeScript | `DialogueHistoryManager`, `DialogueEntry`, `HistoryWindow` |
+| EXP-38 | system-reminder-injection | P2 | Build | TypeScript | `injectSystemReminder`, `SystemReminder`, `ReminderConfig` |
+| EXP-39 | plugin-lifecycle-manager | P2 | Build | TypeScript | `PluginLifecycleManager`, `PluginManifest`, `PluginState` |
+| EXP-40 | sdk-bridge | P3 | Build | TypeScript | `SDKBridge`, `SDKMessage`, `SessionConfig`, `ControlRequest` |
+| EXP-41 | voice-input-gating | P3 | Build | TypeScript | `checkVoiceGating`, `compositeGateCheck`, `GateLayer`, `GateResult` |
+| EXP-42 | output-style-system | P3 | Build | TypeScript | `loadOutputStyles`, `applyOutputStyle`, `OutputStyle`, `MarkdownCache` |
+| EXP-43 | onboarding-flow-engine | P3 | Build | TypeScript | `OnboardingFlowEngine`, `OnboardingStep`, `OnboardingState` |
+| EXP-ROOT | Root config updates | P0 | - | - | Makefile, package.json reflect 43 packages |
+| EXP-DOCS | Documentation updates | P0 | - | - | README, dependency-graph, KB inventory, IMPLEMENTATION-PLAYBOOK |
+| EXP-VALIDATE | Full validation | P0 | - | - | scaffold-check 43/43, type-check 35/0, lint clean |
 
 ## Out of Scope
 

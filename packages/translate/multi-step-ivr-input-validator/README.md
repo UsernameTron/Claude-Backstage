@@ -1,43 +1,45 @@
 # @claude-patterns/multi-step-ivr-input-validator
 
-Validates multi-step DTMF input sequences against IVR call flow state machines, translating Claude Code's compound command decomposition pattern into per-step IVR input validation.
+Compound DTMF sequence validation for IVR call flows, translated from Claude Code's compound command decomposition pattern.
 
 ## Tier
 
-**Translate** — New builds from pattern adaptation.
+**Translate** — New build from pattern adaptation.
 
 ## Priority
 
-**P2** — Extends the IVR call flow validator with sequence-level validation.
+**P2** — Translate tier extension.
 
 ## Source Pattern
 
-- **Source pattern**: Compound command decomposition (Section 8.6, Pattern 8)
-- **KB sections**: Section 8.6 (Compound Command Decomposition), Section 43 (Multi-step IVR input)
+- **Pattern 8**: Compound command decomposition
+- **Source**: Section 8.6 (Compound Command Handling)
+- **KB sections**: Section 8.6 (Compound Commands), Section 43 (Contact Center)
 
 ## Domain Translation
 
-| Claude Code Concept | IVR Concept |
-|---------------------|-------------|
-| Compound command (`cmd1 && cmd2`) | Multi-step DTMF sequence (press 1, then 3, then 2) |
-| Subcommand decomposition | Step-by-step input decomposition |
-| Per-subcommand validation | Per-step DTMF validation against current menu state |
-| Injection detection (`safe && evil`) | Invalid sequence detection (valid step 1, invalid step 2) |
-| Pattern: validate each independently | Pattern: validate each DTMF against the node it reaches |
+Maps Claude Code's compound command decomposition to multi-step IVR DTMF validation:
 
-## Key Insight
-
-Claude Code decomposes compound commands like `cmd1 && cmd2 && cmd3` into individual subcommands and validates each one independently, catching injection attacks where a safe first command masks a dangerous second command. IVR call flows have the exact same problem: a caller pressing "1, 3, 2" is executing a compound navigation sequence where each step changes the active menu context. Validating only the first input is insufficient -- each subsequent DTMF must be validated against the node that the previous step actually reached. This decompose-then-validate-each pattern catches dead-end sequences, unreachable endpoints, and invalid mid-sequence inputs.
+| Claude Code Concept | Contact Center Concept |
+|---------------------|----------------------|
+| Compound command | Multi-step DTMF sequence |
+| Command decomposition | Input decomposition ("1,3,2" -> ["1","3","2"]) |
+| Step-by-step validation | Sequential flow graph traversal |
+| Dead-end detection | Dead-end node identification |
+| Exhaustive path enumeration | All-sequence generation |
+| Validation result | Sequence validation result with failure point |
 
 ## Exports
 
-- `DTMFSequence` — A complete multi-step DTMF input sequence with entry point
-- `DTMFStep` — A single step in a DTMF sequence with expected and actual node IDs
-- `SequenceValidationResult` — Result of validating a DTMF sequence against a flow
-- `validateSequence` — Validate a sequence of DTMF inputs against a call flow
-- `decomposeInput` — Split raw input string into individual DTMF steps
-- `generateAllSequences` — Enumerate all possible DTMF paths through a flow
-- `findDeadEndSequences` — Find sequences that lead to dead-end nodes
+- `validateSequence(flow, sequence)` — Validate DTMF sequence against call flow
+- `decomposeInput(rawInput)` — Split raw input into individual DTMF steps
+- `generateAllSequences(flow, maxDepth?)` — Generate all possible sequences
+- `findDeadEndSequences(flow)` — Find sequences leading to dead-end nodes
+- `DTMFStep` — Interface: input, expectedNodeId, actualNodeId
+- `DTMFSequence` — Interface: steps, entryNodeId
+- `SequenceValidationResult` — Interface: valid, failedAtStep, steps, reachableEndpoint
+- `IVRCallFlow` — Re-exported from ivr-call-flow-validator
+- `IVRNode` — Re-exported from ivr-call-flow-validator
 
 ## Dependencies
 
@@ -45,4 +47,4 @@ Claude Code decomposes compound commands like `cmd1 && cmd2 && cmd3` into indivi
 
 ## Status
 
-Type stubs only. All functions throw `Error("TODO: ...")`.
+Type stubs only. All functions throw `Error("TODO")`.

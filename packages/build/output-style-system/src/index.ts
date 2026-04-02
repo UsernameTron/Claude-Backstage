@@ -1,15 +1,13 @@
+// output-style-system — Output styles and markdown rendering
+// Source Pattern: Section 35 — custom styles from user/project dirs, LRU token cache (500 entries), plain-text fast path
+// KB: Section 35
+
+// --- Types & Interfaces ---
+
 /**
- * @claude-patterns/output-style-system
- *
- * Custom output styles with frontmatter config, LRU token cache for rendered markdown,
- * and plain-text fast path optimization.
- *
- * @source Output styles and markdown rendering (Section 35)
- * @kb Section 35 (Output Styles and Markdown Rendering)
+ * An output style definition loaded from user or project directories.
+ * Styles control how Claude's response is formatted and rendered.
  */
-
-// Types & Interfaces
-
 export interface OutputStyle {
   name: string;
   description: string;
@@ -18,43 +16,83 @@ export interface OutputStyle {
   content: string;
 }
 
+/**
+ * Configuration for loading output styles from filesystem directories.
+ */
 export interface OutputStyleConfig {
   userStyleDir: string;
   projectStyleDir: string;
 }
 
+/**
+ * Configuration for the markdown token cache.
+ * Uses LRU eviction with a configurable max size and sample size for plain-text detection.
+ */
 export interface MarkdownCacheConfig {
   maxEntries: number;
   sampleSize: number;
 }
 
+/**
+ * LRU cache for rendered markdown tokens.
+ * Avoids re-rendering identical markdown content across turns.
+ */
 export interface MarkdownCache {
-  get(key: string): string | undefined;
-  set(key: string, value: string): void;
-  has(key: string): boolean;
-  clear(): void;
-  size(): number;
+  get: (key: string) => string | undefined;
+  set: (key: string, value: string) => void;
+  has: (key: string) => boolean;
+  clear: () => void;
+  size: () => number;
 }
 
-// Constants
+// --- Functions ---
 
-export const DEFAULT_MAX_ENTRIES = 500;
-export const DEFAULT_SAMPLE_SIZE = 500;
-
-// Function stubs
-
+/**
+ * Loads output styles from user and project style directories.
+ * Merges both sources with project styles taking precedence.
+ * TODO: implement style loading from user/project directories
+ */
 export function loadOutputStyles(_config: OutputStyleConfig): OutputStyle[] {
-  throw new Error("TODO: build from output styles (Section 35)");
+  throw new Error(
+    "TODO: implement style loading from user/project directories",
+  );
 }
 
-export function applyOutputStyle(_content: string, _style: OutputStyle): string {
-  throw new Error("TODO: build from output styles (Section 35)");
+/**
+ * Applies an output style to content, transforming formatting as specified.
+ * TODO: implement style application with keepCodingInstructions and forceForPlugin
+ */
+export function applyOutputStyle(
+  _content: string,
+  _style: OutputStyle,
+): string {
+  throw new Error(
+    "TODO: implement style application with keepCodingInstructions and forceForPlugin",
+  );
 }
 
-export function isPlainText(_content: string, _sampleSize?: number): boolean {
-  throw new Error("TODO: build from plain-text fast path (Section 35)");
+/**
+ * Fast-path check for plain text content.
+ * Samples the first N characters (default 500) for markdown syntax markers.
+ * Returns true if no markdown syntax is detected.
+ * TODO: implement plain-text detection by sampling first 500 chars
+ */
+export function isPlainText(
+  _content: string,
+  _sampleSize?: number,
+): boolean {
+  throw new Error(
+    "TODO: implement plain-text detection by sampling first 500 chars",
+  );
 }
 
-export function createMarkdownCache(_config?: MarkdownCacheConfig): MarkdownCache {
-  throw new Error("TODO: build from LRU token cache (Section 35)");
+/**
+ * Creates an LRU markdown cache with configurable size.
+ * Default: 500 max entries.
+ * TODO: implement LRU cache with eviction
+ */
+export function createMarkdownCache(
+  _config?: MarkdownCacheConfig,
+): MarkdownCache {
+  throw new Error("TODO: implement LRU cache with eviction");
 }

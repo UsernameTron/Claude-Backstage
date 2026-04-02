@@ -1,30 +1,35 @@
 /**
- * Multi-Step IVR Input Validator — validates multi-step DTMF sequences against
- * IVR call flow state machines.
+ * Multi-Step IVR Input Validator — compound DTMF sequence validation for IVR flows.
  *
  * Translate tier — applies Claude Code's compound command decomposition pattern
- * to per-step IVR input validation.
- * Source Pattern: Compound command decomposition (Section 8.6, Pattern 8).
+ * (Section 8.6, Pattern 8) to multi-step DTMF input validation. Decomposes complex
+ * caller input sequences (e.g., "press 1, then 3, then 2") into individual steps
+ * and validates each step against the IVR call flow graph.
+ *
+ * Source Pattern: Compound command decomposition (Section 8.6, Pattern 8)
  * Tier: Translate P2.
  *
- * Key insight: Just as Claude Code decomposes `cmd1 && cmd2` and validates each
- * subcommand independently to catch injection, IVR multi-step DTMF sequences
- * must be decomposed and each step validated against the node it actually reaches.
+ * Key insight: Complex IVR interactions involve multi-step DTMF sequences where
+ * each step transitions the caller through the flow graph. Validating these
+ * sequences end-to-end mirrors how Claude Code decomposes compound commands
+ * into individual operations and validates each one.
  */
 
 import type { IVRCallFlow, IVRNode } from "@claude-patterns/ivr-call-flow-validator";
+
+export type { IVRCallFlow, IVRNode } from "@claude-patterns/ivr-call-flow-validator";
 
 /**
  * A single step in a DTMF input sequence.
  */
 export interface DTMFStep {
   input: string;
-  expectedNodeId: string;
-  actualNodeId: string;
+  expectedNodeId?: string;
+  actualNodeId?: string;
 }
 
 /**
- * A complete multi-step DTMF input sequence with its entry point.
+ * A complete DTMF input sequence starting from a specific entry node.
  */
 export interface DTMFSequence {
   steps: DTMFStep[];
@@ -42,68 +47,66 @@ export interface SequenceValidationResult {
 }
 
 /**
- * Validate a sequence of DTMF inputs against an IVR call flow.
+ * Validate a DTMF input sequence against an IVR call flow.
  *
- * Decomposes the sequence and validates each step against the node it reaches,
- * catching invalid mid-sequence inputs and dead-end paths.
+ * Walks the flow graph step by step, checking that each input leads to a valid
+ * transition. Reports the first step where validation fails.
  *
  * @param flow - The IVR call flow to validate against
  * @param sequence - Array of DTMF inputs (e.g., ["1", "3", "2"])
- * @returns Validation result with per-step details
+ * @returns Validation result with step-by-step details
  */
 export function validateSequence(
   flow: IVRCallFlow,
-  sequence: string[],
+  sequence: string[]
 ): SequenceValidationResult {
-  // TODO: translate from compound command decomposition (Section 8.6, Pattern 8)
+  // TODO: translate from compound command decomposition pattern (Section 8.6, Pattern 8)
   throw new Error(
-    "TODO: translate from compound command decomposition (Section 8.6, Pattern 8)"
+    "TODO: translate from compound command decomposition pattern (Section 8.6, Pattern 8)"
   );
 }
 
 /**
- * Split a raw input string into individual DTMF steps.
+ * Decompose a raw input string into individual DTMF steps.
  *
- * Handles comma-separated ("1,3,2"), dash-separated ("1-3-2"),
- * and concatenated ("132") input formats.
+ * Handles common formats: "1,3,2", "1-3-2", "132".
  *
- * @param rawInput - Raw input string to decompose
- * @returns Array of individual DTMF inputs
+ * @param rawInput - The raw input string to decompose
+ * @returns Array of individual DTMF input strings
  */
 export function decomposeInput(rawInput: string): string[] {
-  // TODO: translate from compound command decomposition (Section 8.6, Pattern 8)
+  // TODO: translate from compound command decomposition pattern (Section 8.6, Pattern 8)
   throw new Error(
-    "TODO: translate from compound command decomposition (Section 8.6, Pattern 8)"
+    "TODO: translate from compound command decomposition pattern (Section 8.6, Pattern 8)"
   );
 }
 
 /**
- * Enumerate all possible DTMF paths through a call flow up to a maximum depth.
+ * Generate all possible DTMF sequences through a flow up to a maximum depth.
  *
- * @param flow - The IVR call flow to enumerate
- * @param maxDepth - Maximum sequence length to explore (default: 10)
+ * @param flow - The IVR call flow to traverse
+ * @param maxDepth - Maximum sequence length (default: 10)
  * @returns Array of all possible DTMF sequences
  */
 export function generateAllSequences(
   flow: IVRCallFlow,
-  maxDepth?: number,
+  maxDepth?: number
 ): DTMFSequence[] {
-  // TODO: translate from compound command decomposition (Section 8.6, Pattern 8)
+  // TODO: translate from compound command decomposition pattern (Section 8.6, Pattern 8)
   throw new Error(
-    "TODO: translate from compound command decomposition (Section 8.6, Pattern 8)"
+    "TODO: translate from compound command decomposition pattern (Section 8.6, Pattern 8)"
   );
 }
 
 /**
- * Find all DTMF sequences that lead to dead-end nodes (nodes with no outgoing
- * transitions and no terminal action like disconnect or transfer).
+ * Find DTMF sequences that lead to dead-end nodes (non-terminal nodes with no exits).
  *
  * @param flow - The IVR call flow to analyze
- * @returns Array of sequences that reach dead ends
+ * @returns Array of sequences that terminate at dead-end nodes
  */
 export function findDeadEndSequences(flow: IVRCallFlow): DTMFSequence[] {
-  // TODO: translate from compound command decomposition (Section 8.6, Pattern 8)
+  // TODO: translate from compound command decomposition pattern (Section 8.6, Pattern 8)
   throw new Error(
-    "TODO: translate from compound command decomposition (Section 8.6, Pattern 8)"
+    "TODO: translate from compound command decomposition pattern (Section 8.6, Pattern 8)"
   );
 }

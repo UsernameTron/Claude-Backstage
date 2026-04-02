@@ -1,41 +1,46 @@
 # @claude-patterns/voice-input-gating
 
-Three-layer feature gating: remote flag, authentication, and runtime composite check.
+**Tier:** Build | **Priority:** P3 | **KB:** Section 34
 
-## Tier
+Three-layer feature gating for voice input: remote flag, authentication, and runtime checks.
 
-**Build** — Design reference. Architectural patterns for new builds.
+## Source Pattern
 
-## Priority
-
-**P3** — Demonstrates layered feature gate pattern.
-
-## Source Reference
-
-- **Source pattern**: Voice input system (Section 34)
-- **KB sections**: Section 34 (Voice Input System)
+- Section 34: Voice input gating — three sequential gate layers with fail-fast evaluation
+- Gate order: remote_flag -> authentication -> runtime
 
 ## Architecture
 
-Three-layer feature gating: remote flag check (GrowthBook kill switch) then authentication check (OAuth token for Claude.ai voice_stream endpoint) then runtime composite check (combines flag + auth + platform support). Demonstrates the pattern of layered feature gates where each layer is independently controllable.
+Voice input is gated behind three layers evaluated in sequence. Each layer can independently deny access, and evaluation stops at the first denial (fail-fast). This pattern ensures voice features are only available when:
 
-The composite gate check evaluates all layers in order and fails fast on the first denial, returning which layer blocked access and why. This pattern is reusable for any multi-condition feature rollout.
+1. **Remote flag** — The feature is enabled server-side via a feature flag
+2. **Authentication** — The user has the required authentication type (e.g., Max plan)
+3. **Runtime** — The current platform supports voice input at the OS/browser level
+
+### Fail-Fast Evaluation
+
+The composite gate check evaluates layers in order. If the remote flag is disabled, authentication and runtime checks are never performed. This minimizes unnecessary API calls and provides clear denial reasons.
 
 ## Exports
 
-- `GateLayer` — Union type for the three gate layers
-- `GateResult` — Interface with allowed status, blocking layer, and reason
-- `VoiceGatingConfig` — Configuration for flag key, auth type, and supported platforms
-- `checkVoiceGating` — Run all gate layers for voice input
-- `checkRemoteFlag` — Check a remote feature flag
-- `checkAuthentication` — Verify authentication meets requirements
-- `checkRuntimeSupport` — Check platform runtime support
-- `compositeGateCheck` — Generic composite gate evaluator with fail-fast
+### Types
+
+- `GateLayer` — union of three gate layer identifiers
+- `GateResult` — result with allowed flag, deniedBy layer, and reason string
+- `VoiceGatingConfig` — feature flag key, required auth type, supported platforms
+
+### Functions
+
+- `checkVoiceGating(config)` — run all three layers against config
+- `checkRemoteFlag(flagKey)` — check remote feature flag
+- `checkAuthentication(requiredType)` — verify authentication type
+- `checkRuntimeSupport(platform)` — check platform support
+- `compositeGateCheck(gates)` — evaluate multiple layers in order, fail fast
 
 ## Dependencies
 
-None
+None.
 
 ## Status
 
-Type stubs only. All functions throw `Error("TODO: ...")`.
+Type stubs only. All functions throw `TODO` errors referencing implementation notes.

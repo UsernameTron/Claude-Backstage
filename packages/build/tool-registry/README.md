@@ -1,36 +1,39 @@
 # @claude-patterns/tool-registry
 
-Three-layer tool assembly: compile-time elimination, runtime deny-rule filtering, and built-in/external merge.
+Three-layer tool assembly and registry for merging built-in and external tools with deny-rule filtering.
 
 ## Tier
 
-**Build** — Design reference. Architectural patterns for new builds.
+**Build** — Design reference. Architectural pattern for new builds.
 
 ## Priority
 
-**P2** — Foundation for tool system architecture.
+**P2** — Supporting subsystem for tool management.
 
-## Source Reference
+## Source Pattern
 
-- **Source pattern**: Tool system + three-layer filtering (Section 6.2-6.3)
-- **KB sections**: Section 6 (Tool System), Section 6.3 (Three-Layer Tool Filtering)
+- **KB sections**: Section 6.2 — Tool compilation, Section 6.3 — Runtime deny-rule filtering
 
 ## Architecture
 
-Three-layer tool assembly: compile-time elimination (feature flags) then runtime deny-rule filtering then merge built-in + external tools. The `assembleToolPool()` pattern ensures built-in tools are a sorted contiguous prefix for cache stability, with external (MCP) tools appended after.
+Tool assembly follows three filtering layers:
 
-This layered filtering approach means each layer operates independently: compile-time removes tools that should never exist in this build, runtime deny rules handle per-session configuration, and assembly merges the final pool with deterministic ordering.
+1. **Compile-time** — Static elimination of disabled tools at build time
+2. **Runtime deny** — Dynamic deny-rule filtering per session/request
+3. **Assembly** — Final merge of built-in and external (MCP) tools into a ToolPool
+
+Tools are sorted deterministically (`sortForCacheStability`) so the prompt cache key remains stable across sessions with identical tool sets.
 
 ## Exports
 
-- `Tool` — Interface for a registered tool with name, schema, call function, and permissions
-- `ToolPool` — Interface for the assembled tool collection with lookup and filter
-- `ToolFilterLayer` — Type for the three filtering layers
-- `assembleToolPool` — Assembles final tool pool from built-in, external, and deny rules
-- `filterToolsByDenyRules` — Applies runtime deny rules to a tool list
-- `sortForCacheStability` — Deterministic sort: built-in prefix, external suffix
-- `registerTool` — Register a single tool
-- `getAllTools` — Retrieve all registered tools
+- `Tool` — Tool with name, description, inputSchema, callable, permissions
+- `ToolPool` — Assembled tool collection with lookup and filtering
+- `ToolFilterLayer` — Union type for the three filtering layers
+- `assembleToolPool(builtIn, external, denyRules)` — Full assembly pipeline
+- `filterToolsByDenyRules(tools, denyRules)` — Deny-rule filter
+- `sortForCacheStability(tools)` — Deterministic sort for cache keys
+- `registerTool(tool)` — Add to global registry
+- `getAllTools()` — Retrieve all registered tools
 
 ## Dependencies
 
@@ -38,4 +41,4 @@ None
 
 ## Status
 
-Type stubs only. All functions throw `Error("TODO: ...")`.
+Type stubs only. All functions throw `Error`.

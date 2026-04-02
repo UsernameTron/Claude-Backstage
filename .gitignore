@@ -40,5 +40,12 @@ KB-v2.1-*.docx
 Plan-Outline.MD
 scaffold-build-inventory-prompt.md
 
-# Claude Code worktrees
+# Claude Code (private/local)
 .claude/worktrees/
+.claude/settings.local.json
+
+# Binary plugin archives
+*.plugin
+
+# Source analysis repo (separate git repo)
+claude-code/

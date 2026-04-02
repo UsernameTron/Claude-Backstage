@@ -60,6 +60,15 @@ streaming-tool-executor + state-store + token-estimation
 
 The dialogue loop combines streaming tool execution, lightweight state management, and token estimation for query orchestration.
 
+### ivr-call-flow-validator
+
+```
+ivr-call-flow-validator
+  <- multi-step-ivr-input-validator
+```
+
+Multi-step IVR input validator imports IVRCallFlow and IVRNode types from the call flow validator.
+
 ## Visual Dependency Tree
 
 ```
@@ -141,6 +150,17 @@ These packages have no dependencies on other packages in the monorepo:
 - `cli-startup-optimization` — Fast path lazy imports
 - `ivr-call-flow-validator` — IVR FSM validator (TypeScript)
 - `agent-skill-routing` — ACD permission rules (Python)
+- `workforce-scheduling-coordinator` — Workforce scheduling (Python)
+- `genesys-flow-security-validator` — Flow security validation (TypeScript)
+- `tool-schema-cache` — Tool schema caching (TypeScript)
+- `tool-registry` — Tool registry with three-layer filtering (TypeScript)
+- `dialogue-history-manager` — Dialogue history management (TypeScript)
+- `system-reminder-injection` — System reminder mechanism (TypeScript)
+- `plugin-lifecycle-manager` — Plugin lifecycle management (TypeScript)
+- `sdk-bridge` — Server/SDK mode bridge (TypeScript)
+- `voice-input-gating` — Voice input gating system (TypeScript)
+- `output-style-system` — Output style and markdown system (TypeScript)
+- `onboarding-flow-engine` — Onboarding flow engine (TypeScript)
 
 **P2 (expansion):**
 - `tool-schema-cache` — Tool schema caching per-session
