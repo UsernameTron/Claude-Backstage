@@ -1,0 +1,12 @@
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "claude-patterns-agent-skill-routing"
+version = "0.0.0"
+description = "ACD skill routing translated from Claude Code permission system pattern"
+requires-python = ">=3.11"
+
+[tool.setuptools.packages.find]
+where = ["src"]
