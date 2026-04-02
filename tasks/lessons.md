@@ -15,6 +15,8 @@
 - [2026-04-02] [tsconfig]: Package tsconfig.json extends path is ../../../tsconfig.base.json (3 levels), not ../../ (2 levels). The packages/ tier structure adds an extra directory level. Triggered by: 3 independent executors all auto-corrected this.
 - [2026-04-02] [Python]: Use `setuptools.build_meta` as build backend, not legacy backends. Python 3.14 breaks on `setuptools.backends._legacy:_Backend`. Triggered by: pip install -e failure in Phase 2.
 - [2026-04-02] [Bun]: bun binary is at $HOME/.bun/bin/bun, not in default PATH. Always pass full path to executor agents. Triggered by: `bun install` failing with command not found.
+- [2026-04-02] [Workspace Deps]: When a package imports from another package in the monorepo, its package.json MUST include `"dependencies": { "@claude-patterns/{dep}": "workspace:*" }`. Without this, tsc --noEmit fails with TS2307. Triggered by: multi-step-ivr-input-validator missing dep on ivr-call-flow-validator.
+- [2026-04-02] [Reference Docs]: IMPLEMENTATION-PLAYBOOK.md and KB-v2.1-Build-Inventory.md live in the parent project directory, not the worktree. KB file is gitignored by pattern `KB-v2.1-*.md`. Copy into worktree before editing. Triggered by: assumed files didn't exist when they were in parent dir.
 
 ## Archived
 <!-- Rules that no longer apply -->

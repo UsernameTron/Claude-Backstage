@@ -5,7 +5,9 @@
     "packages/extract/*",
     "packages/build/*",
     "packages/translate/ivr-call-flow-validator",
-    "packages/translate/prompt-cache-optimizer"
+    "packages/translate/prompt-cache-optimizer",
+    "packages/translate/genesys-flow-security-validator",
+    "packages/translate/multi-step-ivr-input-validator"
   ],
   "devDependencies": {
     "@biomejs/biome": "^2.4.10",

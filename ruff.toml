@@ -8,6 +8,7 @@ src = [
   "packages/translate/consecutive-breach-tracker/src",
   "packages/translate/cost-per-interaction/src",
   "packages/translate/agent-skill-routing/src",
+  "packages/translate/workforce-scheduling-coordinator/src",
 ]
 
 [lint]
