@@ -2,7 +2,7 @@
 
 ## Active
 
-- [ ] Ship PR — branch `claude/loving-hypatia` has expansion work (43 packages)
+- [x] Ship PR — PR #1 created: UsernameTron/Claude-Backstage#1
 - [ ] Decide next milestone: implementations, new project, or archive
 
 ## Session Handoff (2026-04-02)
