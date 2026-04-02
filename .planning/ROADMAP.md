@@ -92,7 +92,7 @@ Plans:
 **Plans:** 4 plans
 
 Plans:
-- [ ] 05-01-PLAN.md — Translate tier: #32 workforce-scheduling-coordinator, #33 genesys-flow-security-validator, #34 multi-step-ivr-input-validator
+- [x] 05-01-PLAN.md — Translate tier: #32 workforce-scheduling-coordinator, #33 genesys-flow-security-validator, #34 multi-step-ivr-input-validator
 - [x] 05-02-PLAN.md — Build tier P2: #35 tool-schema-cache, #36 tool-registry, #37 dialogue-history-manager, #38 system-reminder-injection, #39 plugin-lifecycle-manager
 - [x] 05-03-PLAN.md — Build tier P3: #40 sdk-bridge, #41 voice-input-gating, #42 output-style-system, #43 onboarding-flow-engine
 - [ ] 05-04-PLAN.md — Root config updates, governance docs, full validation
