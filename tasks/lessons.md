@@ -16,5 +16,8 @@
 - [2026-04-02] [Python]: Use `setuptools.build_meta` as build backend, not legacy backends. Python 3.14 breaks on `setuptools.backends._legacy:_Backend`. Triggered by: pip install -e failure in Phase 2.
 - [2026-04-02] [Bun]: bun binary is at $HOME/.bun/bin/bun, not in default PATH. Always pass full path to executor agents. Triggered by: `bun install` failing with command not found.
 
+- [2026-04-02] [Worktree]: Do NOT use `isolation: "worktree"` for Wave 2+ plans that depend on Wave 1 output. Worktrees branch from a point-in-time snapshot and won't have the Wave 1 commits. Run dependent-wave plans without isolation or inline. Triggered by: 05-04 agent stalled in worktree without Wave 1 packages.
+- [2026-04-02] [Agents]: When a background agent stalls (output stops growing for >2 min), stop it and complete the work inline rather than waiting indefinitely. Check git diff to see what partial work exists and finish from there. Triggered by: 05-04 agent stalled during validation, output frozen at 506 lines.
+
 ## Archived
 <!-- Rules that no longer apply -->
