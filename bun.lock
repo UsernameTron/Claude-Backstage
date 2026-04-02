@@ -10,25 +10,133 @@
         "typescript": "^6.0.2",
       },
     },
+    "packages/build/agent-dialogue-loop": {
+      "name": "@claude-patterns/agent-dialogue-loop",
+      "version": "0.0.0",
+      "dependencies": {
+        "@claude-patterns/state-store": "workspace:*",
+        "@claude-patterns/streaming-tool-executor": "workspace:*",
+        "@claude-patterns/token-estimation": "workspace:*",
+      },
+    },
+    "packages/build/cli-startup-optimization": {
+      "name": "@claude-patterns/cli-startup-optimization",
+      "version": "0.0.0",
+    },
     "packages/build/context-injection": {
       "name": "@claude-patterns/context-injection",
       "version": "0.0.0",
     },
+    "packages/build/ink-renderer": {
+      "name": "@claude-patterns/ink-renderer",
+      "version": "0.0.0",
+    },
+    "packages/build/keyboard-shortcuts": {
+      "name": "@claude-patterns/keyboard-shortcuts",
+      "version": "0.0.0",
+    },
+    "packages/build/mcp-integration": {
+      "name": "@claude-patterns/mcp-integration",
+      "version": "0.0.0",
+    },
+    "packages/build/multi-agent-coordinator": {
+      "name": "@claude-patterns/multi-agent-coordinator",
+      "version": "0.0.0",
+      "dependencies": {
+        "@claude-patterns/mcp-integration": "workspace:*",
+      },
+    },
     "packages/build/prompt-system": {
       "name": "@claude-patterns/prompt-system",
+      "version": "0.0.0",
+    },
+    "packages/build/skills-system": {
+      "name": "@claude-patterns/skills-system",
+      "version": "0.0.0",
+      "dependencies": {
+        "@claude-patterns/claudemd-memory": "workspace:*",
+      },
+    },
+    "packages/build/vim-mode-fsm": {
+      "name": "@claude-patterns/vim-mode-fsm",
+      "version": "0.0.0",
+    },
+    "packages/extract/analytics-killswitch": {
+      "name": "@claude-patterns/analytics-killswitch",
+      "version": "0.0.0",
+    },
+    "packages/extract/auto-compact": {
+      "name": "@claude-patterns/auto-compact",
+      "version": "0.0.0",
+      "dependencies": {
+        "@claude-patterns/token-estimation": "workspace:*",
+      },
+    },
+    "packages/extract/claudemd-memory": {
+      "name": "@claude-patterns/claudemd-memory",
+      "version": "0.0.0",
+    },
+    "packages/extract/config-migration": {
+      "name": "@claude-patterns/config-migration",
       "version": "0.0.0",
     },
     "packages/extract/cost-tracker": {
       "name": "@claude-patterns/cost-tracker",
       "version": "0.0.0",
     },
+    "packages/extract/dangerous-command-detection": {
+      "name": "@claude-patterns/dangerous-command-detection",
+      "version": "0.0.0",
+      "dependencies": {
+        "@claude-patterns/path-validation": "workspace:*",
+        "@claude-patterns/permission-system": "workspace:*",
+      },
+    },
     "packages/extract/denial-tracking": {
       "name": "@claude-patterns/denial-tracking",
+      "version": "0.0.0",
+    },
+    "packages/extract/path-validation": {
+      "name": "@claude-patterns/path-validation",
       "version": "0.0.0",
     },
     "packages/extract/permission-system": {
       "name": "@claude-patterns/permission-system",
       "version": "0.0.0",
+    },
+    "packages/extract/read-only-validation": {
+      "name": "@claude-patterns/read-only-validation",
+      "version": "0.0.0",
+    },
+    "packages/extract/sandbox-config": {
+      "name": "@claude-patterns/sandbox-config",
+      "version": "0.0.0",
+      "dependencies": {
+        "@claude-patterns/path-validation": "workspace:*",
+      },
+    },
+    "packages/extract/state-store": {
+      "name": "@claude-patterns/state-store",
+      "version": "0.0.0",
+    },
+    "packages/extract/streaming-tool-executor": {
+      "name": "@claude-patterns/streaming-tool-executor",
+      "version": "0.0.0",
+    },
+    "packages/extract/subprocess-env-scrubbing": {
+      "name": "@claude-patterns/subprocess-env-scrubbing",
+      "version": "0.0.0",
+    },
+    "packages/extract/token-estimation": {
+      "name": "@claude-patterns/token-estimation",
+      "version": "0.0.0",
+    },
+    "packages/extract/yolo-classifier": {
+      "name": "@claude-patterns/yolo-classifier",
+      "version": "0.0.0",
+      "dependencies": {
+        "@claude-patterns/permission-system": "workspace:*",
+      },
     },
     "packages/translate/ivr-call-flow-validator": {
       "name": "@claude-patterns/ivr-call-flow-validator",
@@ -58,19 +166,61 @@
 
     "@biomejs/cli-win32-x64": ["@biomejs/cli-win32-x64@2.4.10", "", { "os": "win32", "cpu": "x64" }, "sha512-aW/JU5GuyH4uxMrNYpoC2kjaHlyJGLgIa3XkhPEZI0uKhZhJZU8BuEyJmvgzSPQNGozBwWjC972RaNdcJ9KyJg=="],
 
+    "@claude-patterns/agent-dialogue-loop": ["@claude-patterns/agent-dialogue-loop@workspace:packages/build/agent-dialogue-loop"],
+
+    "@claude-patterns/analytics-killswitch": ["@claude-patterns/analytics-killswitch@workspace:packages/extract/analytics-killswitch"],
+
+    "@claude-patterns/auto-compact": ["@claude-patterns/auto-compact@workspace:packages/extract/auto-compact"],
+
+    "@claude-patterns/claudemd-memory": ["@claude-patterns/claudemd-memory@workspace:packages/extract/claudemd-memory"],
+
+    "@claude-patterns/cli-startup-optimization": ["@claude-patterns/cli-startup-optimization@workspace:packages/build/cli-startup-optimization"],
+
+    "@claude-patterns/config-migration": ["@claude-patterns/config-migration@workspace:packages/extract/config-migration"],
+
     "@claude-patterns/context-injection": ["@claude-patterns/context-injection@workspace:packages/build/context-injection"],
 
     "@claude-patterns/cost-tracker": ["@claude-patterns/cost-tracker@workspace:packages/extract/cost-tracker"],
 
+    "@claude-patterns/dangerous-command-detection": ["@claude-patterns/dangerous-command-detection@workspace:packages/extract/dangerous-command-detection"],
+
     "@claude-patterns/denial-tracking": ["@claude-patterns/denial-tracking@workspace:packages/extract/denial-tracking"],
 
+    "@claude-patterns/ink-renderer": ["@claude-patterns/ink-renderer@workspace:packages/build/ink-renderer"],
+
     "@claude-patterns/ivr-call-flow-validator": ["@claude-patterns/ivr-call-flow-validator@workspace:packages/translate/ivr-call-flow-validator"],
+
+    "@claude-patterns/keyboard-shortcuts": ["@claude-patterns/keyboard-shortcuts@workspace:packages/build/keyboard-shortcuts"],
+
+    "@claude-patterns/mcp-integration": ["@claude-patterns/mcp-integration@workspace:packages/build/mcp-integration"],
+
+    "@claude-patterns/multi-agent-coordinator": ["@claude-patterns/multi-agent-coordinator@workspace:packages/build/multi-agent-coordinator"],
+
+    "@claude-patterns/path-validation": ["@claude-patterns/path-validation@workspace:packages/extract/path-validation"],
 
     "@claude-patterns/permission-system": ["@claude-patterns/permission-system@workspace:packages/extract/permission-system"],
 
     "@claude-patterns/prompt-cache-optimizer": ["@claude-patterns/prompt-cache-optimizer@workspace:packages/translate/prompt-cache-optimizer"],
 
     "@claude-patterns/prompt-system": ["@claude-patterns/prompt-system@workspace:packages/build/prompt-system"],
+
+    "@claude-patterns/read-only-validation": ["@claude-patterns/read-only-validation@workspace:packages/extract/read-only-validation"],
+
+    "@claude-patterns/sandbox-config": ["@claude-patterns/sandbox-config@workspace:packages/extract/sandbox-config"],
+
+    "@claude-patterns/skills-system": ["@claude-patterns/skills-system@workspace:packages/build/skills-system"],
+
+    "@claude-patterns/state-store": ["@claude-patterns/state-store@workspace:packages/extract/state-store"],
+
+    "@claude-patterns/streaming-tool-executor": ["@claude-patterns/streaming-tool-executor@workspace:packages/extract/streaming-tool-executor"],
+
+    "@claude-patterns/subprocess-env-scrubbing": ["@claude-patterns/subprocess-env-scrubbing@workspace:packages/extract/subprocess-env-scrubbing"],
+
+    "@claude-patterns/token-estimation": ["@claude-patterns/token-estimation@workspace:packages/extract/token-estimation"],
+
+    "@claude-patterns/vim-mode-fsm": ["@claude-patterns/vim-mode-fsm@workspace:packages/build/vim-mode-fsm"],
+
+    "@claude-patterns/yolo-classifier": ["@claude-patterns/yolo-classifier@workspace:packages/extract/yolo-classifier"],
 
     "@types/node": ["@types/node@25.5.0", "", { "dependencies": { "undici-types": "~7.18.0" } }, "sha512-jp2P3tQMSxWugkCUKLRPVUpGaL5MVFwF8RDuSRztfwgN1wmqJeMSbKlnEtQqU8UrhTmzEmZdu2I6v2dpp7XIxw=="],
 
