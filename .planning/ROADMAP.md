@@ -38,12 +38,12 @@ Plans:
   3. prompt-cache-optimizer (TS translate) compiles with `tsc --noEmit`
   4. `make scaffold-check` reports 8/31 packages present
   5. Each package has README.md with source refs, entry point stub, and manifest
-**Plans**: TBD
+**Plans:** 3 plans
 
 Plans:
-- [ ] 02-01: Extract tier P0 — permission-system, denial-tracking, cost-tracker
-- [ ] 02-02: Build tier P0 — prompt-system, context-injection
-- [ ] 02-03: Translate tier P0 — consecutive-breach-tracker, cost-per-interaction, prompt-cache-optimizer
+- [ ] 02-01-PLAN.md — Extract tier P0: permission-system, denial-tracking, cost-tracker
+- [ ] 02-02-PLAN.md — Build tier P0: prompt-system, context-injection
+- [ ] 02-03-PLAN.md — Translate tier P0: consecutive-breach-tracker, cost-per-interaction, prompt-cache-optimizer
 
 ### Phase 3: Extract Tier Completion
 **Goal**: All 16 extract/ packages scaffolded with correct dependency wiring
