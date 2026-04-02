@@ -1,6 +1,6 @@
 # claude-code-patterns
 
-A monorepo organizing 31 buildable systems extracted from Claude Code's source tree (~1,900 files, 512K+ LOC TypeScript) and Knowledge Base v2.1. Each package provides type stubs, source file references, and dependency mappings -- a pattern library for building skills, agents, and operational tools.
+A monorepo organizing 43 buildable systems extracted from Claude Code's source tree (~1,900 files, 512K+ LOC TypeScript) and Knowledge Base v2.1. Each package provides type stubs, source file references, and dependency mappings -- a pattern library for building skills, agents, and operational tools.
 
 **This is NOT a fork of Claude Code.** It is a build reference with type stubs only.
 
@@ -40,17 +40,17 @@ make type-check
 | Tier | Count | Language | Description | Usage Pattern |
 |------|-------|----------|-------------|---------------|
 | **extract/** | 16 | TypeScript | Direct extraction targets from Claude Code source | Copy the source files, adapt imports, ship |
-| **build/** | 10 | TypeScript | Architectural patterns for new builds | Use source as design reference, build your own |
-| **translate/** | 5 | 3 Python + 2 TS | Cross-domain pattern applications | Apply Claude Code patterns to contact center / AI domains |
+| **build/** | 19 | TypeScript | Architectural patterns for new builds | Use source as design reference, build your own |
+| **translate/** | 8 | 4 Python + 4 TS | Cross-domain pattern applications | Apply Claude Code patterns to contact center / AI domains |
 
 ## Priority Matrix
 
 | Priority | Count | Description | Build When |
 |----------|-------|-------------|------------|
 | **P0** | 8 | Foundation packages | First -- everything else depends on these |
-| **P1** | 8 | High-value systems | After P0 -- strong portfolio and interview value |
-| **P2** | 10 | Extended capabilities | As needed -- solid engineering value |
-| **P3** | 5 | Nice-to-have | When time permits |
+| **P1** | 10 | High-value systems | After P0 -- strong portfolio and interview value |
+| **P2** | 17 | Extended capabilities | As needed -- solid engineering value |
+| **P3** | 8 | Nice-to-have | When time permits |
 
 ## Full Package Inventory
 
@@ -75,7 +75,7 @@ make type-check
 | 15 | analytics-killswitch | P3 | 4,040 | `services/analytics/` (9 files) | none |
 | 16 | claudemd-memory | P1 | 2,565 | `utils/claudemd.ts` + `skills/loadSkillsDir.ts` | none |
 
-### Build Tier (10 TypeScript packages)
+### Build Tier (19 TypeScript packages)
 
 | # | Package | Priority | LOC | Source Reference | Dependencies |
 |---|---------|----------|-----|------------------|--------------|
@@ -89,8 +89,17 @@ make type-check
 | 24 | mcp-integration | P2 | 12,310 | `services/mcp/` (23 files) | none |
 | 25 | multi-agent-coordinator | P1 | 369 | `coordinator/coordinatorMode.ts` | mcp-integration |
 | 26 | cli-startup-optimization | P2 | ~2,000 | `main.tsx` + `setup.ts` | none |
+| 35 | tool-schema-cache | P2 | ~500 | Tool schema caching (Sec 21.3) | none |
+| 36 | tool-registry | P2 | ~1,000 | Tool system (Sec 6.2-6.3) | none |
+| 37 | dialogue-history-manager | P2 | ~800 | Dialogue history (Sec 19) | none |
+| 38 | system-reminder-injection | P2 | ~600 | System reminder mechanism (Sec 20) | none |
+| 39 | plugin-lifecycle-manager | P2 | ~1,200 | Plugin system (Sec 25) | none |
+| 40 | sdk-bridge | P3 | ~800 | Server/SDK mode (Sec 26) | none |
+| 41 | voice-input-gating | P3 | ~400 | Voice input system (Sec 34) | none |
+| 42 | output-style-system | P3 | ~600 | Output styles + markdown (Sec 35) | none |
+| 43 | onboarding-flow-engine | P3 | ~500 | Onboarding flow (Sec 36) | none |
 
-### Translate Tier (3 Python + 2 TypeScript)
+### Translate Tier (4 Python + 4 TypeScript)
 
 | # | Package | Priority | Language | Source Pattern | Dependencies |
 |---|---------|----------|----------|----------------|--------------|
@@ -99,6 +108,9 @@ make type-check
 | 29 | agent-skill-routing | P1 | Python | Permission system (Recipe 1) | none |
 | 30 | cost-per-interaction | P0 | Python | Cost tracker (Pattern + source) | none |
 | 31 | prompt-cache-optimizer | P0 | TypeScript | Cache-stable ordering (Pattern 4) | none |
+| 32 | workforce-scheduling-coordinator | P1 | Python | Multi-agent coordinator (Sec 24) | none |
+| 33 | genesys-flow-security-validator | P1 | TypeScript | Security audit patterns (Sec 8-10, 38) | none |
+| 34 | multi-step-ivr-input-validator | P2 | TypeScript | Compound command decomposition (Sec 8.6) | ivr-call-flow-validator |
 
 ## Architecture
 
@@ -117,16 +129,17 @@ Key dependency chains:
 - `claudemd-memory` <- skills-system
 - `mcp-integration` <- multi-agent-coordinator
 - `streaming-tool-executor` + `state-store` + `token-estimation` <- agent-dialogue-loop
+- `ivr-call-flow-validator` <- multi-step-ivr-input-validator
 
 ## Development
 
 ### Make Targets
 
 ```bash
-make scaffold-check  # Validate all 31 dirs have required files
+make scaffold-check  # Validate all 43 dirs have required files
 make type-check      # tsc --noEmit across all TS packages
 make lint            # Biome (TS) + Ruff (Python)
-make list-packages   # Enumerate all 31 with tier and priority
+make list-packages   # Enumerate all 43 with tier and priority
 ```
 
 ### Adding a New Package
@@ -160,8 +173,8 @@ claude-code-patterns/
   Makefile                     # scaffold-check, type-check, lint
   packages/
     extract/                   # 16 TS packages
-    build/                     # 10 TS packages
-    translate/                 # 5 packages (3 Python, 2 TS)
+    build/                     # 19 TS packages
+    translate/                 # 8 packages (4 Python, 4 TS)
 ```
 
 ## Status

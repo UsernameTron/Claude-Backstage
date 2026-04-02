@@ -1,7 +1,7 @@
 # Implementation Playbook
 ## Filling the Rooms: One Package at a Time
 
-**What this is:** A step-by-step guide for implementing each of the 31 packages in your claude-code-patterns monorepo using Claude Code terminal. Each section gives you the exact prompt to copy-paste.
+**What this is:** A step-by-step guide for implementing each of the 43 packages in your claude-code-patterns monorepo using Claude Code terminal. Each section gives you the exact prompt to copy-paste.
 
 **Core principle:** One package per Claude Code session. Never combine packages. Never rush.
 
@@ -196,6 +196,21 @@ Now that the workflow is proven, build the architectural core.
 | 30 | keyboard-shortcuts | Build | Template 2 | 35 |
 | 31 | ink-renderer | Build | Template 2 | 33 |
 
+### Wave 6 -- Expansion Packages (#32-43)
+
+- [ ] 32. workforce-scheduling-coordinator (Python, P1)
+- [ ] 33. genesys-flow-security-validator (TS, P1)
+- [ ] 34. multi-step-ivr-input-validator (TS, P2, needs #28)
+- [ ] 35. tool-schema-cache (TS, P2)
+- [ ] 36. tool-registry (TS, P2)
+- [ ] 37. dialogue-history-manager (TS, P2)
+- [ ] 38. system-reminder-injection (TS, P2)
+- [ ] 39. plugin-lifecycle-manager (TS, P2)
+- [ ] 40. sdk-bridge (TS, P3)
+- [ ] 41. voice-input-gating (TS, P3)
+- [ ] 42. output-style-system (TS, P3)
+- [ ] 43. onboarding-flow-engine (TS, P3)
+
 ---
 
 ## Session Protocol: What You Actually Do Each Time
@@ -350,4 +365,18 @@ Wave 5 — P3 Nice to Have
 [ ] 29. vim-mode-fsm
 [ ] 30. keyboard-shortcuts
 [ ] 31. ink-renderer
+
+Wave 6 — Expansion Packages (#32-43)
+[ ] 32. workforce-scheduling-coordinator (Python, P1)
+[ ] 33. genesys-flow-security-validator (TS, P1)
+[ ] 34. multi-step-ivr-input-validator (TS, P2, needs #28)
+[ ] 35. tool-schema-cache (TS, P2)
+[ ] 36. tool-registry (TS, P2)
+[ ] 37. dialogue-history-manager (TS, P2)
+[ ] 38. system-reminder-injection (TS, P2)
+[ ] 39. plugin-lifecycle-manager (TS, P2)
+[ ] 40. sdk-bridge (TS, P3)
+[ ] 41. voice-input-gating (TS, P3)
+[ ] 42. output-style-system (TS, P3)
+[ ] 43. onboarding-flow-engine (TS, P3)
 ```

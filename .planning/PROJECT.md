@@ -2,7 +2,7 @@
 
 ## What This Is
 
-A monorepo organizing 31 buildable systems extracted from Claude Code's source tree (~1,900 files, 512K+ LOC TypeScript) and Knowledge Base v2.1. Each package provides type stubs, source file references, and dependency mappings — a pattern library for building skills, agents, and operational tools. This is NOT a fork of Claude Code. It is a build reference with type stubs only.
+A monorepo organizing 43 buildable systems extracted from Claude Code's source tree (~1,900 files, 512K+ LOC TypeScript) and Knowledge Base v2.1. Each package provides type stubs, source file references, and dependency mappings — a pattern library for building skills, agents, and operational tools. This is NOT a fork of Claude Code. It is a build reference with type stubs only.
 
 ## Core Value
 
@@ -16,8 +16,8 @@ Every package maps directly to a real Claude Code subsystem with exact source pa
 
 ### Active
 
-- [ ] Monorepo root with Bun workspaces for 28 TypeScript packages
-- [ ] Tiered package structure: extract/ (16 TS), build/ (10 TS), translate/ (3 Python + 2 TS)
+- [ ] Monorepo root with Bun workspaces for 35 TypeScript packages
+- [ ] Tiered package structure: extract/ (16 TS), build/ (19 TS), translate/ (4 Python + 4 TS)
 - [ ] Each package has README.md, entry point stub, manifest, tsconfig (TS only)
 - [ ] Type stubs compile with strict mode (`tsc --noEmit` passes)
 - [ ] Python packages install via `pip install -e`

@@ -7,9 +7,9 @@ Generated: 2026-04-01
 ### FR-1: Monorepo Infrastructure
 | REQ | Description | Priority | Acceptance Criteria |
 |-----|-------------|----------|-------------------|
-| FR-1.1 | Bun workspace root with `@claude-patterns/` scope | P0 | `bun install` resolves all 28 TS packages |
+| FR-1.1 | Bun workspace root with `@claude-patterns/` scope | P0 | `bun install` resolves all 35 TS packages |
 | FR-1.2 | Shared tsconfig.base.json (strict, ES2022, Bun types) | P0 | All packages extend base config successfully |
-| FR-1.3 | Makefile with scaffold-check, type-check, lint targets | P0 | `make scaffold-check` validates 31 packages |
+| FR-1.3 | Makefile with scaffold-check, type-check, lint targets | P0 | `make scaffold-check` validates 43 packages |
 | FR-1.4 | ARCHITECTURE.md with full ADR for Option B | P0 | Documents evaluation of 3 options against 6 criteria |
 | FR-1.5 | dependency-graph.md with cross-package relationships | P1 | Shows all 6 dependency chains accurately |
 | FR-1.6 | Biome v2 linter config for TS packages | P2 | `make lint` passes on all TS stubs |
@@ -70,10 +70,10 @@ Generated: 2026-04-01
 
 | REQ | Description | Priority | Acceptance Criteria |
 |-----|-------------|----------|-------------------|
-| NFR-1 | `tsc --noEmit` passes all 28 TS packages | P0 | Zero compilation errors in strict mode |
-| NFR-2 | `pip install -e` works for all 3 Python packages | P0 | Each Python package installs successfully |
+| NFR-1 | `tsc --noEmit` passes all 35 TS packages | P0 | Zero compilation errors in strict mode |
+| NFR-2 | `pip install -e` works for all 4 Python packages | P0 | Each Python package installs successfully |
 | NFR-3 | Cross-package workspace imports resolve | P0 | `@claude-patterns/permission-system` importable from dependent packages |
-| NFR-4 | Scaffold validation covers all 31 packages | P1 | Each has README.md + entry point + manifest |
+| NFR-4 | Scaffold validation covers all 43 packages | P1 | Each has README.md + entry point + manifest |
 | NFR-5 | No runtime code — type stubs only | P0 | All implementations are TODO comments |
 
 ## Out of Scope
