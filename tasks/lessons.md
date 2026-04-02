@@ -12,6 +12,9 @@
 ### Learned Rules
 - [2026-04-01] [Git]: When working in a subdirectory of a parent repo with a restrictive .gitignore (`*` rule), initialize a separate git repo for the subdirectory. The parent repo's negation patterns only apply at root level. Triggered by: repeated `skipped_gitignored` failures when trying to commit via gsd-tools.
 - [2026-04-01] [Source Access]: The claude-code/src/ directory is not accessible for direct inspection. Build type stubs from KB v2.1 and plan outline specifications instead. Triggered by: Explore agent confirmed source tree inaccessible.
+- [2026-04-02] [tsconfig]: Package tsconfig.json extends path is ../../../tsconfig.base.json (3 levels), not ../../ (2 levels). The packages/ tier structure adds an extra directory level. Triggered by: 3 independent executors all auto-corrected this.
+- [2026-04-02] [Python]: Use `setuptools.build_meta` as build backend, not legacy backends. Python 3.14 breaks on `setuptools.backends._legacy:_Backend`. Triggered by: pip install -e failure in Phase 2.
+- [2026-04-02] [Bun]: bun binary is at $HOME/.bun/bin/bun, not in default PATH. Always pass full path to executor agents. Triggered by: `bun install` failing with command not found.
 
 ## Archived
 <!-- Rules that no longer apply -->

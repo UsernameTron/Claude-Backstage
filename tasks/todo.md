@@ -2,7 +2,14 @@
 
 ## Active
 
-None — all 4 phases complete, 31/31 packages scaffolded.
+- [ ] Ship PR via `/gsd:ship` — branch `chore/gsd-init` has all work
+- [ ] Decide next milestone: implementations, new project, or archive
+
+## Session Handoff (2026-04-02)
+
+Branch: `chore/gsd-init` — clean, all committed.
+State: All 4 phases complete, 31/31 packages scaffolded. Milestone v1.0 fully executed.
+Resume: `/gsd:ship` to create PR, or `/gsd:audit-milestone` for formal audit.
 
 ## Completed
 
