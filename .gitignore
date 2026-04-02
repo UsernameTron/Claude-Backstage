@@ -32,3 +32,13 @@ venv/
 # Environment
 .env
 .env.*
+
+# Source material (reference inputs, not project deliverables)
+claude-code-technical-knowledge-base*.md
+KB-v2.1-*.md
+KB-v2.1-*.docx
+Plan-Outline.MD
+scaffold-build-inventory-prompt.md
+
+# Claude Code worktrees
+.claude/worktrees/
