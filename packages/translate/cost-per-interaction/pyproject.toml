@@ -1,0 +1,12 @@
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "claude-patterns-cost-per-interaction"
+version = "0.0.0"
+description = "Per-channel cost aggregation for contact center economics"
+requires-python = ">=3.11"
+
+[tool.setuptools.packages.find]
+where = ["src"]

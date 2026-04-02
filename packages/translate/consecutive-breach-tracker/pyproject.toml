@@ -1,0 +1,12 @@
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "claude-patterns-consecutive-breach-tracker"
+version = "0.0.0"
+description = "Queue breach detection with adaptive routing escalation"
+requires-python = ">=3.11"
+
+[tool.setuptools.packages.find]
+where = ["src"]
