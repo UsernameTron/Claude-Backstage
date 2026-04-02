@@ -73,7 +73,7 @@ Plans:
 **Plans:** 4 plans
 
 Plans:
-- [ ] 04-01-PLAN.md — Dependent build packages (Wave 2): mcp-integration, agent-dialogue-loop, skills-system, multi-agent-coordinator
+- [x] 04-01-PLAN.md — Dependent build packages (Wave 2): mcp-integration, agent-dialogue-loop, skills-system, multi-agent-coordinator
 - [x] 04-02-PLAN.md — Standalone build packages (Wave 1): vim-mode-fsm, keyboard-shortcuts, ink-renderer, cli-startup-optimization
 - [x] 04-03-PLAN.md — Translate packages (Wave 1): ivr-call-flow-validator, agent-skill-routing
 - [ ] 04-04-PLAN.md — Documentation and linting (Wave 3): Ruff config, DEVOPS-HANDOFF.md, README verification
@@ -85,4 +85,4 @@ Plans:
 | 1. Monorepo Scaffold | 2/2 | Complete   | 2026-04-02 |
 | 2. P0 Package Stubs | 3/3 | Complete | 2026-04-02 |
 | 3. Extract Tier Completion | 2/2 | Complete | 2026-04-02 |
-| 4. Build + Translate Completion | 2/4 | In progress | - |
+| 4. Build + Translate Completion | 3/4 | In progress | - |
