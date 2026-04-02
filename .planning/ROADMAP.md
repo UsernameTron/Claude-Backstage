@@ -22,11 +22,11 @@ Build a type-stub monorepo organizing 31 Claude Code subsystems across 3 tiers. 
   2. `tsc --noEmit` runs successfully against tsconfig.base.json (no packages yet, but config valid)
   3. `make scaffold-check` target exists and runs (will report 0/31 packages until Phase 2)
   4. ARCHITECTURE.md, CLAUDE.md, README.md, and dependency-graph.md exist at root
-**Plans:** 2 plans
+**Plans:** 1/2 plans executed
 
 Plans:
 - [ ] 01-01-PLAN.md — Root configs: package.json, tsconfig.base.json, biome.json, Makefile
-- [ ] 01-02-PLAN.md — Root documentation: ARCHITECTURE.md, CLAUDE.md, README.md, dependency-graph.md
+- [x] 01-02-PLAN.md — Root documentation: ARCHITECTURE.md, CLAUDE.md, README.md, dependency-graph.md
 
 ### Phase 2: P0 Package Stubs
 **Goal**: All 8 P0 packages scaffolded with README, entry point stubs, manifests, and passing `tsc --noEmit`
@@ -82,7 +82,7 @@ Plans:
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Monorepo Scaffold | 0/2 | Planning complete | - |
+| 1. Monorepo Scaffold | 1/2 | In Progress|  |
 | 2. P0 Package Stubs | 0/3 | Not started | - |
 | 3. Extract Tier Completion | 0/2 | Not started | - |
 | 4. Build + Translate Completion | 0/4 | Not started | - |
