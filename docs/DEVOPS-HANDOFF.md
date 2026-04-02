@@ -2,7 +2,7 @@
 
 ## 1. Project Summary
 
-Type-stub monorepo organizing 31 Claude Code subsystems as independently extractable packages across three tiers. This is a **build reference only** -- no runtime behavior, no deployable artifacts, no executable code.
+Type-stub monorepo organizing 43 Claude Code subsystems as independently extractable packages across three tiers. This is a **build reference only** -- no runtime behavior, no deployable artifacts, no executable code.
 
 Each package maps directly to a real Claude Code subsystem with:
 - Exact source file paths and LOC counts
@@ -10,7 +10,7 @@ Each package maps directly to a real Claude Code subsystem with:
 - Cross-package dependency mappings via `@claude-patterns/{name}` workspace references
 - Knowledge Base v2.1 section references for design context
 
-**Package distribution:** 16 extract (TS), 10 build (TS), 5 translate (3 Python + 2 TS) = 31 total.
+**Package distribution:** 16 extract (TS), 19 build (TS), 8 translate (4 Python + 4 TS) = 43 total.
 
 ## 2. Environment Requirements
 
@@ -32,16 +32,16 @@ Each package maps directly to a real Claude Code subsystem with:
 ### Initial Setup
 
 ```bash
-# Install TypeScript dependencies (all 28 TS packages)
+# Install TypeScript dependencies (all 39 TS packages)
 bun install
 
-# Validate all 31 packages are scaffolded
+# Validate all 43 packages are scaffolded
 make scaffold-check
-# Expected output: 31/31 packages present
+# Expected output: 43/43 packages present
 
-# Type-check all 28 TypeScript packages
+# Type-check all 39 TypeScript packages
 make type-check
-# Expected output: 28 packages checked, 0 failed
+# Expected output: 39 packages checked, 0 failed
 ```
 
 ### Python Packages (Translate Tier)
@@ -51,6 +51,7 @@ make type-check
 pip install -e packages/translate/consecutive-breach-tracker/
 pip install -e packages/translate/cost-per-interaction/
 pip install -e packages/translate/agent-skill-routing/
+pip install -e packages/translate/workforce-scheduling-coordinator/
 ```
 
 ### Linting
@@ -63,21 +64,24 @@ make lint
 # TypeScript (Biome v2)
 npx @biomejs/biome check packages/extract packages/build \
   packages/translate/ivr-call-flow-validator \
-  packages/translate/prompt-cache-optimizer
+  packages/translate/prompt-cache-optimizer \
+  packages/translate/genesys-flow-security-validator \
+  packages/translate/multi-step-ivr-input-validator
 
 # Python (Ruff)
 ruff check packages/translate/consecutive-breach-tracker \
   packages/translate/cost-per-interaction \
-  packages/translate/agent-skill-routing
+  packages/translate/agent-skill-routing \
+  packages/translate/workforce-scheduling-coordinator
 ```
 
 ### All Make Targets
 
 ```bash
-make scaffold-check  # Validate all 31 dirs have required files
+make scaffold-check  # Validate all 43 dirs have required files
 make type-check      # tsc --noEmit across all TS packages
 make lint            # Biome (TS) + Ruff (Python)
-make list-packages   # Enumerate all 31 with tier and priority
+make list-packages   # Enumerate all 43 with tier and priority
 ```
 
 ## 4. Configuration Reference
@@ -160,7 +164,7 @@ make list-packages   # Enumerate all 31 with tier and priority
 | 15 | sandbox-config | P2 | 1,153 | path-validation |
 | 16 | dangerous-command-detection | P2 | 12,411 | permission-system, path-validation |
 
-### Build Tier (10 TypeScript)
+### Build Tier (19 TypeScript)
 
 | # | Package | Priority | LOC | Dependencies |
 |---|---------|----------|-----|--------------|
@@ -175,7 +179,21 @@ make list-packages   # Enumerate all 31 with tier and priority
 | 25 | ink-renderer | P3 | 19,848 | none |
 | 26 | cli-startup-optimization | P2 | ~2,000 | none |
 
-### Translate Tier (3 Python + 2 TypeScript)
+### Build Tier Expansion (9 TypeScript, #35-43)
+
+| # | Package | Priority | LOC | Dependencies |
+|---|---------|----------|-----|--------------|
+| 35 | tool-schema-cache | P2 | ~500 | none |
+| 36 | tool-registry | P2 | ~1,000 | none |
+| 37 | dialogue-history-manager | P2 | ~800 | none |
+| 38 | system-reminder-injection | P2 | ~600 | none |
+| 39 | plugin-lifecycle-manager | P2 | ~1,200 | none |
+| 40 | sdk-bridge | P3 | ~800 | none |
+| 41 | voice-input-gating | P3 | ~400 | none |
+| 42 | output-style-system | P3 | ~600 | none |
+| 43 | onboarding-flow-engine | P3 | ~500 | none |
+
+### Translate Tier (4 Python + 4 TypeScript)
 
 | # | Package | Priority | Language | Dependencies |
 |---|---------|----------|----------|--------------|
@@ -184,3 +202,6 @@ make list-packages   # Enumerate all 31 with tier and priority
 | 29 | prompt-cache-optimizer | P0 | TypeScript | none |
 | 30 | ivr-call-flow-validator | P1 | TypeScript | none |
 | 31 | agent-skill-routing | P1 | Python | none |
+| 32 | workforce-scheduling-coordinator | P1 | Python | none |
+| 33 | genesys-flow-security-validator | P1 | TypeScript | none |
+| 34 | multi-step-ivr-input-validator | P2 | TypeScript | ivr-call-flow-validator |

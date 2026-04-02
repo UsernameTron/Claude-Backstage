@@ -78,4 +78,4 @@ list-packages:
 	for pkg in $(TRANSLATE_TS_PKGS); do echo "  packages/translate/$$pkg [TS]"; done; \
 	for pkg in $(TRANSLATE_PY_PKGS); do echo "  packages/translate/$$pkg [Python]"; done; \
 	echo ""; \
-	echo "43 packages total (35 TS + 4 Python)"
+	echo "43 packages total (39 TS + 4 Python)"
