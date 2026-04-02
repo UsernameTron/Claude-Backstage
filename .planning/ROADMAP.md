@@ -85,4 +85,4 @@ Plans:
 | 1. Monorepo Scaffold | 2/2 | Complete   | 2026-04-02 |
 | 2. P0 Package Stubs | 3/3 | Complete | 2026-04-02 |
 | 3. Extract Tier Completion | 2/2 | Complete | 2026-04-02 |
-| 4. Build + Translate Completion | 0/4 | Not started | - |
+| 4. Build + Translate Completion | 2/4 | In progress | - |

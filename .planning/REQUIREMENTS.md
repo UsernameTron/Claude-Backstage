@@ -53,8 +53,8 @@ Generated: 2026-04-01
 | REQ | Package | Priority | Language | Key Exports |
 |-----|---------|----------|----------|-------------|
 | FR-4.1 | consecutive-breach-tracker | P0 | Python | `ConsecutiveBreachTracker` class, `record_breach()`, `get_action()` |
-| FR-4.2 | ivr-call-flow-validator | P1 | TypeScript | `IVRNode`, `IVRCallFlow`, `validate()` |
-| FR-4.3 | agent-skill-routing | P1 | Python | `RoutingRule`, `evaluate_rules()` -> deny/ask/allow |
+| FR-4.2 | ivr-call-flow-validator | P1 | TypeScript | `IVRNode`, `IVRCallFlow`, `validate()` | DONE |
+| FR-4.3 | agent-skill-routing | P1 | Python | `RoutingRule`, `evaluate_rules()` -> deny/ask/allow | DONE |
 | FR-4.4 | cost-per-interaction | P0 | Python | `ChannelCostAggregator`, `get_cost_per_contact()` |
 | FR-4.5 | prompt-cache-optimizer | P0 | TypeScript | `optimizeCacheOrder()`, `CacheScope` enum |
 
