@@ -113,6 +113,15 @@ Multi-step IVR input validator imports IVRCallFlow and IVRNode types from the ca
    └─────────────────┘              └──────────────────────┘
 ```
 
+### ivr-call-flow-validator
+
+```
+ivr-call-flow-validator
+  <- multi-step-ivr-input-validator
+```
+
+Multi-step IVR input validator imports IVRCallFlow and IVRNode types from the call flow validator.
+
 ## Independent Packages (no upstream dependencies)
 
 These packages have no dependencies on other packages in the monorepo:
@@ -126,7 +135,11 @@ These packages have no dependencies on other packages in the monorepo:
 - `cost-per-interaction` — Channel cost aggregation (Python)
 - `prompt-cache-optimizer` — Cache ordering with 3-tier scoping
 
-**P1-P3:**
+**P1:**
+- `genesys-flow-security-validator` — Genesys Architect flow security validation
+- `workforce-scheduling-coordinator` — WFM scheduling coordinator (Python)
+
+**P1-P3 (original):**
 - `subprocess-env-scrubbing` — Environment variable sanitization
 - `config-migration` — Configuration version migration
 - `read-only-validation` — Git/gh command allowlists
@@ -148,6 +161,19 @@ These packages have no dependencies on other packages in the monorepo:
 - `voice-input-gating` — Voice input gating system (TypeScript)
 - `output-style-system` — Output style and markdown system (TypeScript)
 - `onboarding-flow-engine` — Onboarding flow engine (TypeScript)
+
+**P2 (expansion):**
+- `tool-schema-cache` — Tool schema caching per-session
+- `tool-registry` — Three-layer tool assembly and filtering
+- `dialogue-history-manager` — Full message lifecycle management
+- `system-reminder-injection` — System reminder tag injection
+- `plugin-lifecycle-manager` — Plugin discovery, cache, cleanup
+
+**P3 (expansion):**
+- `sdk-bridge` — WebSocket SDK/Direct Connect session management
+- `voice-input-gating` — Three-layer feature gating
+- `output-style-system` — Custom output styles with LRU cache
+- `onboarding-flow-engine` — Dynamic multi-step onboarding pipeline
 
 ## Build Order Recommendation
 
