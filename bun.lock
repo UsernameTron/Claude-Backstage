@@ -10,6 +10,26 @@
         "typescript": "^6.0.2",
       },
     },
+    "packages/build/context-injection": {
+      "name": "@claude-patterns/context-injection",
+      "version": "0.0.0",
+    },
+    "packages/build/prompt-system": {
+      "name": "@claude-patterns/prompt-system",
+      "version": "0.0.0",
+    },
+    "packages/extract/cost-tracker": {
+      "name": "@claude-patterns/cost-tracker",
+      "version": "0.0.0",
+    },
+    "packages/extract/denial-tracking": {
+      "name": "@claude-patterns/denial-tracking",
+      "version": "0.0.0",
+    },
+    "packages/extract/permission-system": {
+      "name": "@claude-patterns/permission-system",
+      "version": "0.0.0",
+    },
     "packages/translate/ivr-call-flow-validator": {
       "name": "@claude-patterns/ivr-call-flow-validator",
       "version": "0.0.0",
@@ -38,9 +58,19 @@
 
     "@biomejs/cli-win32-x64": ["@biomejs/cli-win32-x64@2.4.10", "", { "os": "win32", "cpu": "x64" }, "sha512-aW/JU5GuyH4uxMrNYpoC2kjaHlyJGLgIa3XkhPEZI0uKhZhJZU8BuEyJmvgzSPQNGozBwWjC972RaNdcJ9KyJg=="],
 
+    "@claude-patterns/context-injection": ["@claude-patterns/context-injection@workspace:packages/build/context-injection"],
+
+    "@claude-patterns/cost-tracker": ["@claude-patterns/cost-tracker@workspace:packages/extract/cost-tracker"],
+
+    "@claude-patterns/denial-tracking": ["@claude-patterns/denial-tracking@workspace:packages/extract/denial-tracking"],
+
     "@claude-patterns/ivr-call-flow-validator": ["@claude-patterns/ivr-call-flow-validator@workspace:packages/translate/ivr-call-flow-validator"],
 
+    "@claude-patterns/permission-system": ["@claude-patterns/permission-system@workspace:packages/extract/permission-system"],
+
     "@claude-patterns/prompt-cache-optimizer": ["@claude-patterns/prompt-cache-optimizer@workspace:packages/translate/prompt-cache-optimizer"],
+
+    "@claude-patterns/prompt-system": ["@claude-patterns/prompt-system@workspace:packages/build/prompt-system"],
 
     "@types/node": ["@types/node@25.5.0", "", { "dependencies": { "undici-types": "~7.18.0" } }, "sha512-jp2P3tQMSxWugkCUKLRPVUpGaL5MVFwF8RDuSRztfwgN1wmqJeMSbKlnEtQqU8UrhTmzEmZdu2I6v2dpp7XIxw=="],
 
