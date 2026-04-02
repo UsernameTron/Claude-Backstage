@@ -8,7 +8,7 @@ Build a type-stub monorepo organizing 31 Claude Code subsystems across 3 tiers. 
 
 - [x] **Phase 1: Monorepo Scaffold** - Root tooling, configs, and validation infrastructure (completed 2026-04-02)
 - [x] **Phase 2: P0 Package Stubs** - 8 foundation packages across all 3 tiers (completed 2026-04-02)
-- [ ] **Phase 3: Extract Tier Completion** - Remaining 13 extract/ packages (P1-P3)
+- [x] **Phase 3: Extract Tier Completion** - Remaining 13 extract/ packages (P1-P3) (completed 2026-04-02)
 - [ ] **Phase 4: Build + Translate Completion** - Remaining 8 build/ + 3 translate/ packages, docs finalization
 
 ## Phase Details
@@ -54,11 +54,11 @@ Plans:
   2. Cross-package deps resolve: yolo-classifier imports from permission-system, auto-compact from token-estimation
   3. `make scaffold-check` reports 16/16 extract packages present
   4. dangerous-command-detection correctly depends on both permission-system and path-validation
-**Plans:** 1/2 plans executed
+**Plans:** 2/2 plans complete
 
 Plans:
 - [x] 03-01-PLAN.md — Standalone extract packages (Wave 1): state-store, streaming-tool-executor, token-estimation, subprocess-env-scrubbing, config-migration, path-validation, read-only-validation, analytics-killswitch, claudemd-memory
-- [ ] 03-02-PLAN.md — Dependent extract packages (Wave 2): yolo-classifier, auto-compact, sandbox-config, dangerous-command-detection
+- [x] 03-02-PLAN.md — Dependent extract packages (Wave 2): yolo-classifier, auto-compact, sandbox-config, dangerous-command-detection
 
 ### Phase 4: Build + Translate Completion
 **Goal**: All 31 packages present, full monorepo compiles, documentation finalized
@@ -84,5 +84,5 @@ Plans:
 |-------|----------------|--------|-----------|
 | 1. Monorepo Scaffold | 2/2 | Complete   | 2026-04-02 |
 | 2. P0 Package Stubs | 3/3 | Complete | 2026-04-02 |
-| 3. Extract Tier Completion | 1/2 | In Progress|  |
+| 3. Extract Tier Completion | 2/2 | Complete | 2026-04-02 |
 | 4. Build + Translate Completion | 0/4 | Not started | - |
