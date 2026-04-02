@@ -1,0 +1,23 @@
+# Ruff configuration for Python translate-tier packages
+# https://docs.astral.sh/ruff/
+
+target-version = "py311"
+line-length = 120
+
+src = [
+  "packages/translate/consecutive-breach-tracker/src",
+  "packages/translate/cost-per-interaction/src",
+  "packages/translate/agent-skill-routing/src",
+]
+
+[lint]
+select = [
+  "E",   # pycodestyle errors
+  "F",   # pyflakes
+  "I",   # isort
+  "UP",  # pyupgrade
+  "B",   # flake8-bugbear
+]
+ignore = [
+  "E501",  # line length handled by line-length setting
+]
