@@ -27,6 +27,10 @@
       "name": "@claude-patterns/context-injection",
       "version": "0.0.0",
     },
+    "packages/build/dialogue-history-manager": {
+      "name": "@claude-patterns/dialogue-history-manager",
+      "version": "0.0.0",
+    },
     "packages/build/ink-renderer": {
       "name": "@claude-patterns/ink-renderer",
       "version": "0.0.0",
@@ -46,8 +50,24 @@
         "@claude-patterns/mcp-integration": "workspace:*",
       },
     },
+    "packages/build/onboarding-flow-engine": {
+      "name": "@claude-patterns/onboarding-flow-engine",
+      "version": "0.0.0",
+    },
+    "packages/build/output-style-system": {
+      "name": "@claude-patterns/output-style-system",
+      "version": "0.0.0",
+    },
+    "packages/build/plugin-lifecycle-manager": {
+      "name": "@claude-patterns/plugin-lifecycle-manager",
+      "version": "0.0.0",
+    },
     "packages/build/prompt-system": {
       "name": "@claude-patterns/prompt-system",
+      "version": "0.0.0",
+    },
+    "packages/build/sdk-bridge": {
+      "name": "@claude-patterns/sdk-bridge",
       "version": "0.0.0",
     },
     "packages/build/skills-system": {
@@ -57,8 +77,24 @@
         "@claude-patterns/claudemd-memory": "workspace:*",
       },
     },
+    "packages/build/system-reminder-injection": {
+      "name": "@claude-patterns/system-reminder-injection",
+      "version": "0.0.0",
+    },
+    "packages/build/tool-registry": {
+      "name": "@claude-patterns/tool-registry",
+      "version": "0.0.0",
+    },
+    "packages/build/tool-schema-cache": {
+      "name": "@claude-patterns/tool-schema-cache",
+      "version": "0.0.0",
+    },
     "packages/build/vim-mode-fsm": {
       "name": "@claude-patterns/vim-mode-fsm",
+      "version": "0.0.0",
+    },
+    "packages/build/voice-input-gating": {
+      "name": "@claude-patterns/voice-input-gating",
       "version": "0.0.0",
     },
     "packages/extract/analytics-killswitch": {
@@ -138,9 +174,20 @@
         "@claude-patterns/permission-system": "workspace:*",
       },
     },
+    "packages/translate/genesys-flow-security-validator": {
+      "name": "@claude-patterns/genesys-flow-security-validator",
+      "version": "0.0.0",
+    },
     "packages/translate/ivr-call-flow-validator": {
       "name": "@claude-patterns/ivr-call-flow-validator",
       "version": "0.0.0",
+    },
+    "packages/translate/multi-step-ivr-input-validator": {
+      "name": "@claude-patterns/multi-step-ivr-input-validator",
+      "version": "0.0.0",
+      "dependencies": {
+        "@claude-patterns/ivr-call-flow-validator": "workspace:*",
+      },
     },
     "packages/translate/prompt-cache-optimizer": {
       "name": "@claude-patterns/prompt-cache-optimizer",
@@ -186,6 +233,10 @@
 
     "@claude-patterns/denial-tracking": ["@claude-patterns/denial-tracking@workspace:packages/extract/denial-tracking"],
 
+    "@claude-patterns/dialogue-history-manager": ["@claude-patterns/dialogue-history-manager@workspace:packages/build/dialogue-history-manager"],
+
+    "@claude-patterns/genesys-flow-security-validator": ["@claude-patterns/genesys-flow-security-validator@workspace:packages/translate/genesys-flow-security-validator"],
+
     "@claude-patterns/ink-renderer": ["@claude-patterns/ink-renderer@workspace:packages/build/ink-renderer"],
 
     "@claude-patterns/ivr-call-flow-validator": ["@claude-patterns/ivr-call-flow-validator@workspace:packages/translate/ivr-call-flow-validator"],
@@ -196,9 +247,17 @@
 
     "@claude-patterns/multi-agent-coordinator": ["@claude-patterns/multi-agent-coordinator@workspace:packages/build/multi-agent-coordinator"],
 
+    "@claude-patterns/multi-step-ivr-input-validator": ["@claude-patterns/multi-step-ivr-input-validator@workspace:packages/translate/multi-step-ivr-input-validator"],
+
+    "@claude-patterns/onboarding-flow-engine": ["@claude-patterns/onboarding-flow-engine@workspace:packages/build/onboarding-flow-engine"],
+
+    "@claude-patterns/output-style-system": ["@claude-patterns/output-style-system@workspace:packages/build/output-style-system"],
+
     "@claude-patterns/path-validation": ["@claude-patterns/path-validation@workspace:packages/extract/path-validation"],
 
     "@claude-patterns/permission-system": ["@claude-patterns/permission-system@workspace:packages/extract/permission-system"],
+
+    "@claude-patterns/plugin-lifecycle-manager": ["@claude-patterns/plugin-lifecycle-manager@workspace:packages/build/plugin-lifecycle-manager"],
 
     "@claude-patterns/prompt-cache-optimizer": ["@claude-patterns/prompt-cache-optimizer@workspace:packages/translate/prompt-cache-optimizer"],
 
@@ -208,6 +267,8 @@
 
     "@claude-patterns/sandbox-config": ["@claude-patterns/sandbox-config@workspace:packages/extract/sandbox-config"],
 
+    "@claude-patterns/sdk-bridge": ["@claude-patterns/sdk-bridge@workspace:packages/build/sdk-bridge"],
+
     "@claude-patterns/skills-system": ["@claude-patterns/skills-system@workspace:packages/build/skills-system"],
 
     "@claude-patterns/state-store": ["@claude-patterns/state-store@workspace:packages/extract/state-store"],
@@ -216,9 +277,17 @@
 
     "@claude-patterns/subprocess-env-scrubbing": ["@claude-patterns/subprocess-env-scrubbing@workspace:packages/extract/subprocess-env-scrubbing"],
 
+    "@claude-patterns/system-reminder-injection": ["@claude-patterns/system-reminder-injection@workspace:packages/build/system-reminder-injection"],
+
     "@claude-patterns/token-estimation": ["@claude-patterns/token-estimation@workspace:packages/extract/token-estimation"],
 
+    "@claude-patterns/tool-registry": ["@claude-patterns/tool-registry@workspace:packages/build/tool-registry"],
+
+    "@claude-patterns/tool-schema-cache": ["@claude-patterns/tool-schema-cache@workspace:packages/build/tool-schema-cache"],
+
     "@claude-patterns/vim-mode-fsm": ["@claude-patterns/vim-mode-fsm@workspace:packages/build/vim-mode-fsm"],
+
+    "@claude-patterns/voice-input-gating": ["@claude-patterns/voice-input-gating@workspace:packages/build/voice-input-gating"],
 
     "@claude-patterns/yolo-classifier": ["@claude-patterns/yolo-classifier@workspace:packages/extract/yolo-classifier"],
 

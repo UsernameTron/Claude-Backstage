@@ -1,6 +1,6 @@
 # Dependency Graph
 
-Cross-package dependency map for all 31 claude-code-patterns packages. Dependencies resolve via `@claude-patterns/{name}` workspace references — tier directories are invisible to imports.
+Cross-package dependency map for all 43 claude-code-patterns packages. Dependencies resolve via `@claude-patterns/{name}` workspace references — tier directories are invisible to imports.
 
 ## Dependency Chains
 
@@ -104,6 +104,15 @@ The dialogue loop combines streaming tool execution, lightweight state managemen
    └─────────────────┘              └──────────────────────┘
 ```
 
+### ivr-call-flow-validator
+
+```
+ivr-call-flow-validator
+  <- multi-step-ivr-input-validator
+```
+
+Multi-step IVR input validator imports IVRCallFlow and IVRNode types from the call flow validator.
+
 ## Independent Packages (no upstream dependencies)
 
 These packages have no dependencies on other packages in the monorepo:
@@ -117,7 +126,11 @@ These packages have no dependencies on other packages in the monorepo:
 - `cost-per-interaction` — Channel cost aggregation (Python)
 - `prompt-cache-optimizer` — Cache ordering with 3-tier scoping
 
-**P1-P3:**
+**P1:**
+- `genesys-flow-security-validator` — Genesys Architect flow security validation
+- `workforce-scheduling-coordinator` — WFM scheduling coordinator (Python)
+
+**P1-P3 (original):**
 - `subprocess-env-scrubbing` — Environment variable sanitization
 - `config-migration` — Configuration version migration
 - `read-only-validation` — Git/gh command allowlists
@@ -126,8 +139,21 @@ These packages have no dependencies on other packages in the monorepo:
 - `keyboard-shortcuts` — 17-context shortcut system
 - `ink-renderer` — Custom double-buffer renderer
 - `cli-startup-optimization` — Fast path lazy imports
-- `ivr-call-flow-validator` — IVR FSM validator (Python)
+- `ivr-call-flow-validator` — IVR FSM validator (TypeScript)
 - `agent-skill-routing` — ACD permission rules (Python)
+
+**P2 (expansion):**
+- `tool-schema-cache` — Tool schema caching per-session
+- `tool-registry` — Three-layer tool assembly and filtering
+- `dialogue-history-manager` — Full message lifecycle management
+- `system-reminder-injection` — System reminder tag injection
+- `plugin-lifecycle-manager` — Plugin discovery, cache, cleanup
+
+**P3 (expansion):**
+- `sdk-bridge` — WebSocket SDK/Direct Connect session management
+- `voice-input-gating` — Three-layer feature gating
+- `output-style-system` — Custom output styles with LRU cache
+- `onboarding-flow-engine` — Dynamic multi-step onboarding pipeline
 
 ## Build Order Recommendation
 

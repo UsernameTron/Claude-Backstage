@@ -1,6 +1,6 @@
 .PHONY: scaffold-check type-check lint list-packages
 
-# All 31 package directories (used for scaffold validation)
+# All 43 package directories (used for scaffold validation)
 EXTRACT_PKGS := permission-system denial-tracking cost-tracker state-store \
   streaming-tool-executor token-estimation subprocess-env-scrubbing \
   config-migration path-validation read-only-validation analytics-killswitch \
@@ -8,10 +8,14 @@ EXTRACT_PKGS := permission-system denial-tracking cost-tracker state-store \
   dangerous-command-detection
 BUILD_PKGS := prompt-system context-injection agent-dialogue-loop \
   skills-system multi-agent-coordinator mcp-integration vim-mode-fsm \
-  keyboard-shortcuts ink-renderer cli-startup-optimization
-TRANSLATE_TS_PKGS := ivr-call-flow-validator prompt-cache-optimizer
+  keyboard-shortcuts ink-renderer cli-startup-optimization \
+  tool-schema-cache tool-registry dialogue-history-manager \
+  system-reminder-injection plugin-lifecycle-manager sdk-bridge \
+  voice-input-gating output-style-system onboarding-flow-engine
+TRANSLATE_TS_PKGS := ivr-call-flow-validator prompt-cache-optimizer \
+  genesys-flow-security-validator multi-step-ivr-input-validator
 TRANSLATE_PY_PKGS := consecutive-breach-tracker cost-per-interaction \
-  agent-skill-routing
+  agent-skill-routing workforce-scheduling-coordinator
 
 ALL_EXTRACT := $(addprefix packages/extract/,$(EXTRACT_PKGS))
 ALL_BUILD := $(addprefix packages/build/,$(BUILD_PKGS))
@@ -53,22 +57,25 @@ lint:
 	@echo "=== TypeScript (Biome) ==="; \
 	npx @biomejs/biome check packages/extract packages/build \
 		packages/translate/ivr-call-flow-validator \
-		packages/translate/prompt-cache-optimizer 2>/dev/null || true; \
+		packages/translate/prompt-cache-optimizer \
+		packages/translate/genesys-flow-security-validator \
+		packages/translate/multi-step-ivr-input-validator 2>/dev/null || true; \
 	echo ""; \
 	echo "=== Python (Ruff) ==="; \
 	ruff check packages/translate/consecutive-breach-tracker \
 		packages/translate/cost-per-interaction \
-		packages/translate/agent-skill-routing 2>/dev/null || true
+		packages/translate/agent-skill-routing \
+		packages/translate/workforce-scheduling-coordinator 2>/dev/null || true
 
 list-packages:
 	@echo "=== Extract Tier (16 TS) ==="; \
 	for pkg in $(EXTRACT_PKGS); do echo "  packages/extract/$$pkg"; done; \
 	echo ""; \
-	echo "=== Build Tier (10 TS) ==="; \
+	echo "=== Build Tier (19 TS) ==="; \
 	for pkg in $(BUILD_PKGS); do echo "  packages/build/$$pkg"; done; \
 	echo ""; \
-	echo "=== Translate Tier (2 TS + 3 Python) ==="; \
+	echo "=== Translate Tier (4 TS + 4 Python) ==="; \
 	for pkg in $(TRANSLATE_TS_PKGS); do echo "  packages/translate/$$pkg [TS]"; done; \
 	for pkg in $(TRANSLATE_PY_PKGS); do echo "  packages/translate/$$pkg [Python]"; done; \
 	echo ""; \
-	echo "31 packages total (28 TS + 3 Python)"
+	echo "43 packages total (39 TS + 4 Python)"

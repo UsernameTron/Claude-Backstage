@@ -1,0 +1,12 @@
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "claude-patterns-workforce-scheduling-coordinator"
+version = "0.0.0"
+description = "WFM scheduling engine translated from Claude Code multi-agent coordinator pattern"
+requires-python = ">=3.11"
+
+[tool.setuptools.packages.find]
+where = ["src"]
