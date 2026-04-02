@@ -1,12 +1,12 @@
 # claude-code-patterns
 
-Type-stub monorepo for 31 Claude Code subsystems. Build reference only — no implementations.
+Type-stub monorepo for 43 Claude Code subsystems. Build reference only — no implementations.
 
 ## Tiers
 
 - **extract/** (16 TS) — Copy, adapt, ship. Direct extraction targets from source.
-- **build/** (10 TS) — Design reference. Architectural patterns for new builds.
-- **translate/** (5 mixed) — New builds from pattern adaptation. 3 Python + 2 TypeScript.
+- **build/** (19 TS) — Design reference. Architectural patterns for new builds.
+- **translate/** (8 mixed) — New builds from pattern adaptation. 4 Python + 4 TypeScript.
 
 ## P0 Packages (build these first)
 
@@ -28,6 +28,7 @@ path-validation   <- sandbox-config, dangerous-command-detection
 claudemd-memory   <- skills-system
 mcp-integration   <- multi-agent-coordinator
 streaming-tool-executor + state-store + token-estimation <- agent-dialogue-loop
+ivr-call-flow-validator <- multi-step-ivr-input-validator
 ```
 
 ## Conventions
@@ -41,10 +42,10 @@ streaming-tool-executor + state-store + token-estimation <- agent-dialogue-loop
 ## Commands
 
 ```bash
-make scaffold-check  # Validate all 31 dirs have required files
+make scaffold-check  # Validate all 43 dirs have required files
 make type-check      # tsc --noEmit across all TS packages
 make lint            # Biome (TS) + Ruff (Python)
-make list-packages   # Enumerate all 31 with tier and priority
+make list-packages   # Enumerate all 43 with tier and priority
 ```
 
 ## Tech Stack
