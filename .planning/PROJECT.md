@@ -37,6 +37,17 @@ Every package maps directly to a real Claude Code subsystem with exact source pa
 **Shipped:** v2.2 Implementations (2026-04-03)
 **Status:** All 43 packages fully implemented with 567 tests, zero TODO throws, full monorepo build clean.
 
+### Next Milestone Goals
+
+Potential directions for v2.3 or v3.0:
+
+- **Integration tests** — End-to-end tests across cross-package dependency chains (9 chains, currently unit-tested only)
+- **Nyquist compliance** — Fill VALIDATION.md gaps for phases 6-9 (tech debt from v2.2 audit)
+- **Documentation site** — Generate browsable API docs from package READMEs and type signatures
+- **Usage examples** — Add runnable example scripts showing how to consume extract/translate packages
+- **CI/CD pipeline** — Automated type-check, lint, and test on push (currently manual via Makefile)
+- **Package publishing** — npm/PyPI publishing for packages ready for external consumption
+
 ### Out of Scope
 
 - CI/CD pipelines — single-developer build reference
