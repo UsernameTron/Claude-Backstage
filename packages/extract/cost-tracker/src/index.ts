@@ -28,12 +28,16 @@ export interface SessionCosts {
   totalCostUSD: number;
 }
 
+/** In-memory storage keyed by model name. */
+const costStore = new Map<string, SessionCostEntry>();
+
 /**
  * Retrieves stored session costs from project config.
  */
 export function getStoredSessionCosts(): SessionCosts {
-  // TODO: extract from cost-tracker.ts
-  throw new Error("TODO: extract from cost-tracker.ts");
+  const entries = Array.from(costStore.values());
+  const totalCostUSD = entries.reduce((sum, e) => sum + e.costUSD, 0);
+  return { entries, totalCostUSD };
 }
 
 /**
@@ -41,22 +45,32 @@ export function getStoredSessionCosts(): SessionCosts {
  * Aggregates by model — updates existing entry or creates new one.
  */
 export function addToTotalSessionCost(entry: SessionCostEntry): void {
-  // TODO: extract from cost-tracker.ts
-  throw new Error("TODO: extract from cost-tracker.ts");
+  const existing = costStore.get(entry.model);
+  if (existing) {
+    existing.inputTokens += entry.inputTokens;
+    existing.outputTokens += entry.outputTokens;
+    existing.cacheReadInputTokens += entry.cacheReadInputTokens;
+    existing.cacheCreationInputTokens += entry.cacheCreationInputTokens;
+    existing.webSearchRequests += entry.webSearchRequests;
+    existing.costUSD += entry.costUSD;
+  } else {
+    costStore.set(entry.model, { ...entry });
+  }
 }
 
 /**
  * Formats a USD cost value for display (e.g., "$1.23").
  */
 export function formatTotalCost(costUSD: number): string {
-  // TODO: extract from cost-tracker.ts
-  throw new Error("TODO: extract from cost-tracker.ts");
+  return `$${costUSD.toFixed(2)}`;
 }
 
 /**
  * Persists current session costs to project config.
  */
 export function saveCurrentSessionCosts(costs: SessionCosts): void {
-  // TODO: extract from cost-tracker.ts
-  throw new Error("TODO: extract from cost-tracker.ts");
+  costStore.clear();
+  for (const entry of costs.entries) {
+    costStore.set(entry.model, { ...entry });
+  }
 }
