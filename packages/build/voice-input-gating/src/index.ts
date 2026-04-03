@@ -29,45 +29,90 @@ export interface VoiceGatingConfig {
   supportedPlatforms: string[];
 }
 
+// --- Module-level state ---
+
+/** Simulated set of enabled feature flags. */
+const enabledFlags = new Set<string>(["voice_input_enabled"]);
+
+/** Supported platforms for runtime checks. */
+const SUPPORTED_PLATFORMS = ["darwin", "linux", "win32"];
+
+/** Simulated current platform. */
+let currentPlatform = "darwin";
+
+/**
+ * Reset gating state for test isolation.
+ */
+export function resetGatingState(): void {
+  enabledFlags.clear();
+  enabledFlags.add("voice_input_enabled");
+  currentPlatform = "darwin";
+}
+
 // --- Functions ---
 
 /**
- * Runs all three gate layers in order against the given configuration.
- * Fails fast on the first denial.
- * TODO: implement three-layer composite gate check
- */
-export function checkVoiceGating(_config: VoiceGatingConfig): GateResult {
-  throw new Error("TODO: implement three-layer composite gate check");
-}
-
-/**
  * Checks the remote feature flag to determine if voice input is enabled.
- * TODO: implement remote flag lookup
  */
-export function checkRemoteFlag(_flagKey: string): boolean {
-  throw new Error("TODO: implement remote flag lookup");
+export function checkRemoteFlag(flagKey: string): boolean {
+  return enabledFlags.has(flagKey);
 }
 
 /**
  * Checks whether the current session has the required authentication type.
- * TODO: implement authentication type verification
+ * Simulated: always returns true in reference implementation.
  */
 export function checkAuthentication(_requiredType: string): boolean {
-  throw new Error("TODO: implement authentication type verification");
+  return true;
 }
 
 /**
  * Checks whether the current platform supports voice input at runtime.
- * TODO: implement runtime platform support check
  */
-export function checkRuntimeSupport(_platform: string): boolean {
-  throw new Error("TODO: implement runtime platform support check");
+export function checkRuntimeSupport(platform: string): boolean {
+  return SUPPORTED_PLATFORMS.includes(platform);
 }
 
 /**
  * Evaluates multiple gate layers in order, failing fast on the first denial.
- * TODO: implement ordered composite gate evaluation
  */
-export function compositeGateCheck(_gates: GateLayer[]): GateResult {
-  throw new Error("TODO: implement ordered composite gate evaluation");
+export function compositeGateCheck(
+  gates: GateLayer[],
+  config: VoiceGatingConfig,
+): GateResult {
+  for (const gate of gates) {
+    let passed = false;
+    switch (gate) {
+      case "remote_flag":
+        passed = checkRemoteFlag(config.featureFlagKey);
+        break;
+      case "authentication":
+        passed = checkAuthentication(config.requiredAuthType);
+        break;
+      case "runtime":
+        passed = config.supportedPlatforms.some((p) =>
+          checkRuntimeSupport(p),
+        );
+        break;
+    }
+    if (!passed) {
+      return {
+        allowed: false,
+        deniedBy: gate,
+        reason: `denied by ${gate} gate`,
+      };
+    }
+  }
+  return { allowed: true, deniedBy: null, reason: "all gates passed" };
+}
+
+/**
+ * Runs all three gate layers in order against the given configuration.
+ * Fails fast on the first denial.
+ */
+export function checkVoiceGating(config: VoiceGatingConfig): GateResult {
+  return compositeGateCheck(
+    ["remote_flag", "authentication", "runtime"],
+    config,
+  );
 }
