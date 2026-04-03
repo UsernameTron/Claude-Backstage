@@ -47,6 +47,23 @@ export interface SequenceValidationResult {
 }
 
 /**
+ * Decompose a raw input string into individual DTMF steps.
+ *
+ * Handles common formats: "1,3,2", "1-3-2", "132".
+ *
+ * @param rawInput - The raw input string to decompose
+ * @returns Array of individual DTMF input strings
+ */
+export function decomposeInput(rawInput: string): string[] {
+  if (!rawInput) return [];
+  return rawInput
+    .split(/[,\-]/)
+    .map((s) => s.trim())
+    .flatMap((s) => (s.length > 1 ? s.split("") : [s]))
+    .filter(Boolean);
+}
+
+/**
  * Validate a DTMF input sequence against an IVR call flow.
  *
  * Walks the flow graph step by step, checking that each input leads to a valid
@@ -60,26 +77,45 @@ export function validateSequence(
   flow: IVRCallFlow,
   sequence: string[]
 ): SequenceValidationResult {
-  // TODO: translate from compound command decomposition pattern (Section 8.6, Pattern 8)
-  throw new Error(
-    "TODO: translate from compound command decomposition pattern (Section 8.6, Pattern 8)"
-  );
+  const steps: DTMFStep[] = [];
+  let currentNodeId = flow.entryNode;
+
+  for (let i = 0; i < sequence.length; i++) {
+    const input = sequence[i];
+    const node = flow.nodes[currentNodeId];
+    if (!node) {
+      return { valid: false, failedAtStep: i, steps, reachableEndpoint: null };
+    }
+
+    const transition =
+      node.transitions.find((t) => t.input === input) ||
+      (node.defaultTransition?.input === input
+        ? node.defaultTransition
+        : undefined) ||
+      node.defaultTransition;
+
+    if (!transition) {
+      return { valid: false, failedAtStep: i, steps, reachableEndpoint: null };
+    }
+
+    steps.push({
+      input,
+      expectedNodeId: transition.targetNode,
+      actualNodeId: transition.targetNode,
+    });
+    currentNodeId = transition.targetNode;
+  }
+
+  return {
+    valid: true,
+    failedAtStep: null,
+    steps,
+    reachableEndpoint: currentNodeId,
+  };
 }
 
-/**
- * Decompose a raw input string into individual DTMF steps.
- *
- * Handles common formats: "1,3,2", "1-3-2", "132".
- *
- * @param rawInput - The raw input string to decompose
- * @returns Array of individual DTMF input strings
- */
-export function decomposeInput(rawInput: string): string[] {
-  // TODO: translate from compound command decomposition pattern (Section 8.6, Pattern 8)
-  throw new Error(
-    "TODO: translate from compound command decomposition pattern (Section 8.6, Pattern 8)"
-  );
-}
+/** Terminal node types that do not require outbound transitions. */
+const TERMINAL_NODE_TYPES = new Set(["disconnect", "transfer", "voicemail"]);
 
 /**
  * Generate all possible DTMF sequences through a flow up to a maximum depth.
@@ -90,12 +126,50 @@ export function decomposeInput(rawInput: string): string[] {
  */
 export function generateAllSequences(
   flow: IVRCallFlow,
-  maxDepth?: number
+  maxDepth: number = 10
 ): DTMFSequence[] {
-  // TODO: translate from compound command decomposition pattern (Section 8.6, Pattern 8)
-  throw new Error(
-    "TODO: translate from compound command decomposition pattern (Section 8.6, Pattern 8)"
-  );
+  const results: DTMFSequence[] = [];
+  const queue: Array<{ nodeId: string; steps: DTMFStep[] }> = [
+    { nodeId: flow.entryNode, steps: [] },
+  ];
+
+  while (queue.length > 0) {
+    const item = queue.shift()!;
+    const node = flow.nodes[item.nodeId];
+
+    if (
+      !node ||
+      item.steps.length >= maxDepth ||
+      node.transitions.length === 0
+    ) {
+      results.push({ steps: item.steps, entryNodeId: flow.entryNode });
+      continue;
+    }
+
+    for (const transition of node.transitions) {
+      queue.push({
+        nodeId: transition.targetNode,
+        steps: [...item.steps, { input: transition.input }],
+      });
+    }
+
+    if (node.defaultTransition) {
+      const alreadyHasTarget = node.transitions.some(
+        (t) => t.targetNode === node.defaultTransition!.targetNode
+      );
+      if (!alreadyHasTarget) {
+        queue.push({
+          nodeId: node.defaultTransition.targetNode,
+          steps: [
+            ...item.steps,
+            { input: node.defaultTransition.input },
+          ],
+        });
+      }
+    }
+  }
+
+  return results;
 }
 
 /**
@@ -105,8 +179,28 @@ export function generateAllSequences(
  * @returns Array of sequences that terminate at dead-end nodes
  */
 export function findDeadEndSequences(flow: IVRCallFlow): DTMFSequence[] {
-  // TODO: translate from compound command decomposition pattern (Section 8.6, Pattern 8)
-  throw new Error(
-    "TODO: translate from compound command decomposition pattern (Section 8.6, Pattern 8)"
-  );
+  const allSequences = generateAllSequences(flow);
+  return allSequences.filter((seq) => {
+    if (seq.steps.length === 0) return false;
+    const lastStep = seq.steps[seq.steps.length - 1];
+    // Walk to find the final node
+    let nodeId = flow.entryNode;
+    for (const step of seq.steps) {
+      const node = flow.nodes[nodeId];
+      if (!node) return false;
+      const transition = node.transitions.find(
+        (t) => t.input === step.input
+      ) || node.defaultTransition;
+      if (!transition) return false;
+      nodeId = transition.targetNode;
+    }
+    const finalNode = flow.nodes[nodeId];
+    if (!finalNode) return false;
+    // Dead end: non-terminal node with no outgoing transitions
+    return (
+      !TERMINAL_NODE_TYPES.has(finalNode.type) &&
+      finalNode.transitions.length === 0 &&
+      !finalNode.defaultTransition
+    );
+  });
 }
