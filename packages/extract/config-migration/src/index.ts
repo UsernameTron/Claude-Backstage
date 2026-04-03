@@ -9,6 +9,17 @@
 
 export const CURRENT_MIGRATION_VERSION = 11;
 
+/** Runtime check: returns the value if it is a non-null object (record-like), otherwise fallback. */
+function asRecord(
+  value: unknown,
+  fallback: Record<string, unknown>,
+): Record<string, unknown> {
+  if (typeof value === "object" && value !== null && !Array.isArray(value)) {
+    return value as Record<string, unknown>;
+  }
+  return fallback;
+}
+
 export interface Migration {
   version: number;
   name: string;
@@ -45,12 +56,12 @@ const migrations: Migration[] = [
     name: "add-permissions-defaults",
     migrate: (config) => ({
       ...config,
-      permissions: (config.permissions as Record<string, unknown>) ?? {
+      permissions: asRecord(config.permissions, {
         allow: [],
         deny: [],
         ask: [],
         defaultMode: "default",
-      },
+      }),
     }),
   },
   {
@@ -58,10 +69,10 @@ const migrations: Migration[] = [
     name: "add-sandbox-defaults",
     migrate: (config) => ({
       ...config,
-      sandbox: (config.sandbox as Record<string, unknown>) ?? {
+      sandbox: asRecord(config.sandbox, {
         enabled: false,
         autoAllowBashIfSandboxed: false,
-      },
+      }),
     }),
   },
   {
@@ -69,7 +80,7 @@ const migrations: Migration[] = [
     name: "move-env-to-namespace",
     migrate: (config) => ({
       ...config,
-      env: (config.env as Record<string, unknown>) ?? {},
+      env: asRecord(config.env, {}),
     }),
   },
   {
@@ -77,14 +88,14 @@ const migrations: Migration[] = [
     name: "add-mcp-server-config",
     migrate: (config) => ({
       ...config,
-      mcpServers: (config.mcpServers as Record<string, unknown>) ?? {},
+      mcpServers: asRecord(config.mcpServers, {}),
     }),
   },
   {
     version: 7,
     name: "normalize-permission-rules",
     migrate: (config) => {
-      const permissions = (config.permissions ?? {}) as Record<string, unknown>;
+      const permissions = asRecord(config.permissions, {});
       return {
         ...config,
         permissions: {
@@ -101,7 +112,7 @@ const migrations: Migration[] = [
     name: "add-hook-configuration",
     migrate: (config) => ({
       ...config,
-      hooks: (config.hooks as Record<string, unknown>) ?? {},
+      hooks: asRecord(config.hooks, {}),
     }),
   },
   {

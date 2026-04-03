@@ -49,6 +49,11 @@ export function resetGatingState(): void {
   currentPlatform = "darwin";
 }
 
+/**
+ * Alias for resetGatingState — consistent resetState() API across all packages.
+ */
+export const resetState = resetGatingState;
+
 // --- Functions ---
 
 /**

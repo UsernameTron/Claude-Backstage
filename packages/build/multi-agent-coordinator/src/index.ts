@@ -83,3 +83,8 @@ export function dispatchTask(
   };
   return Promise.resolve(completed);
 }
+
+/** Reset module-level state for test isolation. */
+export function resetState(): void {
+  coordinatorActive = false;
+}

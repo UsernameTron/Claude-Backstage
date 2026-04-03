@@ -300,3 +300,6 @@ export function isDangerousBashPermission(pattern: string): boolean {
 
   return false;
 }
+
+/** Reset module-level state for test isolation. Alias for clearAllRules. */
+export const resetState = clearAllRules;

@@ -41,4 +41,4 @@ None
 
 ## Status
 
-Type stubs only. All functions throw `Error`.
+Working implementation. Three-layer assembly pipeline with global registry, deny-rule filtering, and deterministic sort for prompt cache stability. 97 LOC with tests.

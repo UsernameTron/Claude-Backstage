@@ -46,6 +46,30 @@ export interface HistoryConfig {
   externalStorageThreshold: number;
 }
 
+const VALID_MESSAGE_TYPES: ReadonlySet<string> = new Set([
+  "user",
+  "assistant",
+  "attachment",
+  "system",
+  "compact_boundary",
+  "tool_use_summary",
+  "progress",
+]);
+
+/** Runtime type guard for DialogueMessage parsed from JSON. */
+function isDialogueMessage(value: unknown): value is DialogueMessage {
+  if (typeof value !== "object" || value === null) return false;
+  const obj = value as Record<string, unknown>;
+  return (
+    typeof obj.type === "string" &&
+    VALID_MESSAGE_TYPES.has(obj.type) &&
+    typeof obj.content === "string" &&
+    typeof obj.timestamp === "number" &&
+    typeof obj.metadata === "object" &&
+    obj.metadata !== null
+  );
+}
+
 // --- Class ---
 
 /**
@@ -106,7 +130,13 @@ export class DialogueHistoryManager {
     const parsed = this.serialized
       .split("\n")
       .filter(Boolean)
-      .map((line) => JSON.parse(line) as DialogueMessage);
+      .map((line) => {
+        const obj: unknown = JSON.parse(line);
+        if (!isDialogueMessage(obj)) {
+          throw new Error(`Invalid dialogue message: ${line}`);
+        }
+        return obj;
+      });
     this.messages = parsed;
     return parsed;
   }

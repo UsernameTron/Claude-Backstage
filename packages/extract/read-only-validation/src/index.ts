@@ -43,7 +43,7 @@ export const GIT_READ_ONLY_COMMANDS: Readonly<Record<string, ReadOnlyCommand>> =
     tag: { safeFlags: { "--list": "none", "-l": "none" } },
     remote: { safeFlags: { "-v": "none" } },
     stash: {
-      safeFlags: { list: "none" as unknown as FlagType },
+      safeFlags: { list: "none" satisfies FlagType },
     },
   } as const;
 

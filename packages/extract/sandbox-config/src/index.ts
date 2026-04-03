@@ -161,3 +161,11 @@ export function containsExcludedCommand(
 
   return false;
 }
+
+/**
+ * Reset module-level mutable state for test isolation.
+ */
+export function resetState(): void {
+  sandboxEnabled = false;
+  currentConfig = {};
+}

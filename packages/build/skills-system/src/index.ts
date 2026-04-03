@@ -193,3 +193,10 @@ export function parseFrontmatter(
 
   return frontmatter;
 }
+
+/**
+ * Reset module-level mutable state for test isolation.
+ */
+export function resetState(): void {
+  bundledSkillRegistry.clear();
+}

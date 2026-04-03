@@ -43,4 +43,4 @@ None.
 
 ## Status
 
-Type stubs only. All functions throw `TODO` errors referencing implementation notes.
+Working implementation. Three-layer fail-fast gate evaluation with remote flag, authentication, and runtime platform checks. 119 LOC with tests.

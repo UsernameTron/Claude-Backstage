@@ -44,6 +44,11 @@ export function resetRegistry(): void {
   registry.length = 0;
 }
 
+/**
+ * Alias for resetRegistry — consistent resetState() API across all packages.
+ */
+export const resetState = resetRegistry;
+
 // --- Functions ---
 
 /**

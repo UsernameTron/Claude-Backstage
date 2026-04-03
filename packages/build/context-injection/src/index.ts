@@ -162,3 +162,11 @@ export function prependUserContext(
 export function getSystemPromptInjection(): string | null {
   return null;
 }
+
+/**
+ * Reset module-level mutable state for test isolation.
+ */
+export function resetState(): void {
+  cachedSystemContext = null;
+  cachedClaudeMd = null;
+}

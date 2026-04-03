@@ -59,7 +59,11 @@ export type KeybindingSource = "default" | "user" | "extension" | "platform";
 // --- Module-level state ---
 const bindings: Map<KeybindingSource, ParsedBinding[]> = new Map();
 
-const KNOWN_MODIFIERS: Set<string> = new Set(["ctrl", "alt", "shift", "meta", "cmd"]);
+const KNOWN_MODIFIERS: ReadonlySet<string> = new Set<Modifier>(["ctrl", "alt", "shift", "meta", "cmd"]);
+
+function isModifier(value: string): value is Modifier {
+  return KNOWN_MODIFIERS.has(value);
+}
 
 // Parse a raw keystroke string into a structured binding
 export function parseKeystroke(raw: string): ParsedBinding {
@@ -91,7 +95,7 @@ export function parseKeystroke(raw: string): ParsedBinding {
     ? modPart
         .split("+")
         .map((m) => m.toLowerCase().trim())
-        .filter((m) => KNOWN_MODIFIERS.has(m)) as Modifier[]
+        .filter(isModifier)
     : [];
 
   return { key, modifiers, context: "global", command: "" };

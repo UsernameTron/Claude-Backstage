@@ -43,7 +43,7 @@ export interface StartupMetrics {
 const registeredModules = new Map<string, LazyModule>();
 let startupMetrics: StartupMetrics = {
   totalMs: 0,
-  phases: {} as Record<string, number>,
+  phases: {},
   lazyModulesDeferred: 0,
 };
 let currentPhase: StartupPhase | null = null;
@@ -53,7 +53,7 @@ export function resetState(): void {
   registeredModules.clear();
   startupMetrics = {
     totalMs: 0,
-    phases: {} as Record<string, number>,
+    phases: {},
     lazyModulesDeferred: 0,
   };
   currentPhase = null;

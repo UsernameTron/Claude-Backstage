@@ -74,3 +74,10 @@ export function saveCurrentSessionCosts(costs: SessionCosts): void {
     costStore.set(entry.model, { ...entry });
   }
 }
+
+/**
+ * Reset module-level mutable state for test isolation.
+ */
+export function resetState(): void {
+  costStore.clear();
+}

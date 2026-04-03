@@ -37,4 +37,4 @@ None
 
 ## Status
 
-Type stubs only. All methods throw `Error`.
+Working implementation. Class-based cache with get/set/refresh/invalidate and deterministic schema ordering for prompt cache key stability. 86 LOC with tests.
