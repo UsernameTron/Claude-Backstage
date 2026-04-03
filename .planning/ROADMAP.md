@@ -128,5 +128,5 @@ Plans:
 | 7. Wave 2 Core Architecture | v2.2 | 1/3 | In Progress|  |
 | 8. Wave 3 P1 Portfolio | v2.2 | 0/4 | Not started | - |
 | 9. Wave 4 P2 Engineering | v2.2 | 0/3 | Not started | - |
-| 10. Wave 5 P3 Nice to Have | v2.2 | 2/2 | Complete   | 2026-04-03 |
+| 10. Wave 5 P3 Nice to Have | v2.2 | 2/2 | Complete    | 2026-04-03 |
 | 11. Wave 6 Expansion | v2.2 | 0/0 | Not started | - |
