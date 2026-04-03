@@ -2,8 +2,6 @@
 
 from agent_skill_routing import (
     AgentProfile,
-    RoutingAction,
-    RoutingDecision,
     RoutingRule,
     SkillRequirement,
     check_compliance,

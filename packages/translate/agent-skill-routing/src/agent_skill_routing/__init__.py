@@ -15,6 +15,7 @@ KB reference: Recipe 1 — Permission System Applied to ACD, Section 43
 
 from __future__ import annotations
 
+import json
 from dataclasses import dataclass, field
 from typing import Literal
 
@@ -78,6 +79,15 @@ class AgentProfile:
     groups: list[str] = field(default_factory=list)
 
 
+def _matches_rule(agent: AgentProfile, skill: SkillRequirement, rule: RoutingRule) -> bool:
+    """Check if a rule matches the agent-skill pair."""
+    if rule.skill != skill.skill_name and rule.skill != "*":
+        return False
+    if rule.agent_group != "*" and rule.agent_group not in agent.groups:
+        return False
+    return True
+
+
 def evaluate_rules(
     agent: AgentProfile,
     skill: SkillRequirement,
@@ -95,28 +105,57 @@ def evaluate_rules(
 
     Returns:
         RoutingDecision with the final action and matched rule
-
-    Raises:
-        NotImplementedError: Stub only — no implementation yet
     """
-    raise NotImplementedError(
-        "TODO: apply deny>ask>allow cascade from permission system pattern"
-    )
+    sorted_rules = sorted(rules, key=lambda r: r.priority)
+    chain: list[str] = []
+
+    # Phase 1: Check deny rules first
+    for rule in sorted_rules:
+        if rule.action == "deny" and _matches_rule(agent, skill, rule):
+            chain.append(f"deny: {rule.reason} (priority={rule.priority})")
+            return RoutingDecision(action="deny", matched_rule=rule, evaluation_chain=chain)
+        if rule.action == "deny":
+            chain.append(f"deny skip: {rule.skill} does not match")
+
+    # Phase 2: Check ask rules
+    for rule in sorted_rules:
+        if rule.action == "ask" and _matches_rule(agent, skill, rule):
+            chain.append(f"ask: {rule.reason} (priority={rule.priority})")
+            return RoutingDecision(action="ask", matched_rule=rule, evaluation_chain=chain)
+
+    # Phase 3: Check allow rules
+    for rule in sorted_rules:
+        if rule.action == "allow" and _matches_rule(agent, skill, rule):
+            chain.append(f"allow: {rule.reason} (priority={rule.priority})")
+            return RoutingDecision(action="allow", matched_rule=rule, evaluation_chain=chain)
+
+    # Default: allow if no rules match
+    chain.append("default: no matching rules, allowing")
+    return RoutingDecision(action="allow", matched_rule=None, evaluation_chain=chain)
 
 
 def load_rules(path: str) -> list[RoutingRule]:
-    """Load routing rules from a configuration file.
+    """Load routing rules from a JSON configuration file.
 
     Args:
-        path: Path to the rules configuration file
+        path: Path to the rules configuration file (JSON array of rule objects)
 
     Returns:
         List of parsed RoutingRule objects
-
-    Raises:
-        NotImplementedError: Stub only — no implementation yet
     """
-    raise NotImplementedError("TODO: implement rule loading from config file")
+    with open(path, encoding="utf-8") as f:
+        data = json.load(f)
+
+    return [
+        RoutingRule(
+            skill=entry["skill"],
+            agent_group=entry["agent_group"],
+            action=entry["action"],
+            priority=entry["priority"],
+            reason=entry["reason"],
+        )
+        for entry in data
+    ]
 
 
 def check_compliance(agent: AgentProfile, skill: SkillRequirement) -> bool:
@@ -131,8 +170,18 @@ def check_compliance(agent: AgentProfile, skill: SkillRequirement) -> bool:
 
     Returns:
         True if the agent meets minimum requirements
-
-    Raises:
-        NotImplementedError: Stub only — no implementation yet
     """
-    raise NotImplementedError("TODO: implement compliance check")
+    # Check skill exists
+    if skill.skill_name not in agent.skills:
+        return False
+
+    # Check proficiency
+    proficiency = agent.proficiencies.get(skill.skill_name, 0)
+    if proficiency < skill.min_proficiency:
+        return False
+
+    # Check language if required
+    if skill.language is not None and skill.language not in agent.groups:
+        return False
+
+    return True
