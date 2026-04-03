@@ -54,25 +54,45 @@ class ChannelCostAggregator:
     """
 
     def __init__(self) -> None:
-        # TODO: implement cost aggregation
-        raise NotImplementedError("TODO: translate from cost-tracker.ts pattern")
+        self._interactions: dict[Channel, list[InteractionCost]] = {}
 
     def add_interaction(self, cost: InteractionCost) -> None:
         """Record an interaction cost."""
-        # TODO: implement cost recording
-        raise NotImplementedError("TODO: translate from cost-tracker.ts pattern")
+        self._interactions.setdefault(cost.channel, []).append(cost)
 
     def get_cost_per_contact(self, channel: Channel) -> float:
         """Get average cost per contact for a channel."""
-        # TODO: implement cost calculation
-        raise NotImplementedError("TODO: translate from cost-tracker.ts pattern")
+        interactions = self._interactions.get(channel, [])
+        if not interactions:
+            return 0.0
+        return sum(i.cost_usd for i in interactions) / len(interactions)
 
     def get_summary(self, channel: Optional[Channel] = None) -> list[ChannelSummary]:
         """Get cost summary, optionally filtered by channel."""
-        # TODO: implement summary generation
-        raise NotImplementedError("TODO: translate from cost-tracker.ts pattern")
+        channels = [channel] if channel is not None else list(self._interactions.keys())
+        result: list[ChannelSummary] = []
+        for ch in channels:
+            interactions = self._interactions.get(ch, [])
+            if not interactions:
+                continue
+            total_cost = sum(i.cost_usd for i in interactions)
+            count = len(interactions)
+            durations = [i.duration_seconds for i in interactions if i.duration_seconds is not None]
+            avg_dur = sum(durations) / len(durations) if durations else 0.0
+            result.append(ChannelSummary(
+                channel=ch,
+                total_interactions=count,
+                total_cost_usd=total_cost,
+                cost_per_contact=total_cost / count,
+                avg_duration_seconds=avg_dur,
+            ))
+        return result
 
     def format_total_cost(self) -> str:
         """Format total cost across all channels as string."""
-        # TODO: implement formatting
-        raise NotImplementedError("TODO: translate from cost-tracker.ts pattern")
+        total = sum(
+            i.cost_usd
+            for interactions in self._interactions.values()
+            for i in interactions
+        )
+        return f"${total:.2f}"
