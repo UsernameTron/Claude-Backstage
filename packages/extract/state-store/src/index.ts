@@ -27,11 +27,55 @@ export interface Store<T> {
   subscribe(listener: Listener): () => void;
 }
 
-// Factory function — Object.is reference equality prevents cascading re-renders
+/**
+ * Factory function — Object.is reference equality prevents cascading re-renders.
+ *
+ * Design: Uses a Set<Listener> for O(1) subscribe/unsubscribe.
+ * getState returns a shallow copy for flat objects to enforce read-only contract.
+ * setState uses Object.is to skip no-op updates (same reference = no change).
+ */
 export function createStore<T>(
   initialState: T,
   onChange?: OnChange<T>,
 ): Store<T> {
-  // TODO: extract from state/store.ts
-  throw new Error("TODO: extract from state/store.ts");
+  let state: T = initialState;
+  const listeners = new Set<Listener>();
+
+  function getState(): T {
+    // Shallow copy for flat objects — enforces readonly contract
+    // without DeepImmutable runtime cost
+    if (state !== null && typeof state === "object" && !Array.isArray(state)) {
+      return { ...state };
+    }
+    return state;
+  }
+
+  function setState(updater: (prev: T) => T): void {
+    const newState = updater(state);
+    // Object.is equality check — skip if same reference
+    if (Object.is(state, newState)) {
+      return;
+    }
+    const oldState = state;
+    state = newState;
+
+    // Fire onChange callback if provided
+    if (onChange) {
+      onChange({ newState, oldState });
+    }
+
+    // Notify all listeners
+    for (const listener of listeners) {
+      listener();
+    }
+  }
+
+  function subscribe(listener: Listener): () => void {
+    listeners.add(listener);
+    return () => {
+      listeners.delete(listener);
+    };
+  }
+
+  return { getState, setState, subscribe };
 }
