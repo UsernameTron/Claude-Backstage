@@ -89,7 +89,7 @@ Plans:
 Plans:
 - [x] 09-01-PLAN.md — Extract standalone (subprocess-env-scrubbing, config-migration, path-validation, read-only-validation)
 - [x] 09-02-PLAN.md — Build standalone (mcp-integration, cli-startup-optimization)
-- [ ] 09-03-PLAN.md — Extract with deps (sandbox-config, dangerous-command-detection)
+- [x] 09-03-PLAN.md — Extract with deps (sandbox-config, dangerous-command-detection)
 
 ### Phase 10: Wave 5 — P3 Nice to Have
 **Goal**: Implement 4 P3 packages (analytics, vim FSM, keyboard shortcuts, ink renderer)
@@ -102,7 +102,7 @@ Plans:
   4. make type-check and make lint pass
 **Plans:** 3 plans
 Plans:
-- [ ] 09-01-PLAN.md — Extract standalone (subprocess-env-scrubbing, config-migration, path-validation, read-only-validation)
+- [x] 09-01-PLAN.md — Extract standalone (subprocess-env-scrubbing, config-migration, path-validation, read-only-validation)
 - [x] 09-02-PLAN.md — Build standalone (mcp-integration, cli-startup-optimization)
 - [ ] 09-03-PLAN.md — Extract with deps (sandbox-config, dangerous-command-detection)
 
