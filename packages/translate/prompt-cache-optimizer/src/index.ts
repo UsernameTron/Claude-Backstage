@@ -55,16 +55,27 @@ export interface CacheOptimizationResult {
 export function optimizeCacheOrder(
   segments: CacheSegment[]
 ): CacheOptimizationResult {
-  // TODO: translate from cache-stable ordering pattern
-  throw new Error("TODO: translate from cache-stable ordering pattern (Pattern 4)");
+  const scopeOrder = { [CacheScope.Global]: 0, [CacheScope.Org]: 1, [CacheScope.None]: 2 };
+  const sorted = [...segments].sort((a, b) => {
+    const scopeDiff = scopeOrder[a.scope] - scopeOrder[b.scope];
+    if (scopeDiff !== 0) return scopeDiff;
+    return (a.stable ? 0 : 1) - (b.stable ? 0 : 1);
+  });
+  const boundaryPosition = sorted.reduce((last, s, i) => isStableSegment(s) ? i + 1 : last, 0);
+  const stableTokens = sorted.slice(0, boundaryPosition).reduce((sum, s) => sum + s.content.length, 0);
+  const totalTokens = sorted.reduce((sum, s) => sum + s.content.length, 0);
+  return {
+    segments: sorted,
+    estimatedCacheHitRate: totalTokens > 0 ? stableTokens / totalTokens : 0,
+    boundaryPosition,
+  };
 }
 
 /**
  * Check if a segment should be placed before the cache boundary.
  */
 export function isStableSegment(segment: CacheSegment): boolean {
-  // TODO: translate from cache-stable ordering pattern
-  throw new Error("TODO: translate from cache-stable ordering pattern (Pattern 4)");
+  return segment.stable || segment.scope !== CacheScope.None;
 }
 
 /**
@@ -78,6 +89,6 @@ export function estimateCacheSavings(
   totalTokens: number,
   stableTokens: number
 ): number {
-  // TODO: translate from cache-stable ordering pattern
-  throw new Error("TODO: translate from cache-stable ordering pattern (Pattern 4)");
+  if (totalTokens <= 0) return 0;
+  return Math.min(Math.max(stableTokens / totalTokens, 0), 1);
 }
