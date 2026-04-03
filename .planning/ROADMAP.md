@@ -100,10 +100,10 @@ Plans:
   2. vim-mode-fsm has working state machine with transition()
   3. ink-renderer has working render pipeline types
   4. make type-check and make lint pass
-**Plans:** 2 plans
+**Plans:** 1/2 plans executed
 Plans:
 - [ ] 10-01-PLAN.md — Implement analytics-killswitch + vim-mode-fsm (extract + build)
-- [ ] 10-02-PLAN.md — Implement keyboard-shortcuts + ink-renderer (build + build)
+- [x] 10-02-PLAN.md — Implement keyboard-shortcuts + ink-renderer (build + build)
 
 ### Phase 11: Wave 6 — Expansion Implementations
 **Goal**: Implement 12 expansion packages (#32-43)
@@ -128,5 +128,5 @@ Plans:
 | 7. Wave 2 Core Architecture | v2.2 | 1/3 | In Progress|  |
 | 8. Wave 3 P1 Portfolio | v2.2 | 0/4 | Not started | - |
 | 9. Wave 4 P2 Engineering | v2.2 | 0/3 | Not started | - |
-| 10. Wave 5 P3 Nice to Have | v2.2 | 0/2 | Not started | - |
+| 10. Wave 5 P3 Nice to Have | v2.2 | 1/2 | In Progress|  |
 | 11. Wave 6 Expansion | v2.2 | 0/0 | Not started | - |
