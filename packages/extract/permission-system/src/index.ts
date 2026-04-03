@@ -1,7 +1,7 @@
 /**
  * @claude-patterns/permission-system
  *
- * Type stubs for Claude Code's permission system.
+ * Permission system implementing deny > ask > allow priority chain.
  * Source: utils/permissions/ (24 files, 9,409 LOC)
  * KB Reference: Section 8 — Permission System
  */
@@ -102,6 +102,75 @@ export interface PermissionResult {
   rule?: PermissionRule;
 }
 
+// --- Module State ---
+
+const allowRules: PermissionRule[] = [];
+const denyRules: PermissionRule[] = [];
+const askRules: PermissionRule[] = [];
+
+// --- Rule Population ---
+
+/** Add an allow rule to the permission system. */
+export function addAllowRule(rule: PermissionRule): void {
+  allowRules.push(rule);
+}
+
+/** Add a deny rule to the permission system. */
+export function addDenyRule(rule: PermissionRule): void {
+  denyRules.push(rule);
+}
+
+/** Add an ask rule to the permission system. */
+export function addAskRule(rule: PermissionRule): void {
+  askRules.push(rule);
+}
+
+/** Clear all rules. Primarily for testing. */
+export function clearAllRules(): void {
+  allowRules.length = 0;
+  denyRules.length = 0;
+  askRules.length = 0;
+}
+
+// --- Private Helpers ---
+
+/**
+ * Check if a rule matches the given tool name and input.
+ * Supports exact match, prefix syntax (:*), and trailing wildcard (*).
+ */
+function ruleMatchesTool(
+  rule: PermissionRule,
+  toolName: string,
+  toolInput: Record<string, unknown>,
+): boolean {
+  if (rule.tool !== toolName) return false;
+  if (!rule.pattern) return true;
+
+  const inputContent =
+    toolName === "Bash"
+      ? String(toolInput.command || "")
+      : toolName === "Read" || toolName === "Write" || toolName === "Edit"
+        ? String(toolInput.file_path || toolInput.path || "")
+        : JSON.stringify(toolInput);
+
+  const pattern = rule.pattern;
+
+  // Exact match
+  if (pattern === inputContent) return true;
+  // Prefix match (:* syntax)
+  if (pattern.endsWith(":*") && inputContent.startsWith(pattern.slice(0, -2)))
+    return true;
+  // Trailing wildcard
+  if (
+    pattern.endsWith("*") &&
+    !pattern.endsWith(":*") &&
+    inputContent.startsWith(pattern.slice(0, -1))
+  )
+    return true;
+
+  return false;
+}
+
 // --- Functions ---
 
 /**
@@ -113,8 +182,39 @@ export function hasPermissionsToUseTool(
   toolInput: Record<string, unknown>,
   mode: PermissionMode,
 ): PermissionResult {
-  // TODO: extract from utils/permissions/
-  throw new Error("TODO: extract from utils/permissions/");
+  const ruleResult = checkRuleBasedPermissions(toolName, toolInput);
+  if (ruleResult.rule) return ruleResult;
+
+  // No rule matched -- apply mode-based defaults
+  switch (mode) {
+    case "bypassPermissions":
+      return { allowed: true, reason: "Bypass mode: all tools allowed" };
+    case "plan":
+      return { allowed: false, reason: "Plan mode: read-only" };
+    case "dontAsk":
+      return { allowed: false, reason: "DontAsk mode: no implicit permission" };
+    case "acceptEdits": {
+      const editTools = ["Write", "Edit", "MultiEdit"];
+      const allowed = editTools.includes(toolName);
+      return {
+        allowed,
+        reason: allowed
+          ? "AcceptEdits mode: edit tool allowed"
+          : "AcceptEdits mode: non-edit tool denied",
+      };
+    }
+    case "auto":
+      return {
+        allowed: false,
+        reason: "Auto mode: needs classifier (not implemented)",
+      };
+    case "default":
+    default:
+      return {
+        allowed: false,
+        reason: "Default mode: needs user confirmation",
+      };
+  }
 }
 
 /**
@@ -125,32 +225,59 @@ export function checkRuleBasedPermissions(
   toolName: string,
   toolInput: Record<string, unknown>,
 ): PermissionResult {
-  // TODO: extract from utils/permissions/
-  throw new Error("TODO: extract from utils/permissions/");
+  // Deny rules first (highest priority)
+  for (const rule of denyRules) {
+    if (ruleMatchesTool(rule, toolName, toolInput)) {
+      return {
+        allowed: false,
+        reason: `Denied by ${rule.source} rule: ${rule.tool}${rule.pattern ? `(${rule.pattern})` : ""}`,
+        rule,
+      };
+    }
+  }
+  // Ask rules second
+  for (const rule of askRules) {
+    if (ruleMatchesTool(rule, toolName, toolInput)) {
+      return {
+        allowed: false,
+        reason: `Needs confirmation per ${rule.source} rule: ${rule.tool}${rule.pattern ? `(${rule.pattern})` : ""}`,
+        rule,
+      };
+    }
+  }
+  // Allow rules third
+  for (const rule of allowRules) {
+    if (ruleMatchesTool(rule, toolName, toolInput)) {
+      return {
+        allowed: true,
+        reason: `Allowed by ${rule.source} rule: ${rule.tool}${rule.pattern ? `(${rule.pattern})` : ""}`,
+        rule,
+      };
+    }
+  }
+
+  return { allowed: false, reason: "No matching permission rule" };
 }
 
 /**
  * Returns all configured allow rules across all sources.
  */
 export function getAllowRules(): PermissionRule[] {
-  // TODO: extract from utils/permissions/
-  throw new Error("TODO: extract from utils/permissions/");
+  return [...allowRules];
 }
 
 /**
  * Returns all configured deny rules across all sources.
  */
 export function getDenyRules(): PermissionRule[] {
-  // TODO: extract from utils/permissions/
-  throw new Error("TODO: extract from utils/permissions/");
+  return [...denyRules];
 }
 
 /**
  * Returns all configured ask rules across all sources.
  */
 export function getAskRules(): PermissionRule[] {
-  // TODO: extract from utils/permissions/
-  throw new Error("TODO: extract from utils/permissions/");
+  return [...askRules];
 }
 
 /**
@@ -159,6 +286,17 @@ export function getAskRules(): PermissionRule[] {
  * bypassing the YOLO classifier (KB section 8.6).
  */
 export function isDangerousBashPermission(pattern: string): boolean {
-  // TODO: extract from utils/permissions/
-  throw new Error("TODO: extract from utils/permissions/");
+  const content = pattern.trim().toLowerCase();
+  if (content === "" || content === "*") return true;
+
+  for (const dangerousPattern of DANGEROUS_BASH_PATTERNS) {
+    const lower = dangerousPattern.toLowerCase();
+    if (content === lower) return true;
+    if (content === `${lower}:*`) return true;
+    if (content === `${lower}*`) return true;
+    if (content === `${lower} *`) return true;
+    if (content.startsWith(`${lower} -`) && content.endsWith("*")) return true;
+  }
+
+  return false;
 }
