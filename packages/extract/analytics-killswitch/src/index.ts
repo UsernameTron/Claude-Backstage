@@ -28,26 +28,59 @@ export interface TelemetrySink {
 // Backend routes: Datadog (operational), first-party (product), BigQuery (warehouse)
 export type TelemetryBackend = "datadog" | "firstParty" | "bigQuery";
 
+// --- Module-level state ---
+let eventQueue: AnalyticsEvent[] = [];
+let sinks: TelemetrySink[] = [];
+let killswitchActive = false;
+let initialized = false;
+
 // Log an analytics event — events queue before sink attachment
 export function logEvent(event: AnalyticsEvent): void {
-  // TODO: extract from services/analytics/
-  throw new Error("TODO: extract from services/analytics/");
+  if (killswitchActive) return;
+  if (!initialized) {
+    eventQueue.push(event);
+    return;
+  }
+  for (const sink of sinks) {
+    if (sink.isEnabled()) {
+      sink.send(event);
+    }
+  }
 }
 
 // Check if killswitch is active — can disable all telemetry remotely
 export function isKillswitchEnabled(): boolean {
-  // TODO: extract from services/analytics/sinkKillswitch.ts
-  throw new Error("TODO: extract from services/analytics/sinkKillswitch.ts");
+  return killswitchActive;
 }
 
-// Initialize the event system — idempotent, queue drains via queueMicrotask()
-export function initializeAnalytics(sinks: TelemetrySink[]): void {
-  // TODO: extract from services/analytics/
-  throw new Error("TODO: extract from services/analytics/");
+// Initialize the event system — idempotent, queue drains on init
+export function initializeAnalytics(newSinks: TelemetrySink[]): void {
+  sinks.length = 0;
+  for (const sink of newSinks) {
+    sinks.push(sink);
+  }
+  initialized = true;
+  // Drain queued events
+  while (eventQueue.length > 0) {
+    const event = eventQueue.shift()!;
+    logEvent(event);
+  }
 }
 
 // _PROTO_ prefix routes to protected BigQuery columns, stripped before Datadog
 export function isProtectedField(fieldName: string): boolean {
-  // TODO: extract from services/analytics/
-  throw new Error("TODO: extract from services/analytics/");
+  return fieldName.startsWith("_PROTO_");
+}
+
+// Set killswitch state — for runtime toggling and testing
+export function setKillswitch(active: boolean): void {
+  killswitchActive = active;
+}
+
+// Reset all module-level state — for test isolation
+export function resetState(): void {
+  eventQueue.length = 0;
+  sinks.length = 0;
+  killswitchActive = false;
+  initialized = false;
 }
