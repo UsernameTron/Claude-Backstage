@@ -74,7 +74,7 @@ Plans:
 - [x] 08-01-PLAN.md — Extract standalone (token-estimation, streaming-tool-executor, state-store, claudemd-memory)
 - [x] 08-02-PLAN.md — Extract with deps + translate TS (yolo-classifier, ivr-call-flow-validator)
 - [x] 08-03-PLAN.md — Build standalone + Python (multi-agent-coordinator, agent-skill-routing)
-- [ ] 08-04-PLAN.md — Dep-chain packages (auto-compact, agent-dialogue-loop, skills-system)
+- [x] 08-04-PLAN.md — Dep-chain packages (auto-compact, agent-dialogue-loop, skills-system)
 
 ### Phase 9: Wave 4 — P2 Engineering Depth
 **Goal**: Implement 8 P2 packages (security, config, path validation, MCP, CLI startup)
