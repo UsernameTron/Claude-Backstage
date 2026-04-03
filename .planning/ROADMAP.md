@@ -71,7 +71,7 @@ Plans:
   4. make type-check and make lint pass for entire monorepo
 **Plans:** 4 plans
 Plans:
-- [ ] 08-01-PLAN.md — Extract standalone (token-estimation, streaming-tool-executor, state-store, claudemd-memory)
+- [x] 08-01-PLAN.md — Extract standalone (token-estimation, streaming-tool-executor, state-store, claudemd-memory)
 - [x] 08-02-PLAN.md — Extract with deps + translate TS (yolo-classifier, ivr-call-flow-validator)
 - [x] 08-03-PLAN.md — Build standalone + Python (multi-agent-coordinator, agent-skill-routing)
 - [ ] 08-04-PLAN.md — Dep-chain packages (auto-compact, agent-dialogue-loop, skills-system)
