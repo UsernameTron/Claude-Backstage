@@ -1,6 +1,6 @@
 # claude-code-patterns
 
-Working implementation monorepo for 43 Claude Code subsystems with 567 tests.
+Implementation monorepo for 43 Claude Code subsystems — working code (extract/translate) and design references (build) — with 567 tests.
 
 ## Tiers
 
@@ -36,7 +36,7 @@ ivr-call-flow-validator <- multi-step-ivr-input-validator
 - Package scope: `@claude-patterns/{name}` — tier directory invisible to imports
 - TypeScript: strict mode, ES2022, Bun workspaces
 - Python: pip install -e, pyproject.toml
-- All packages: working reference implementations with tests (567 tests across 43 packages)
+- All packages: working implementations (extract/translate tiers) and architectural references (build tier) with tests (567 tests across 43 packages)
 - Entry points: `src/index.ts` (TS) or `src/{name}/__init__.py` (Python)
 - Test isolation: packages with module-level mutable state export `resetState()` for test cleanup
 - Type safety: runtime type guards over `as` assertions — use `satisfies` or guard functions instead of unsafe casts
