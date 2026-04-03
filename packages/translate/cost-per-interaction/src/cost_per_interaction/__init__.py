@@ -9,10 +9,9 @@ KB reference: Section 29 — Cost Tracking, Section 43
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from datetime import datetime
 from enum import Enum
-from typing import Optional
 
 
 class Channel(Enum):
@@ -30,10 +29,10 @@ class InteractionCost:
     """Cost record for a single interaction."""
     channel: Channel
     cost_usd: float
-    duration_seconds: Optional[float] = None
-    agent_id: Optional[str] = None
-    queue_id: Optional[str] = None
-    timestamp: Optional[datetime] = None
+    duration_seconds: float | None = None
+    agent_id: str | None = None
+    queue_id: str | None = None
+    timestamp: datetime | None = None
 
 
 @dataclass
@@ -67,7 +66,7 @@ class ChannelCostAggregator:
             return 0.0
         return sum(i.cost_usd for i in interactions) / len(interactions)
 
-    def get_summary(self, channel: Optional[Channel] = None) -> list[ChannelSummary]:
+    def get_summary(self, channel: Channel | None = None) -> list[ChannelSummary]:
         """Get cost summary, optionally filtered by channel."""
         channels = [channel] if channel is not None else list(self._interactions.keys())
         result: list[ChannelSummary] = []

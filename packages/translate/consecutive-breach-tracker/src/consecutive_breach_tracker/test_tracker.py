@@ -1,11 +1,8 @@
 """Tests for ConsecutiveBreachTracker."""
 
-import pytest
-
 from consecutive_breach_tracker import (
     BREACH_THRESHOLDS,
     BreachAction,
-    BreachState,
     ConsecutiveBreachTracker,
 )
 

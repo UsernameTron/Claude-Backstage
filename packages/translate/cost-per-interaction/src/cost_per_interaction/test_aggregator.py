@@ -1,12 +1,8 @@
 """Tests for ChannelCostAggregator."""
 
-import pytest
-from datetime import datetime
-
 from cost_per_interaction import (
     Channel,
     ChannelCostAggregator,
-    ChannelSummary,
     InteractionCost,
 )
 
