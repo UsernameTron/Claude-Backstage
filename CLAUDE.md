@@ -38,6 +38,8 @@ ivr-call-flow-validator <- multi-step-ivr-input-validator
 - Python: pip install -e, pyproject.toml
 - All packages: working reference implementations with tests (567 tests across 43 packages)
 - Entry points: `src/index.ts` (TS) or `src/{name}/__init__.py` (Python)
+- Test isolation: packages with module-level mutable state export `resetState()` for test cleanup
+- Type safety: runtime type guards over `as` assertions — use `satisfies` or guard functions instead of unsafe casts
 
 ## Commands
 
@@ -45,8 +47,8 @@ ivr-call-flow-validator <- multi-step-ivr-input-validator
 make scaffold-check  # Validate all 43 dirs have required files
 make type-check      # tsc --noEmit across all TS packages
 make lint            # Biome (TS) + Ruff (Python)
+make test            # Run all tests (513 TS + 54 Python)
 make list-packages   # Enumerate all 43 with tier and priority
-bun test             # Run all 513 TS tests
 ```
 
 ## Tech Stack

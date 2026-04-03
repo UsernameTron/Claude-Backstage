@@ -2,7 +2,7 @@
 
 ## 1. Project Summary
 
-Type-stub monorepo organizing 43 Claude Code subsystems as independently extractable packages across three tiers. This is a **build reference only** -- no runtime behavior, no deployable artifacts, no executable code.
+Working implementation monorepo organizing 43 Claude Code subsystems as independently extractable packages across three tiers. This is a **build reference only** -- no runtime behavior, no deployable artifacts, no production deployment.
 
 Each package maps directly to a real Claude Code subsystem with:
 - Exact source file paths and LOC counts
