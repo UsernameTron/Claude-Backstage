@@ -56,30 +56,124 @@ export interface ResolveResult {
 // Source of keybinding definitions
 export type KeybindingSource = "default" | "user" | "extension" | "platform";
 
+// --- Module-level state ---
+const bindings: Map<KeybindingSource, ParsedBinding[]> = new Map();
+
+const KNOWN_MODIFIERS: Set<string> = new Set(["ctrl", "alt", "shift", "meta", "cmd"]);
+
+// Parse a raw keystroke string into a structured binding
+export function parseKeystroke(raw: string): ParsedBinding {
+  // Find last "+" to split key from modifiers.
+  // Edge case: "Ctrl++" means key is "+" and modifier is "ctrl".
+  const lastPlus = raw.lastIndexOf("+");
+
+  let key: string;
+  let modPart: string;
+
+  if (lastPlus === -1) {
+    // No "+" at all — single key like "a"
+    key = raw.toLowerCase();
+    modPart = "";
+  } else {
+    const afterPlus = raw.slice(lastPlus + 1);
+    if (afterPlus === "") {
+      // Ends with "+", so key is "+" — modifiers are everything before the trailing "+"
+      key = "+";
+      const beforeTrailing = raw.slice(0, lastPlus);
+      modPart = beforeTrailing;
+    } else {
+      key = afterPlus.toLowerCase();
+      modPart = raw.slice(0, lastPlus);
+    }
+  }
+
+  const modifiers: Modifier[] = modPart
+    ? modPart
+        .split("+")
+        .map((m) => m.toLowerCase().trim())
+        .filter((m) => KNOWN_MODIFIERS.has(m)) as Modifier[]
+    : [];
+
+  return { key, modifiers, context: "global", command: "" };
+}
+
+// Register a binding under a given source
+export function registerBinding(
+  source: KeybindingSource,
+  binding: ParsedBinding,
+): void {
+  const list = bindings.get(source) || [];
+  list.push(binding);
+  bindings.set(source, list);
+}
+
 // Load all bindings from a given source
-export function loadKeybindings(_source: KeybindingSource): ParsedBinding[] {
-  // TODO: extract from keybindings/ loading logic
-  throw new Error("TODO: extract from keybindings/ loading logic");
+export function loadKeybindings(source: KeybindingSource): ParsedBinding[] {
+  return bindings.get(source) || [];
 }
 
 // Resolve a key + modifiers in a context to a command
 export function resolveKey(
-  _key: string,
-  _modifiers: Modifier[],
-  _context: KeyContext,
+  key: string,
+  modifiers: Modifier[],
+  context: KeyContext,
 ): ResolveResult {
-  // TODO: extract from keybindings/ resolution logic
-  throw new Error("TODO: extract from keybindings/ resolution logic");
-}
+  const normalizedKey = key.toLowerCase();
+  const sortedMods = [...modifiers].sort();
 
-// Parse a raw keystroke string into a structured binding
-export function parseKeystroke(_raw: string): ParsedBinding {
-  // TODO: extract from keybindings/ parser
-  throw new Error("TODO: extract from keybindings/ parser");
+  const matches: ParsedBinding[] = [];
+
+  for (const sourceBindings of bindings.values()) {
+    for (const b of sourceBindings) {
+      if (b.key !== normalizedKey) continue;
+      const bSortedMods = [...b.modifiers].sort();
+      if (bSortedMods.length !== sortedMods.length) continue;
+      if (!bSortedMods.every((m, i) => m === sortedMods[i])) continue;
+      if (b.context !== context && b.context !== "global") continue;
+      matches.push(b);
+    }
+  }
+
+  if (matches.length === 0) {
+    return { command: null, binding: null, conflicts: [] };
+  }
+
+  return {
+    command: matches[0].command,
+    binding: matches[0],
+    conflicts: matches.slice(1),
+  };
 }
 
 // Detect conflicts across a set of bindings
-export function detectConflicts(_bindings: ParsedBinding[]): KeybindingWarning[] {
-  // TODO: extract from keybindings/ conflict detection
-  throw new Error("TODO: extract from keybindings/ conflict detection");
+export function detectConflicts(bindings: ParsedBinding[]): KeybindingWarning[] {
+  const groups = new Map<string, ParsedBinding[]>();
+
+  for (const b of bindings) {
+    const groupKey = `${b.key}|${[...b.modifiers].sort().join(",")}|${b.context}`;
+    const list = groups.get(groupKey) || [];
+    list.push(b);
+    groups.set(groupKey, list);
+  }
+
+  const warnings: KeybindingWarning[] = [];
+
+  for (const [, group] of groups) {
+    if (group.length < 2) continue;
+    // Only conflict if commands differ
+    const commands = new Set(group.map((b) => b.command));
+    if (commands.size <= 1) continue;
+    warnings.push({
+      type: "conflict",
+      message: `Conflict: ${group[0].key} in ${group[0].context}`,
+      bindings: group,
+    });
+  }
+
+  return warnings;
+}
+
+// Clear all registered bindings (for test isolation)
+export function resetState(): void {
+  bindings.clear();
 }
