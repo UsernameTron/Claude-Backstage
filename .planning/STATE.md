@@ -1,9 +1,9 @@
 ---
 gsd_state_version: 1.0
-milestone: v2.1
-milestone_name: milestone
-status: executing
-stopped_at: Completed 05-01-PLAN.md
+milestone: v2.2
+milestone_name: Implementations
+status: planning
+stopped_at: Milestone v2.2 initialized
 last_updated: "2026-04-02T20:56:56.763Z"
 last_activity: 2026-04-02
 progress:

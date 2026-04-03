@@ -25,7 +25,23 @@ Every package maps directly to a real Claude Code subsystem with exact source pa
 
 ### Active
 
-(None — next milestone requirements TBD)
+- [ ] Implement all 43 packages from type stubs to working code (6 waves)
+- [ ] Each package: replace TODO throws with real implementations
+- [ ] Tests for each implemented package
+- [ ] Cross-package runtime imports resolve (not just type-level)
+- [ ] make type-check, make lint pass after each wave
+
+## Current Milestone: v2.2 Implementations
+
+**Goal:** Replace all TODO-throwing type stubs with working implementations across 43 packages in 6 waves, following the IMPLEMENTATION-PLAYBOOK.md build order.
+
+**Target features:**
+- Wave 1: 4 quick-win packages (45-323 LOC)
+- Wave 2: 4 core architecture packages (up to 9.4K LOC)
+- Wave 3: 11 P1 portfolio packages with dependency chains
+- Wave 4: 8 P2 engineering packages
+- Wave 5: 4 P3 packages
+- Wave 6: 12 expansion packages
 
 ### Out of Scope
 
@@ -66,4 +82,22 @@ Every package maps directly to a real Claude Code subsystem with exact source pa
 | Worktree isolation for independent plans only | Dependent plans need prior-wave commits visible | Learned — Wave 2+ runs without isolation |
 
 ---
-*Last updated: 2026-04-02 after v2.1 milestone*
+## Evolution
+
+This document evolves at phase transitions and milestone boundaries.
+
+**After each phase transition:**
+1. Requirements invalidated? → Move to Out of Scope with reason
+2. Requirements validated? → Move to Validated with phase reference
+3. New requirements emerged? → Add to Active
+4. Decisions to log? → Add to Key Decisions
+5. "What This Is" still accurate? → Update if drifted
+
+**After each milestone:**
+1. Full review of all sections
+2. Core Value check — still the right priority?
+3. Audit Out of Scope — reasons still valid?
+4. Update Context with current state
+
+---
+*Last updated: 2026-04-02 — v2.2 Implementations milestone started*
