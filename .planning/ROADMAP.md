@@ -41,8 +41,8 @@
   5. make type-check and make lint pass for entire monorepo
 **Plans:** 2 plans
 Plans:
-- [ ] 06-01-PLAN.md — Implement TS packages (denial-tracking + cost-tracker)
-- [ ] 06-02-PLAN.md — Implement Python packages (consecutive-breach-tracker + cost-per-interaction)
+- [x] 06-01-PLAN.md — Implement TS packages (denial-tracking + cost-tracker)
+- [x] 06-02-PLAN.md — Implement Python packages (consecutive-breach-tracker + cost-per-interaction)
 
 ### Phase 7: Wave 2 — Core Architecture
 **Goal**: Implement 4 core architectural packages including the 9.4K LOC permission-system
