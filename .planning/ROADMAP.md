@@ -54,9 +54,9 @@ Plans:
   3. context-injection implements dual-position injection (system + user context)
   4. permission-system implements full permission rule evaluation (deny > ask > allow)
   5. All 4 packages compile, lint clean, no TODO throws
-**Plans:** 3 plans
+**Plans:** 1/3 plans executed
 Plans:
-- [ ] 07-01-PLAN.md — Implement prompt-cache-optimizer (TDD, translate tier)
+- [x] 07-01-PLAN.md — Implement prompt-cache-optimizer (TDD, translate tier)
 - [ ] 07-02-PLAN.md — Implement prompt-system + context-injection (TDD, build tier)
 - [ ] 07-03-PLAN.md — Implement permission-system (TDD, extract tier)
 
@@ -110,7 +110,7 @@ Plans:
 | 4. Build + Translate Completion | v2.1 | 4/4 | Complete | 2026-04-02 |
 | 5. Scaffold Expansion | v2.1 | 4/4 | Complete | 2026-04-02 |
 | 6. Wave 1 Quick Wins | v2.2 | 2/2 | Complete | 2026-04-03 |
-| 7. Wave 2 Core Architecture | v2.2 | 0/3 | Planned | - |
+| 7. Wave 2 Core Architecture | v2.2 | 1/3 | In Progress|  |
 | 8. Wave 3 P1 Portfolio | v2.2 | 0/0 | Not started | - |
 | 9. Wave 4 P2 Engineering | v2.2 | 0/0 | Not started | - |
 | 10. Wave 5 P3 Nice to Have | v2.2 | 0/0 | Not started | - |
