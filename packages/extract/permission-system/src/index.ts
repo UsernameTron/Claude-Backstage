@@ -206,7 +206,7 @@ export function hasPermissionsToUseTool(
     case "auto":
       return {
         allowed: false,
-        reason: "Auto mode: needs classifier (not implemented)",
+        reason: "Auto mode: needs yolo-classifier integration (see @claude-patterns/yolo-classifier)",
       };
     case "default":
     default:
