@@ -1,5 +1,24 @@
 # Milestones
 
+## v2.2 Implementations (Shipped: 2026-04-03)
+
+**Phases completed:** 6 phases, 18 plans, 22 tasks
+
+**Key accomplishments:**
+
+- DenialTracker with 3-consecutive/20-total threshold fallback and cost-tracker with model-keyed Map accumulation and $X.XX formatting
+- ConsecutiveBreachTracker with 3-tier escalation and ChannelCostAggregator with per-channel cost-per-contact calculation, 30 pytest tests passing
+- 3-tier scope-priority cache ordering with stable-first tiebreak, reducing LLM API costs 40-70%
+- Yolo-classifier with permission-system cross-package imports and IVR call flow validator with BFS graph reachability
+- Multi-agent coordinator with mcp-integration type imports and Python skill routing with deny>ask>allow permission cascade
+- Sandbox config with self-referential write denials and dangerous command detection with quote-aware compound decomposition
+- 1. [Rule 3 - Blocking] compositeGateCheck signature changed to accept config
+- System reminder injection, output style LRU cache, and dialogue history manager with compact boundary support -- 3 packages, 37 TDD tests
+- 3 build-tier packages implemented: plugin-lifecycle-manager (4-phase lifecycle), sdk-bridge (NDJSON framing), onboarding-flow-engine (dependency-ordered steps) with 26 passing TDD tests
+- 3 translate-tier packages implemented: Python WFM scheduling coordinator, Genesys flow security audit with 3 rules, and multi-step IVR DTMF validator with cross-package imports
+
+---
+
 ## v2.1 Type-Stub Monorepo (Shipped: 2026-04-02)
 
 **Phases completed:** 5 phases, 15 plans, 27 tasks
