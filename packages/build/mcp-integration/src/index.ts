@@ -67,36 +67,87 @@ export interface McpConnection {
   status: "connected" | "disconnected" | "error";
 }
 
+/**
+ * Validate that an MCP server config has required fields.
+ * stdio needs a non-empty command; http/sse need a non-empty url.
+ */
+function validateConfig(config: McpServerConfig): boolean {
+  switch (config.type) {
+    case "stdio":
+      return config.command.length > 0;
+    case "http":
+      return config.url.length > 0;
+    case "sse":
+      return config.url.length > 0;
+  }
+}
+
 // Connect to an MCP server and discover its tools/resources
-export function connectToServer(
+export async function connectToServer(
   config: ScopedMcpServerConfig,
 ): Promise<McpConnection> {
-  // TODO: extract from services/mcp/
-  throw new Error("TODO: extract from services/mcp/");
+  if (!validateConfig(config.config)) {
+    return {
+      serverName: config.serverName,
+      tools: [],
+      resources: [],
+      status: "error",
+    };
+  }
+
+  // Pattern library: simulate connection (no real I/O).
+  // Tools and resources would be populated by MCP discovery protocol in production.
+  return {
+    serverName: config.serverName,
+    tools: [],
+    resources: [],
+    status: "connected",
+  };
 }
 
 // Aggregate tools and resources from multiple connections
 export function getMcpToolsCommandsAndResources(
   connections: McpConnection[],
 ): { tools: McpTool[]; resources: McpResource[] } {
-  // TODO: extract from services/mcp/
-  throw new Error("TODO: extract from services/mcp/");
+  const active = connections.filter((c) => c.status === "connected");
+  return {
+    tools: active.flatMap((c) => c.tools),
+    resources: active.flatMap((c) => c.resources),
+  };
 }
 
 // Disconnect from an MCP server
-export function disconnectServer(
+export async function disconnectServer(
   connection: McpConnection,
 ): Promise<void> {
-  // TODO: extract from services/mcp/
-  throw new Error("TODO: extract from services/mcp/");
+  connection.status = "disconnected";
+  connection.tools = [];
+  connection.resources = [];
 }
 
 // Proxy a tool call through an MCP connection
-export function proxyToolCall(
+export async function proxyToolCall(
   connection: McpConnection,
   toolName: string,
   input: Record<string, unknown>,
 ): Promise<unknown> {
-  // TODO: extract from services/mcp/
-  throw new Error("TODO: extract from services/mcp/");
+  if (connection.status !== "connected") {
+    throw new Error(
+      `Cannot proxy tool call: server "${connection.serverName}" is ${connection.status}`,
+    );
+  }
+
+  const tool = connection.tools.find((t) => t.name === toolName);
+  if (!tool) {
+    throw new Error(
+      `Tool "${toolName}" not found on server "${connection.serverName}"`,
+    );
+  }
+
+  // Pattern library: simulate tool execution result
+  return {
+    toolName,
+    input,
+    output: `Simulated result from ${connection.serverName}/${toolName}`,
+  };
 }
