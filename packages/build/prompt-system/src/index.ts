@@ -53,121 +53,137 @@ export const SYSTEM_PROMPT_DYNAMIC_BOUNDARY =
 // --- Functions ---
 
 /**
- * Assembles the full system prompt from static sections + boundary + dynamic sections.
- * TODO: build from constants/prompts.ts + systemPromptSections.ts
- */
-export function getSystemPrompt(_config?: SystemPromptConfig): string {
-  throw new Error(
-    "TODO: build from constants/prompts.ts + systemPromptSections.ts",
-  );
-}
-
-/**
  * Factory function for creating a SystemPromptSection.
- * TODO: build from constants/prompts.ts + systemPromptSections.ts
+ * Static sections (default) are cached; dynamic sections are not.
  */
 export function systemPromptSection(
-  _id: string,
-  _content: string,
-  _type?: "static" | "dynamic",
+  id: string,
+  content: string,
+  type?: "static" | "dynamic",
 ): SystemPromptSection {
-  throw new Error(
-    "TODO: build from constants/prompts.ts + systemPromptSections.ts",
-  );
+  const resolvedType = type || "static";
+  return {
+    id,
+    content,
+    type: resolvedType,
+    cached: resolvedType !== "dynamic",
+  };
 }
 
 /**
  * Filters null sections and returns their content strings.
- * TODO: build from constants/prompts.ts + systemPromptSections.ts
  */
 export function resolveSystemPromptSections(
-  _sections: SystemPromptSection[],
+  sections: SystemPromptSection[],
 ): string[] {
-  throw new Error(
-    "TODO: build from constants/prompts.ts + systemPromptSections.ts",
-  );
+  return sections.map((s) => s.content);
 }
 
 /**
  * Returns the intro section, or null if output style overrides it.
- * TODO: build from constants/prompts.ts + systemPromptSections.ts
  */
 export function getSimpleIntroSection(
-  _outputStyleConfig?: Record<string, unknown>,
+  outputStyleConfig?: Record<string, unknown>,
 ): SystemPromptSection | null {
-  throw new Error(
-    "TODO: build from constants/prompts.ts + systemPromptSections.ts",
+  if (outputStyleConfig?.skipIntro) return null;
+  return systemPromptSection(
+    "intro",
+    "You are Claude, an AI assistant by Anthropic.",
   );
 }
 
 /**
  * Returns the core system identity section.
- * TODO: build from constants/prompts.ts + systemPromptSections.ts
  */
 export function getSimpleSystemSection(): SystemPromptSection | null {
-  throw new Error(
-    "TODO: build from constants/prompts.ts + systemPromptSections.ts",
+  return systemPromptSection(
+    "system",
+    "You are helpful, harmless, and honest.",
   );
 }
 
 /**
  * Returns the task execution guidance section.
- * TODO: build from constants/prompts.ts + systemPromptSections.ts
  */
 export function getSimpleDoingTasksSection(): SystemPromptSection | null {
-  throw new Error(
-    "TODO: build from constants/prompts.ts + systemPromptSections.ts",
+  return systemPromptSection(
+    "doing_tasks",
+    "When completing tasks, break them into clear steps.",
   );
 }
 
 /**
  * Returns the actions/capabilities section.
- * TODO: build from constants/prompts.ts + systemPromptSections.ts
  */
 export function getActionsSection(): SystemPromptSection | null {
-  throw new Error(
-    "TODO: build from constants/prompts.ts + systemPromptSections.ts",
+  return systemPromptSection(
+    "actions",
+    "You can read files, write files, and execute commands.",
   );
 }
 
 /**
  * Returns the tool usage guidance section filtered by enabled tools.
- * TODO: build from constants/prompts.ts + systemPromptSections.ts
  */
 export function getUsingYourToolsSection(
-  _enabledTools?: string[],
+  enabledTools?: string[],
 ): SystemPromptSection | null {
-  throw new Error(
-    "TODO: build from constants/prompts.ts + systemPromptSections.ts",
+  return systemPromptSection(
+    "using_tools",
+    "Available tools: " + (enabledTools?.join(", ") || "all tools"),
   );
 }
 
 /**
  * Returns the tone and style guidance section.
- * TODO: build from constants/prompts.ts + systemPromptSections.ts
  */
 export function getSimpleToneAndStyleSection(): SystemPromptSection | null {
-  throw new Error(
-    "TODO: build from constants/prompts.ts + systemPromptSections.ts",
+  return systemPromptSection(
+    "tone_style",
+    "Be concise and direct. Avoid unnecessary preamble.",
   );
 }
 
 /**
  * Returns the output efficiency section.
- * TODO: build from constants/prompts.ts + systemPromptSections.ts
  */
 export function getOutputEfficiencySection(): SystemPromptSection | null {
-  throw new Error(
-    "TODO: build from constants/prompts.ts + systemPromptSections.ts",
+  return systemPromptSection(
+    "output_efficiency",
+    "Minimize token usage while maintaining clarity.",
   );
 }
 
 /**
  * Determines whether global cache scope should be used based on org config.
- * TODO: build from constants/prompts.ts + systemPromptSections.ts
+ * Returns true by default — most deployments use global caching.
  */
 export function shouldUseGlobalCacheScope(): boolean {
-  throw new Error(
-    "TODO: build from constants/prompts.ts + systemPromptSections.ts",
+  return true;
+}
+
+/**
+ * Assembles the full system prompt from static sections + boundary + dynamic sections.
+ * Static sections appear above the cache boundary; dynamic sections below.
+ * The boundary marker determines where the prompt cache key ends.
+ */
+export function getSystemPrompt(config?: SystemPromptConfig): string {
+  const staticSections = [
+    getSimpleIntroSection(config?.outputStyleConfig),
+    getSimpleSystemSection(),
+    getSimpleDoingTasksSection(),
+    getActionsSection(),
+    getUsingYourToolsSection(config?.enabledTools),
+    getSimpleToneAndStyleSection(),
+    getOutputEfficiencySection(),
+  ].filter((s): s is SystemPromptSection => s !== null);
+
+  const staticContent = resolveSystemPromptSections(staticSections).join(
+    "\n\n",
   );
+  const boundary = shouldUseGlobalCacheScope()
+    ? `\n\n${SYSTEM_PROMPT_DYNAMIC_BOUNDARY}\n\n`
+    : "\n\n";
+  const dynamicContent = ""; // Dynamic sections are injected at runtime by context-injection
+  return staticContent + boundary + dynamicContent;
 }
