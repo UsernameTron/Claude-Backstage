@@ -69,6 +69,12 @@ Plans:
   2. Cross-package imports resolve at runtime (yolo-classifier imports from permission-system)
   3. agent-dialogue-loop integrates streaming-tool-executor + state-store + token-estimation
   4. make type-check and make lint pass for entire monorepo
+**Plans:** 4 plans
+Plans:
+- [ ] 08-01-PLAN.md — Extract standalone (token-estimation, streaming-tool-executor, state-store, claudemd-memory)
+- [ ] 08-02-PLAN.md — Extract with deps + translate TS (yolo-classifier, ivr-call-flow-validator)
+- [ ] 08-03-PLAN.md — Build standalone + Python (multi-agent-coordinator, agent-skill-routing)
+- [ ] 08-04-PLAN.md — Dep-chain packages (auto-compact, agent-dialogue-loop, skills-system)
 
 ### Phase 9: Wave 4 — P2 Engineering Depth
 **Goal**: Implement 8 P2 packages (security, config, path validation, MCP, CLI startup)
@@ -111,7 +117,7 @@ Plans:
 | 5. Scaffold Expansion | v2.1 | 4/4 | Complete | 2026-04-02 |
 | 6. Wave 1 Quick Wins | v2.2 | 2/2 | Complete | 2026-04-03 |
 | 7. Wave 2 Core Architecture | v2.2 | 1/3 | In Progress|  |
-| 8. Wave 3 P1 Portfolio | v2.2 | 0/0 | Not started | - |
+| 8. Wave 3 P1 Portfolio | v2.2 | 0/4 | Not started | - |
 | 9. Wave 4 P2 Engineering | v2.2 | 0/0 | Not started | - |
 | 10. Wave 5 P3 Nice to Have | v2.2 | 0/0 | Not started | - |
 | 11. Wave 6 Expansion | v2.2 | 0/0 | Not started | - |
