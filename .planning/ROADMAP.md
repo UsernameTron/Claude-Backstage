@@ -85,6 +85,11 @@ Plans:
   2. dangerous-command-detection correctly imports from permission-system and path-validation
   3. sandbox-config correctly imports from path-validation
   4. make type-check and make lint pass
+**Plans:** 3 plans
+Plans:
+- [ ] 09-01-PLAN.md — Extract standalone (subprocess-env-scrubbing, config-migration, path-validation, read-only-validation)
+- [ ] 09-02-PLAN.md — Build standalone (mcp-integration, cli-startup-optimization)
+- [ ] 09-03-PLAN.md — Extract with deps (sandbox-config, dangerous-command-detection)
 
 ### Phase 10: Wave 5 — P3 Nice to Have
 **Goal**: Implement 4 P3 packages (analytics, vim FSM, keyboard shortcuts, ink renderer)
@@ -95,6 +100,11 @@ Plans:
   2. vim-mode-fsm has working state machine with transition()
   3. ink-renderer has working render pipeline types
   4. make type-check and make lint pass
+**Plans:** 3 plans
+Plans:
+- [ ] 09-01-PLAN.md — Extract standalone (subprocess-env-scrubbing, config-migration, path-validation, read-only-validation)
+- [ ] 09-02-PLAN.md — Build standalone (mcp-integration, cli-startup-optimization)
+- [ ] 09-03-PLAN.md — Extract with deps (sandbox-config, dangerous-command-detection)
 
 ### Phase 11: Wave 6 — Expansion Implementations
 **Goal**: Implement 12 expansion packages (#32-43)
@@ -118,6 +128,6 @@ Plans:
 | 6. Wave 1 Quick Wins | v2.2 | 2/2 | Complete | 2026-04-03 |
 | 7. Wave 2 Core Architecture | v2.2 | 1/3 | In Progress|  |
 | 8. Wave 3 P1 Portfolio | v2.2 | 0/4 | Not started | - |
-| 9. Wave 4 P2 Engineering | v2.2 | 0/0 | Not started | - |
+| 9. Wave 4 P2 Engineering | v2.2 | 0/3 | Not started | - |
 | 10. Wave 5 P3 Nice to Have | v2.2 | 0/0 | Not started | - |
 | 11. Wave 6 Expansion | v2.2 | 0/0 | Not started | - |
