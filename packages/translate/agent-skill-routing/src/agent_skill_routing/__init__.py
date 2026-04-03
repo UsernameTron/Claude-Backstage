@@ -18,7 +18,6 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Literal
 
-
 RoutingAction = Literal["deny", "ask", "allow"]
 """Routing action following the deny > ask > allow cascade from permission system."""
 

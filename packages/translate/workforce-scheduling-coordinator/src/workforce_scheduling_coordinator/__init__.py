@@ -11,9 +11,8 @@ KB reference: Section 24 (Multi-Agent Orchestration), Section 43 (Contact Center
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from enum import Enum
-from typing import Optional
 
 
 class JobType(Enum):
@@ -32,7 +31,7 @@ class SchedulingJob:
     job_type: JobType
     status: str
     parameters: dict
-    result: Optional[dict] = None
+    result: dict | None = None
 
 
 @dataclass
