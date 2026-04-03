@@ -1,6 +1,6 @@
 # claude-code-patterns
 
-Type-stub monorepo for 43 Claude Code subsystems. Build reference only — no implementations.
+Working implementation monorepo for 43 Claude Code subsystems with 567 tests.
 
 ## Tiers
 
@@ -8,7 +8,7 @@ Type-stub monorepo for 43 Claude Code subsystems. Build reference only — no im
 - **build/** (19 TS) — Design reference. Architectural patterns for new builds.
 - **translate/** (8 mixed) — New builds from pattern adaptation. 4 Python + 4 TypeScript.
 
-## P0 Packages (build these first)
+## P0 Packages (core foundation)
 
 1. `permission-system` — Foundation. Permission rules, modes, and evaluation (9.4K LOC)
 2. `denial-tracking` — Denial counter with adaptive fallback (45 LOC)
@@ -36,7 +36,7 @@ ivr-call-flow-validator <- multi-step-ivr-input-validator
 - Package scope: `@claude-patterns/{name}` — tier directory invisible to imports
 - TypeScript: strict mode, ES2022, Bun workspaces
 - Python: pip install -e, pyproject.toml
-- All packages: type stubs + TODO comments only. Zero implementations.
+- All packages: working reference implementations with tests (567 tests across 43 packages)
 - Entry points: `src/index.ts` (TS) or `src/{name}/__init__.py` (Python)
 
 ## Commands
@@ -46,6 +46,7 @@ make scaffold-check  # Validate all 43 dirs have required files
 make type-check      # tsc --noEmit across all TS packages
 make lint            # Biome (TS) + Ruff (Python)
 make list-packages   # Enumerate all 43 with tier and priority
+bun test             # Run all 513 TS tests
 ```
 
 ## Tech Stack
