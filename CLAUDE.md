@@ -56,3 +56,7 @@ make list-packages   # Enumerate all 43 with tier and priority
 - Bun workspaces (not npm/yarn)
 - TypeScript strict mode, ES2022 target
 - Python 3.11+ for translate tier
+
+## Reference
+
+For design pattern details, threat models, and cross-domain application guidance, see `claude-code-technical-knowledge-base-v2.1.md` sections 37–43.
