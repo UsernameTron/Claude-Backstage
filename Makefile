@@ -1,4 +1,4 @@
-.PHONY: scaffold-check type-check lint list-packages
+.PHONY: scaffold-check type-check lint test list-packages
 
 # All 43 package directories (used for scaffold validation)
 EXTRACT_PKGS := permission-system denial-tracking cost-tracker state-store \
@@ -66,6 +66,20 @@ lint:
 		packages/translate/cost-per-interaction \
 		packages/translate/agent-skill-routing \
 		packages/translate/workforce-scheduling-coordinator 2>/dev/null || true
+
+test:
+	@echo "=== TypeScript (bun:test) ==="; \
+	bun test packages/extract packages/build \
+		packages/translate/ivr-call-flow-validator \
+		packages/translate/prompt-cache-optimizer \
+		packages/translate/genesys-flow-security-validator \
+		packages/translate/multi-step-ivr-input-validator; \
+	echo ""; \
+	echo "=== Python (pytest) ==="; \
+	for pkg in $(TRANSLATE_PY_PKGS); do \
+		echo "Testing packages/translate/$$pkg..."; \
+		(cd "packages/translate/$$pkg" && python -m pytest src/ -q) || true; \
+	done
 
 list-packages:
 	@echo "=== Extract Tier (16 TS) ==="; \
