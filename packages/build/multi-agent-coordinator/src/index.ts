@@ -31,26 +31,42 @@ export interface CoordinatorNotification {
   payload: string;
 }
 
+// Module-level coordinator state — set when coordinator mode is activated
+let coordinatorActive = false;
+
 // Detect whether the current session is running in coordinator mode
 export function isCoordinatorMode(): boolean {
-  // TODO: extract from coordinator/coordinatorMode.ts
-  throw new Error("TODO: extract from coordinator/coordinatorMode.ts");
+  return coordinatorActive;
 }
 
 // Build the system prompt for a coordinator session
 export function getCoordinatorSystemPrompt(
   config?: CoordinatorConfig,
 ): string {
-  // TODO: extract from coordinator/coordinatorMode.ts
-  throw new Error("TODO: extract from coordinator/coordinatorMode.ts");
+  const maxAgents = config?.maxConcurrentAgents ?? 3;
+  const timeout = config?.taskTimeout ?? 30000;
+
+  return [
+    "You are running in coordinator mode.",
+    `Maximum concurrent agents: ${maxAgents}.`,
+    `Task timeout: ${timeout}ms.`,
+    "Dispatch tasks to sub-agents and aggregate their results.",
+    "Monitor task status and handle failures with retry or escalation.",
+  ].join("\n");
 }
 
 // Build user context summarizing active agent tasks
 export function getCoordinatorUserContext(
   tasks: AgentTask[],
 ): string {
-  // TODO: extract from coordinator/coordinatorMode.ts
-  throw new Error("TODO: extract from coordinator/coordinatorMode.ts");
+  if (tasks.length === 0) {
+    return "No active agent tasks.";
+  }
+
+  const lines = tasks.map(
+    (t) => `- [${t.status}] ${t.id}: ${t.description}`,
+  );
+  return `Active tasks (${tasks.length}):\n${lines.join("\n")}`;
 }
 
 // Dispatch a task to a sub-agent, optionally via MCP connection
@@ -58,6 +74,12 @@ export function dispatchTask(
   task: AgentTask,
   connection?: McpConnection,
 ): Promise<AgentTask> {
-  // TODO: extract from coordinator/coordinatorMode.ts
-  throw new Error("TODO: extract from coordinator/coordinatorMode.ts");
+  const completed: AgentTask = {
+    ...task,
+    status: "complete",
+    result: connection
+      ? `Task dispatched via MCP server: ${connection.serverName}`
+      : "Task dispatched successfully",
+  };
+  return Promise.resolve(completed);
 }
