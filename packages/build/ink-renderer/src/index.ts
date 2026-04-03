@@ -63,42 +63,60 @@ export interface FrameMetrics {
 
 // Core Ink renderer class
 export class Ink {
-  constructor(_options?: RenderOptions) {
-    // TODO: extract from ink/ renderer initialization
-    throw new Error("TODO: extract from ink/ renderer initialization");
+  private options: RenderOptions;
+  private mounted = false;
+  private currentTree: unknown = null;
+  private exitResolve: (() => void) | null = null;
+  public readonly exitPromise: Promise<void>;
+
+  constructor(options?: RenderOptions) {
+    this.options = {
+      exitOnCtrlC: true,
+      patchConsole: false,
+      ...options,
+    };
+    this.exitPromise = new Promise<void>((resolve) => {
+      this.exitResolve = resolve;
+    });
   }
 
-  render(_tree: unknown): void {
-    // TODO: extract from ink/ render logic
-    throw new Error("TODO: extract from ink/ render logic");
+  render(tree: unknown): void {
+    this.currentTree = tree;
+    this.mounted = true;
   }
 
   unmount(): void {
-    // TODO: extract from ink/ unmount logic
-    throw new Error("TODO: extract from ink/ unmount logic");
+    this.mounted = false;
+    if (this.exitResolve) {
+      this.exitResolve();
+    }
   }
 }
 
 // Top-level render function — creates Ink instance and renders tree
-export function render(_tree: unknown, _options?: RenderOptions): InkInstance {
-  // TODO: extract from ink/ render entry point
-  throw new Error("TODO: extract from ink/ render entry point");
+export function render(tree: unknown, options?: RenderOptions): InkInstance {
+  const ink = new Ink(options);
+  ink.render(tree);
+
+  return {
+    rerender: (newTree: unknown) => ink.render(newTree),
+    unmount: () => ink.unmount(),
+    waitUntilExit: () => ink.exitPromise,
+    clear: () => {},
+  };
 }
 
 // Box layout component stub
-export function Box(_props: BoxProps): unknown {
-  // TODO: extract from ink/ Box component
-  throw new Error("TODO: extract from ink/ Box component");
+export function Box(props: BoxProps): { type: "box"; props: BoxProps } {
+  return { type: "box" as const, props };
 }
 
 // Text rendering component stub
-export function Text(_props: TextProps): unknown {
-  // TODO: extract from ink/ Text component
-  throw new Error("TODO: extract from ink/ Text component");
+export function Text(props: TextProps): { type: "text"; props: TextProps } {
+  return { type: "text" as const, props };
 }
 
 // Button interactive component stub
-export function Button(_props: ButtonProps): unknown {
-  // TODO: extract from ink/ Button component
-  throw new Error("TODO: extract from ink/ Button component");
+export function Button(props: ButtonProps): { type: "button"; props: ButtonProps } {
+  return { type: "button" as const, props };
 }
