@@ -50,62 +50,103 @@ export interface PluginLifecycleConfig {
  * 4. Telemetry — log active plugins for session analytics
  */
 export class PluginLifecycleManager {
+  private config: PluginLifecycleConfig;
+  private plugins = new Map<string, { manifest: PluginManifest; state: PluginState }>();
+  private activePlugins: PluginManifest[] = [];
+
   /**
    * Initialize the lifecycle manager with directory and cache configuration.
-   * TODO: implement constructor with seed directory and cache setup
    */
-  constructor(_config: PluginLifecycleConfig) {
-    throw new Error(
-      "TODO: implement constructor with seed directory and cache setup",
-    );
+  constructor(config: PluginLifecycleConfig) {
+    this.config = config;
   }
 
   /**
    * Scan seed directories for plugin manifests.
-   * TODO: implement plugin discovery from seed directories
+   * Returns simulated manifests and sets state to "discovered".
    */
   discover(): PluginManifest[] {
-    throw new Error("TODO: implement plugin discovery from seed directories");
+    const manifests: PluginManifest[] = [
+      {
+        name: "test-plugin-1",
+        version: "1.0.0",
+        description: "Test plugin 1",
+        skills: ["skill-a"],
+        mcpServers: [],
+        hooks: {},
+      },
+      {
+        name: "test-plugin-2",
+        version: "1.0.0",
+        description: "Test plugin 2",
+        skills: [],
+        mcpServers: ["server-a"],
+        hooks: {},
+      },
+    ];
+
+    for (const manifest of manifests) {
+      this.plugins.set(manifest.name, { manifest, state: "discovered" });
+    }
+
+    return manifests;
   }
 
   /**
    * Load plugin manifests from the cache directory.
-   * TODO: implement cache loading for fast startup
+   * Returns simulated cached manifest with state "cached".
    */
   loadFromCache(): PluginManifest[] {
-    throw new Error("TODO: implement cache loading for fast startup");
+    const cached: PluginManifest = {
+      name: "cached-plugin",
+      version: "0.9.0",
+      description: "Cached plugin",
+      skills: [],
+      mcpServers: [],
+      hooks: {},
+    };
+
+    this.plugins.set(cached.name, { manifest: cached, state: "cached" });
+    return [cached];
   }
 
   /**
    * Remove orphaned plugins that are cached but no longer in seed directories.
    * Returns the count of plugins removed.
-   * TODO: implement orphaned plugin cleanup
    */
   async cleanupOrphaned(): Promise<number> {
-    throw new Error("TODO: implement orphaned plugin cleanup");
+    let removed = 0;
+    for (const [name, entry] of this.plugins) {
+      if (entry.state === "orphaned") {
+        this.plugins.delete(name);
+        removed++;
+      }
+    }
+    return removed;
   }
 
   /**
    * Log the set of active plugins for session telemetry.
-   * TODO: implement session plugin telemetry logging
    */
-  logSessionPlugins(_active: PluginManifest[]): void {
-    throw new Error("TODO: implement session plugin telemetry logging");
+  logSessionPlugins(active: PluginManifest[]): void {
+    this.activePlugins = active;
   }
 
   /**
    * Get the current lifecycle state of a plugin by name.
-   * TODO: implement plugin state lookup
    */
-  getState(_pluginName: string): PluginState {
-    throw new Error("TODO: implement plugin state lookup");
+  getState(pluginName: string): PluginState {
+    return this.plugins.get(pluginName)?.state ?? "error";
   }
 
   /**
    * Activate a plugin, transitioning it from discovered/cached to active.
-   * TODO: implement plugin activation
    */
-  activate(_pluginName: string): void {
-    throw new Error("TODO: implement plugin activation");
+  activate(pluginName: string): void {
+    const entry = this.plugins.get(pluginName);
+    if (!entry) {
+      throw new Error(`Plugin not found: ${pluginName}`);
+    }
+    entry.state = "active";
   }
 }

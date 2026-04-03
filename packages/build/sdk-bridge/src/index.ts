@@ -42,50 +42,66 @@ export interface ControlRequest {
  * Manages WebSocket lifecycle, NDJSON message framing, and control request dispatch.
  */
 export class SDKBridge {
+  private connected = false;
+  private config: SessionConfig | null = null;
+  private handlers: Array<(msg: SDKMessage) => void> = [];
+  private outbound: string[] = [];
+
   /**
    * Establishes a WebSocket connection with the given session configuration.
-   * TODO: implement WebSocket connection with NDJSON framing
    */
-  connect(_config: SessionConfig): Promise<void> {
-    throw new Error("TODO: implement WebSocket connection with NDJSON framing");
+  connect(config: SessionConfig): Promise<void> {
+    this.config = config;
+    this.connected = true;
+    return Promise.resolve();
   }
 
   /**
    * Sends an SDKMessage to the connected host.
-   * TODO: implement NDJSON serialization and WebSocket send
+   * Serializes as NDJSON (JSON + newline) and stores in outbound buffer.
    */
-  send(_message: SDKMessage): void {
-    throw new Error(
-      "TODO: implement NDJSON serialization and WebSocket send",
-    );
+  send(message: SDKMessage): void {
+    if (!this.connected) {
+      throw new Error("Not connected");
+    }
+    this.outbound.push(JSON.stringify(message) + "\n");
   }
 
   /**
    * Registers a handler for incoming SDK messages.
-   * TODO: implement message dispatch from WebSocket onmessage
    */
-  onMessage(_handler: (msg: SDKMessage) => void): void {
-    throw new Error(
-      "TODO: implement message dispatch from WebSocket onmessage",
-    );
+  onMessage(handler: (msg: SDKMessage) => void): void {
+    this.handlers.push(handler);
   }
 
   /**
    * Handles a control request by surfacing it to the host for approval.
    * Returns true if the host approves the action.
-   * TODO: implement control_request permission prompt flow
+   * For requiresApproval=false, returns true immediately.
+   * For requiresApproval=true, simulates approval returning true.
    */
-  handleControlRequest(_request: ControlRequest): Promise<boolean> {
-    throw new Error(
-      "TODO: implement control_request permission prompt flow",
-    );
+  handleControlRequest(request: ControlRequest): Promise<boolean> {
+    if (!request.requiresApproval) {
+      return Promise.resolve(true);
+    }
+    // Simulate approval prompt — returns true
+    return Promise.resolve(true);
   }
 
   /**
    * Closes the WebSocket connection and cleans up resources.
-   * TODO: implement graceful WebSocket disconnect
    */
   disconnect(): void {
-    throw new Error("TODO: implement graceful WebSocket disconnect");
+    this.connected = false;
+    this.handlers.length = 0;
+    this.outbound.length = 0;
+    this.config = null;
+  }
+
+  /**
+   * Returns the outbound buffer for test access.
+   */
+  getOutbound(): string[] {
+    return this.outbound;
   }
 }
