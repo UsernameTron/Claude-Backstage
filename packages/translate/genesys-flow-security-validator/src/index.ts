@@ -77,16 +77,23 @@ export interface FlowValidationResult {
 }
 
 /**
- * Validate a Genesys Architect flow against all built-in security rules.
- *
- * @param flow - The Architect flow to validate
- * @returns Validation result with any vulnerabilities found
+ * Create a FlowVulnerability from a rule match on a specific node.
  */
-export function validateFlow(flow: ArchitectFlow): FlowValidationResult {
-  // TODO: translate from security audit patterns (Sections 8-10, 38)
-  throw new Error(
-    "TODO: translate from security audit patterns (Sections 8-10, 38)"
-  );
+function makeVulnerability(
+  ruleId: string,
+  severity: ValidationSeverity,
+  node: ArchitectNode,
+  flow: ArchitectFlow,
+  remediation: string
+): FlowVulnerability {
+  return {
+    ruleId,
+    severity,
+    nodeId: node.id,
+    flowName: flow.name,
+    description: `${ruleId} found on node "${node.id}" (${node.type})`,
+    remediation,
+  };
 }
 
 /**
@@ -95,8 +102,82 @@ export function validateFlow(flow: ArchitectFlow): FlowValidationResult {
  * @returns Array of built-in validation rules
  */
 export function getBuiltInRules(): FlowValidationRule[] {
-  // TODO: translate from security audit patterns (Sections 8-10, 38)
-  throw new Error(
-    "TODO: translate from security audit patterns (Sections 8-10, 38)"
-  );
+  return [
+    {
+      id: "unprotected-data-action",
+      severity: "critical",
+      description: "Data action without encryption",
+      check: (flow: ArchitectFlow): FlowVulnerability[] =>
+        flow.nodes
+          .filter(
+            (n) => n.type === "data_action" && n.properties.encrypted !== true
+          )
+          .map((n) =>
+            makeVulnerability(
+              "unprotected-data-action",
+              "critical",
+              n,
+              flow,
+              "Enable encryption on data action node"
+            )
+          ),
+    },
+    {
+      id: "pii-in-debug",
+      severity: "warning",
+      description: "PII exposed in debug/log nodes",
+      check: (flow: ArchitectFlow): FlowVulnerability[] =>
+        flow.nodes
+          .filter(
+            (n) =>
+              (n.type.includes("debug") || n.type.includes("log")) &&
+              n.properties.logPii === true
+          )
+          .map((n) =>
+            makeVulnerability(
+              "pii-in-debug",
+              "warning",
+              n,
+              flow,
+              "Disable PII logging in debug/log nodes"
+            )
+          ),
+    },
+    {
+      id: "unvalidated-external-input",
+      severity: "warning",
+      description: "External input without validation",
+      check: (flow: ArchitectFlow): FlowVulnerability[] =>
+        flow.nodes
+          .filter(
+            (n) => n.type === "input" && n.properties.validated !== true
+          )
+          .map((n) =>
+            makeVulnerability(
+              "unvalidated-external-input",
+              "warning",
+              n,
+              flow,
+              "Add input validation before processing external input"
+            )
+          ),
+    },
+  ];
+}
+
+/**
+ * Validate a Genesys Architect flow against all built-in security rules.
+ *
+ * @param flow - The Architect flow to validate
+ * @returns Validation result with any vulnerabilities found
+ */
+export function validateFlow(flow: ArchitectFlow): FlowValidationResult {
+  const rules = getBuiltInRules();
+  const vulnerabilities = rules.flatMap((r) => r.check(flow));
+  return {
+    valid: vulnerabilities.length === 0,
+    vulnerabilities,
+    checkedRules: rules.length,
+    flowName: flow.name,
+  };
 }
