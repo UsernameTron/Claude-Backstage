@@ -37,47 +37,62 @@ export interface ReminderInjectionConfig {
 // --- Functions ---
 
 /**
- * Injects a system reminder into a message string.
- * TODO: implement reminder injection into message content
+ * Wraps content in <system-reminder> (or custom) XML tags.
  */
-export function injectReminder(
-  _message: string,
-  _reminder: SystemReminder,
+export function wrapInReminderTags(
+  content: string,
+  tagName?: string,
 ): string {
-  throw new Error("TODO: implement reminder injection into message content");
+  const tag = tagName ?? "system-reminder";
+  return `<${tag}>${content}</${tag}>`;
 }
 
 /**
- * Wraps content in <system-reminder> (or custom) XML tags.
- * TODO: implement XML tag wrapping for reminder content
+ * Injects a system reminder into a message string.
+ * Appends the reminder content wrapped in system-reminder tags.
  */
-export function wrapInReminderTags(
-  _content: string,
-  _tagName?: string,
+export function injectReminder(
+  message: string,
+  reminder: SystemReminder,
 ): string {
-  throw new Error("TODO: implement XML tag wrapping for reminder content");
+  const wrapped = wrapInReminderTags(reminder.content);
+  return `${message}\n${wrapped}`;
 }
 
 /**
  * Extracts system reminders from a message string by parsing reminder tags.
- * TODO: implement reminder extraction from tagged message content
+ * Returns an array of SystemReminder objects for each tag found.
  */
-export function extractReminders(_message: string): SystemReminder[] {
-  throw new Error(
-    "TODO: implement reminder extraction from tagged message content",
-  );
+export function extractReminders(message: string): SystemReminder[] {
+  const regex = /<system-reminder>([\s\S]*?)<\/system-reminder>/g;
+  const reminders: SystemReminder[] = [];
+  let match: RegExpExecArray | null;
+  while ((match = regex.exec(message)) !== null) {
+    reminders.push({
+      source: "user_context",
+      content: match[1],
+      targetMessageIndex: 0,
+    });
+  }
+  return reminders;
 }
 
 /**
  * Determines whether a reminder should be injected based on source type
  * and current turn count (some reminders are periodic).
- * TODO: implement injection decision logic per source and turn
  */
 export function shouldInjectReminder(
-  _source: SystemReminderSource,
-  _turnCount: number,
+  source: SystemReminderSource,
+  turnCount: number,
 ): boolean {
-  throw new Error(
-    "TODO: implement injection decision logic per source and turn",
-  );
+  switch (source) {
+    case "user_context":
+    case "tool_result":
+    case "attachment":
+    case "todo_write":
+      return true;
+    case "mcp_status":
+    case "deferred_tools":
+      return turnCount % 5 === 0;
+  }
 }

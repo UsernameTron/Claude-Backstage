@@ -45,54 +45,128 @@ export interface MarkdownCache {
   size: () => number;
 }
 
+// --- Default styles ---
+
+const DEFAULT_STYLES: OutputStyle[] = [
+  {
+    name: "default",
+    description: "Default output style with code preservation",
+    keepCodingInstructions: true,
+    forceForPlugin: false,
+    content: "",
+  },
+  {
+    name: "concise",
+    description: "Concise output without code block preservation",
+    keepCodingInstructions: false,
+    forceForPlugin: false,
+    content: "Be concise and direct.",
+  },
+];
+
+// --- Markdown markers used for plain-text detection ---
+
+const MARKDOWN_MARKERS = ["#", "**", "__", "`", "- ", "> ", "|", "["];
+
 // --- Functions ---
 
 /**
  * Loads output styles from user and project style directories.
  * Merges both sources with project styles taking precedence.
- * TODO: implement style loading from user/project directories
+ * Returns simulated in-memory styles (no real filesystem access).
  */
-export function loadOutputStyles(_config: OutputStyleConfig): OutputStyle[] {
-  throw new Error(
-    "TODO: implement style loading from user/project directories",
-  );
+export function loadOutputStyles(config: OutputStyleConfig): OutputStyle[] {
+  // Simulated: return default styles. In production, would read from
+  // config.userStyleDir and config.projectStyleDir, merging by name.
+  void config;
+  return DEFAULT_STYLES.map((s) => ({ ...s }));
 }
 
 /**
  * Applies an output style to content, transforming formatting as specified.
- * TODO: implement style application with keepCodingInstructions and forceForPlugin
+ * - forceForPlugin: wraps in <plugin-style> markers
+ * - keepCodingInstructions: preserves code blocks as-is
+ * - Appends style.content as suffix instruction
  */
 export function applyOutputStyle(
-  _content: string,
-  _style: OutputStyle,
+  content: string,
+  style: OutputStyle,
 ): string {
-  throw new Error(
-    "TODO: implement style application with keepCodingInstructions and forceForPlugin",
-  );
+  let result = content;
+
+  if (!style.keepCodingInstructions) {
+    // Strip code blocks when not preserving coding instructions
+    result = result.replace(/```[\s\S]*?```/g, "");
+  }
+
+  if (style.content) {
+    result = `${result}\n\n${style.content}`;
+  }
+
+  if (style.forceForPlugin) {
+    result = `<plugin-style>${result}</plugin-style>`;
+  }
+
+  return result;
 }
 
 /**
  * Fast-path check for plain text content.
  * Samples the first N characters (default 500) for markdown syntax markers.
  * Returns true if no markdown syntax is detected.
- * TODO: implement plain-text detection by sampling first 500 chars
  */
 export function isPlainText(
-  _content: string,
-  _sampleSize?: number,
+  content: string,
+  sampleSize?: number,
 ): boolean {
-  throw new Error(
-    "TODO: implement plain-text detection by sampling first 500 chars",
-  );
+  const size = sampleSize ?? 500;
+  const sample = content.slice(0, size);
+  return !MARKDOWN_MARKERS.some((marker) => sample.includes(marker));
 }
 
 /**
  * Creates an LRU markdown cache with configurable size.
  * Default: 500 max entries.
- * TODO: implement LRU cache with eviction
+ * Uses Map insertion order for LRU tracking — on get, delete and re-insert
+ * to move entry to end. On set, evict first key (oldest) when at capacity.
  */
 export function createMarkdownCache(
-  _config?: MarkdownCacheConfig,
+  config?: MarkdownCacheConfig,
 ): MarkdownCache {
-  throw new Error("TODO: implement LRU cache with eviction");
+  const maxEntries = config?.maxEntries ?? 500;
+  const map = new Map<string, string>();
+
+  return {
+    get(key: string): string | undefined {
+      const value = map.get(key);
+      if (value !== undefined) {
+        // LRU refresh: delete and re-insert to move to end
+        map.delete(key);
+        map.set(key, value);
+      }
+      return value;
+    },
+    set(key: string, value: string): void {
+      // If key exists, delete first to refresh position
+      if (map.has(key)) {
+        map.delete(key);
+      } else if (map.size >= maxEntries) {
+        // Evict oldest (first key in Map iteration order)
+        const firstKey = map.keys().next().value;
+        if (firstKey !== undefined) {
+          map.delete(firstKey);
+        }
+      }
+      map.set(key, value);
+    },
+    has(key: string): boolean {
+      return map.has(key);
+    },
+    clear(): void {
+      map.clear();
+    },
+    size(): number {
+      return map.size;
+    },
+  };
 }
