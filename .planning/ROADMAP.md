@@ -135,4 +135,4 @@ Plans:
 | 8. Wave 3 P1 Portfolio | v2.2 | 0/4 | Not started | - |
 | 9. Wave 4 P2 Engineering | v2.2 | 0/3 | Not started | - |
 | 10. Wave 5 P3 Nice to Have | v2.2 | 2/2 | Complete    | 2026-04-03 |
-| 11. Wave 6 Expansion | v2.2 | 4/4 | Complete   | 2026-04-03 |
+| 11. Wave 6 Expansion | v2.2 | 4/4 | Complete    | 2026-04-03 |
