@@ -22,17 +22,137 @@ export interface MigrationResult {
   config: Record<string, unknown>;
 }
 
+/**
+ * 11 sequential config migrations representing realistic CLI config evolution.
+ * Each migration transforms the config object immutably (returns a new object).
+ */
+const migrations: Migration[] = [
+  {
+    version: 1,
+    name: "add-config-version",
+    migrate: (config) => ({ ...config, configVersion: 1 }),
+  },
+  {
+    version: 2,
+    name: "rename-api-key",
+    migrate: (config) => {
+      const { apiKey, ...rest } = config;
+      return { ...rest, anthropicApiKey: apiKey ?? rest.anthropicApiKey ?? "" };
+    },
+  },
+  {
+    version: 3,
+    name: "add-permissions-defaults",
+    migrate: (config) => ({
+      ...config,
+      permissions: (config.permissions as Record<string, unknown>) ?? {
+        allow: [],
+        deny: [],
+        ask: [],
+        defaultMode: "default",
+      },
+    }),
+  },
+  {
+    version: 4,
+    name: "add-sandbox-defaults",
+    migrate: (config) => ({
+      ...config,
+      sandbox: (config.sandbox as Record<string, unknown>) ?? {
+        enabled: false,
+        autoAllowBashIfSandboxed: false,
+      },
+    }),
+  },
+  {
+    version: 5,
+    name: "move-env-to-namespace",
+    migrate: (config) => ({
+      ...config,
+      env: (config.env as Record<string, unknown>) ?? {},
+    }),
+  },
+  {
+    version: 6,
+    name: "add-mcp-server-config",
+    migrate: (config) => ({
+      ...config,
+      mcpServers: (config.mcpServers as Record<string, unknown>) ?? {},
+    }),
+  },
+  {
+    version: 7,
+    name: "normalize-permission-rules",
+    migrate: (config) => {
+      const permissions = (config.permissions ?? {}) as Record<string, unknown>;
+      return {
+        ...config,
+        permissions: {
+          ...permissions,
+          allow: Array.isArray(permissions.allow) ? permissions.allow : [],
+          deny: Array.isArray(permissions.deny) ? permissions.deny : [],
+          ask: Array.isArray(permissions.ask) ? permissions.ask : [],
+        },
+      };
+    },
+  },
+  {
+    version: 8,
+    name: "add-hook-configuration",
+    migrate: (config) => ({
+      ...config,
+      hooks: (config.hooks as Record<string, unknown>) ?? {},
+    }),
+  },
+  {
+    version: 9,
+    name: "add-model-preferences",
+    migrate: (config) => ({
+      ...config,
+      model: config.model ?? "claude-sonnet-4-5-20250929",
+    }),
+  },
+  {
+    version: 10,
+    name: "add-telemetry-opt-out",
+    migrate: (config) => ({
+      ...config,
+      telemetryEnabled: config.telemetryEnabled ?? true,
+    }),
+  },
+  {
+    version: 11,
+    name: "add-cleanup-period-days",
+    migrate: (config) => ({
+      ...config,
+      cleanupPeriodDays: config.cleanupPeriodDays ?? 30,
+    }),
+  },
+];
+
 // Runs all pending migrations sequentially from current version to CURRENT_MIGRATION_VERSION
 export function runMigrations(
   config: Record<string, unknown>,
   fromVersion: number,
 ): MigrationResult {
-  // TODO: extract from migrations/
-  throw new Error("TODO: extract from migrations/");
+  const pending = migrations.filter((m) => m.version > fromVersion);
+  const migrationsRun: string[] = [];
+
+  let current = { ...config };
+  for (const migration of pending) {
+    current = migration.migrate(current);
+    migrationsRun.push(migration.name);
+  }
+
+  return {
+    fromVersion,
+    toVersion: pending.length > 0 ? pending[pending.length - 1].version : fromVersion,
+    migrationsRun,
+    config: current,
+  };
 }
 
 // Returns the list of all registered migrations
 export function getMigrations(): Migration[] {
-  // TODO: extract from migrations/
-  throw new Error("TODO: extract from migrations/");
+  return [...migrations];
 }

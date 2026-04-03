@@ -30,6 +30,9 @@ export const GHA_SUBPROCESS_SCRUB = [
 // Returns sanitized env vars for child process spawning.
 // GITHUB_TOKEN intentionally NOT scrubbed (task-scoped, auto-expiring).
 export function subprocessEnv(): Record<string, string | undefined> {
-  // TODO: extract from utils/subprocessEnv.ts
-  throw new Error("TODO: extract from utils/subprocessEnv.ts");
+  const env = { ...process.env };
+  for (const key of GHA_SUBPROCESS_SCRUB) {
+    delete env[key];
+  }
+  return env;
 }
