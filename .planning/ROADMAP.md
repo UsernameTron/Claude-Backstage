@@ -87,7 +87,7 @@ Plans:
   4. make type-check and make lint pass
 **Plans:** 3 plans
 Plans:
-- [ ] 09-01-PLAN.md — Extract standalone (subprocess-env-scrubbing, config-migration, path-validation, read-only-validation)
+- [x] 09-01-PLAN.md — Extract standalone (subprocess-env-scrubbing, config-migration, path-validation, read-only-validation)
 - [x] 09-02-PLAN.md — Build standalone (mcp-integration, cli-startup-optimization)
 - [ ] 09-03-PLAN.md — Extract with deps (sandbox-config, dangerous-command-detection)
 
@@ -103,7 +103,7 @@ Plans:
 **Plans:** 3 plans
 Plans:
 - [ ] 09-01-PLAN.md — Extract standalone (subprocess-env-scrubbing, config-migration, path-validation, read-only-validation)
-- [ ] 09-02-PLAN.md — Build standalone (mcp-integration, cli-startup-optimization)
+- [x] 09-02-PLAN.md — Build standalone (mcp-integration, cli-startup-optimization)
 - [ ] 09-03-PLAN.md — Extract with deps (sandbox-config, dangerous-command-detection)
 
 ### Phase 11: Wave 6 — Expansion Implementations
