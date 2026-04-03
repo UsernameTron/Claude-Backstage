@@ -57,8 +57,8 @@ Plans:
 **Plans:** 1/3 plans executed
 Plans:
 - [x] 07-01-PLAN.md — Implement prompt-cache-optimizer (TDD, translate tier)
-- [ ] 07-02-PLAN.md — Implement prompt-system + context-injection (TDD, build tier)
-- [ ] 07-03-PLAN.md — Implement permission-system (TDD, extract tier)
+- [x] 07-02-PLAN.md — Implement prompt-system + context-injection (TDD, build tier)
+- [x] 07-03-PLAN.md — Implement permission-system (TDD, extract tier)
 
 ### Phase 8: Wave 3 — P1 Portfolio
 **Goal**: Implement 11 P1 packages including dependency chains (yolo <- permission-system, auto-compact <- token-estimation, etc.)
