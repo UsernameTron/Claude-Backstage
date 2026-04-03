@@ -136,10 +136,6 @@ These packages have no dependencies on other packages in the monorepo:
 - `prompt-cache-optimizer` — Cache ordering with 3-tier scoping
 
 **P1:**
-- `genesys-flow-security-validator` — Genesys Architect flow security validation
-- `workforce-scheduling-coordinator` — WFM scheduling coordinator (Python)
-
-**P1-P3 (original):**
 - `subprocess-env-scrubbing` — Environment variable sanitization
 - `config-migration` — Configuration version migration
 - `read-only-validation` — Git/gh command allowlists
@@ -148,28 +144,18 @@ These packages have no dependencies on other packages in the monorepo:
 - `keyboard-shortcuts` — 17-context shortcut system
 - `ink-renderer` — Custom double-buffer renderer
 - `cli-startup-optimization` — Fast path lazy imports
-- `ivr-call-flow-validator` — IVR FSM validator (TypeScript)
 - `agent-skill-routing` — ACD permission rules (Python)
-- `workforce-scheduling-coordinator` — Workforce scheduling (Python)
-- `genesys-flow-security-validator` — Flow security validation (TypeScript)
-- `tool-schema-cache` — Tool schema caching (TypeScript)
-- `tool-registry` — Tool registry with three-layer filtering (TypeScript)
-- `dialogue-history-manager` — Dialogue history management (TypeScript)
-- `system-reminder-injection` — System reminder mechanism (TypeScript)
-- `plugin-lifecycle-manager` — Plugin lifecycle management (TypeScript)
-- `sdk-bridge` — Server/SDK mode bridge (TypeScript)
-- `voice-input-gating` — Voice input gating system (TypeScript)
-- `output-style-system` — Output style and markdown system (TypeScript)
-- `onboarding-flow-engine` — Onboarding flow engine (TypeScript)
+- `genesys-flow-security-validator` — Genesys Architect flow security validation
+- `workforce-scheduling-coordinator` — WFM scheduling coordinator (Python)
 
-**P2 (expansion):**
+**P2:**
 - `tool-schema-cache` — Tool schema caching per-session
 - `tool-registry` — Three-layer tool assembly and filtering
 - `dialogue-history-manager` — Full message lifecycle management
 - `system-reminder-injection` — System reminder tag injection
 - `plugin-lifecycle-manager` — Plugin discovery, cache, cleanup
 
-**P3 (expansion):**
+**P3:**
 - `sdk-bridge` — WebSocket SDK/Direct Connect session management
 - `voice-input-gating` — Three-layer feature gating
 - `output-style-system` — Custom output styles with LRU cache
