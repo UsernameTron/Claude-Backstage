@@ -2,15 +2,7 @@
 
 ## Active
 
-- [ ] Run `/gsd:complete-milestone` to archive v2.2
 - [ ] Decide next milestone or project
-
-## Session Handoff (2026-04-03 evening)
-
-Branch: `main` @ `792491d` — clean, pushed to origin.
-State: v2.2 complete. All 43 packages implemented with 567 tests. Code polish done (resetState exports, type guards, README fixes). All docs updated (CLAUDE.md, DEVOPS-HANDOFF.md, README.md).
-Validation: scaffold-check 43/43, type-check 39/0, lint clean, 567 tests passing.
-Resume: `/gsd:complete-milestone` to archive v2.2, or start next milestone.
 
 ## Completed
 
@@ -27,3 +19,7 @@ Resume: `/gsd:complete-milestone` to archive v2.2, or start next milestone.
 - [x] Phases 10-11: 12 remaining packages implemented (P2/P3)
 - [x] v2.2 code polish: resetState exports, type guards, README fixes
 - [x] Docs updated: CLAUDE.md conventions, DEVOPS-HANDOFF.md, README.md
+- [x] v2.2 milestone archived (8f854b0)
+- [x] KB Section 44: Pattern Implementation Packages added
+- [x] CLAUDE.md language clarified (extract/translate working, build reference)
+- [x] Bidirectional links between KB and CLAUDE.md
