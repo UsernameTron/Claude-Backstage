@@ -39,6 +39,10 @@
   3. consecutive-breach-tracker Python implementation passes ruff lint and pip install -e
   4. cost-per-interaction Python implementation with working ChannelCostAggregator
   5. make type-check and make lint pass for entire monorepo
+**Plans:** 2 plans
+Plans:
+- [ ] 06-01-PLAN.md — Implement TS packages (denial-tracking + cost-tracker)
+- [ ] 06-02-PLAN.md — Implement Python packages (consecutive-breach-tracker + cost-per-interaction)
 
 ### Phase 7: Wave 2 — Core Architecture
 **Goal**: Implement 4 core architectural packages including the 9.4K LOC permission-system
@@ -100,7 +104,7 @@
 | 3. Extract Tier Completion | v2.1 | 2/2 | Complete | 2026-04-02 |
 | 4. Build + Translate Completion | v2.1 | 4/4 | Complete | 2026-04-02 |
 | 5. Scaffold Expansion | v2.1 | 4/4 | Complete | 2026-04-02 |
-| 6. Wave 1 Quick Wins | v2.2 | 0/0 | Not started | - |
+| 6. Wave 1 Quick Wins | v2.2 | 0/2 | Planned | - |
 | 7. Wave 2 Core Architecture | v2.2 | 0/0 | Not started | - |
 | 8. Wave 3 P1 Portfolio | v2.2 | 0/0 | Not started | - |
 | 9. Wave 4 P2 Engineering | v2.2 | 0/0 | Not started | - |
