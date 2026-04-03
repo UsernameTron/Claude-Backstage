@@ -43,27 +43,28 @@ export class DenialTracker {
   }
 
   recordDenial(): DenialAction {
-    // TODO: extract from utils/permissions/denialTracking.ts
-    throw new Error("TODO: extract from utils/permissions/denialTracking.ts");
+    this.state.consecutive++;
+    this.state.total++;
+    return this.shouldFallback() ? "fallback_to_interactive" : "continue";
   }
 
   recordApproval(): void {
-    // TODO: extract from utils/permissions/denialTracking.ts
-    throw new Error("TODO: extract from utils/permissions/denialTracking.ts");
+    this.state.consecutive = 0;
   }
 
   shouldFallback(): boolean {
-    // TODO: extract from utils/permissions/denialTracking.ts
-    throw new Error("TODO: extract from utils/permissions/denialTracking.ts");
+    return (
+      this.state.consecutive >= DENIAL_LIMITS.maxConsecutive ||
+      this.state.total >= DENIAL_LIMITS.maxTotal
+    );
   }
 
   reset(): void {
-    // TODO: extract from utils/permissions/denialTracking.ts
-    throw new Error("TODO: extract from utils/permissions/denialTracking.ts");
+    this.state.consecutive = 0;
+    this.state.total = 0;
   }
 
   getState(): Readonly<DenialState> {
-    // TODO: extract from utils/permissions/denialTracking.ts
-    throw new Error("TODO: extract from utils/permissions/denialTracking.ts");
+    return { ...this.state };
   }
 }
