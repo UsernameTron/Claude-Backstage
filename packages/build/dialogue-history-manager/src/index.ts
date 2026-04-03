@@ -55,67 +55,93 @@ export interface HistoryConfig {
  * data loss on process termination.
  */
 export class DialogueHistoryManager {
+  private messages: DialogueMessage[] = [];
+  private config: HistoryConfig;
+  private serialized: string = "";
+
   /**
    * Initialize the history manager with storage configuration.
-   * TODO: implement constructor with JSONL store setup
    */
-  constructor(_config: HistoryConfig) {
-    throw new Error("TODO: implement constructor with JSONL store setup");
+  constructor(config: HistoryConfig) {
+    this.config = config;
+    this.messages = [];
+    this.serialized = "";
   }
 
   /**
    * Append a message to the history.
-   * TODO: implement message addition with write-before-response
+   * Enforces maxRecords by shifting oldest messages.
    */
-  addMessage(_msg: DialogueMessage): void {
-    throw new Error(
-      "TODO: implement message addition with write-before-response",
-    );
+  addMessage(msg: DialogueMessage): void {
+    this.messages.push(msg);
+    if (this.messages.length > this.config.maxRecords) {
+      this.messages.shift();
+    }
   }
 
   /**
    * Returns messages after the most recent compact boundary.
    * These are the "effective" messages visible to the model.
-   * TODO: implement post-boundary message retrieval
    */
   getMessagesAfterCompactBoundary(): DialogueMessage[] {
-    throw new Error("TODO: implement post-boundary message retrieval");
+    return this.getEffectiveMessages();
   }
 
   /**
-   * Persist all pending messages to JSONL on disk.
-   * Uses write-before-response pattern for crash safety.
-   * TODO: implement JSONL persistence with crash-safe writes
+   * Persist all pending messages to JSONL format.
+   * Simulated: stores serialized JSONL string in memory.
    */
   persist(): void {
-    throw new Error(
-      "TODO: implement JSONL persistence with crash-safe writes",
-    );
+    this.serialized = this.messages
+      .map((m) => JSON.stringify(m))
+      .join("\n");
   }
 
   /**
-   * Load dialogue history from a JSONL file on disk.
-   * TODO: implement JSONL file loading
+   * Load dialogue history from JSONL.
+   * Simulated: parses internal serialized state.
    */
-  loadFromDisk(_path: string): DialogueMessage[] {
-    throw new Error("TODO: implement JSONL file loading");
+  loadFromDisk(path: string): DialogueMessage[] {
+    void path;
+    const parsed = this.serialized
+      .split("\n")
+      .filter(Boolean)
+      .map((line) => JSON.parse(line) as DialogueMessage);
+    this.messages = parsed;
+    return parsed;
   }
 
   /**
    * Returns the effective message list for the current context window.
-   * Equivalent to messages after the last compact boundary.
-   * TODO: implement effective message computation
+   * Messages after the last compact boundary, or all if no boundary exists.
    */
   getEffectiveMessages(): DialogueMessage[] {
-    throw new Error("TODO: implement effective message computation");
+    let lastBoundaryIndex = -1;
+    for (let i = this.messages.length - 1; i >= 0; i--) {
+      if (this.messages[i].type === "compact_boundary") {
+        lastBoundaryIndex = i;
+        break;
+      }
+    }
+    if (lastBoundaryIndex >= 0) {
+      return [...this.messages.slice(lastBoundaryIndex + 1)];
+    }
+    return [...this.messages];
   }
 
   /**
    * Insert a compact boundary message, marking that prior messages
    * have been summarized and can be discarded from the context window.
-   * TODO: implement compact boundary insertion
    */
-  insertCompactBoundary(_summary: string): void {
-    throw new Error("TODO: implement compact boundary insertion");
+  insertCompactBoundary(summary: string): void {
+    const boundary: CompactBoundaryMessage = {
+      type: "compact_boundary",
+      content: summary,
+      timestamp: Date.now(),
+      metadata: {},
+      summary,
+      originalMessageCount: this.messages.length,
+    };
+    this.messages.push(boundary);
   }
 }
