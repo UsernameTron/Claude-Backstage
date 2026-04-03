@@ -14,4 +14,4 @@ Self-referential security ensures the sandbox configuration files themselves can
 
 ## Status
 
-Type stubs only. No runtime implementation.
+Working implementation. Exports `convertToSandboxRuntimeConfig()` (always appends self-referential deny rules for settings/skills/git files), `resolveSandboxFilesystemPath()`, `shouldUseSandbox()`, and `containsExcludedCommand()` (compound decomposition to prevent excluded-command bypass). Tests in `src/sandbox-config.test.ts`.

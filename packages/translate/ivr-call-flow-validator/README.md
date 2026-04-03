@@ -48,4 +48,4 @@ Every IVR menu node should handle all expected DTMF inputs, and every node shoul
 
 ## Status
 
-Type stubs only. All functions throw `Error("TODO")`.
+Working implementation. `validate()` checks for unreachable nodes, dead ends, and missing DTMF coverage. `getUnreachableNodes()` performs BFS from entry point. `getTransitionCoverage()` computes input coverage ratio per node. Tests in `src/ivr-call-flow-validator.test.ts`.

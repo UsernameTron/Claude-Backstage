@@ -47,4 +47,4 @@ The `cacheBreaker` field in `SystemContext` forces prompt cache invalidation whe
 
 ## Status
 
-Type stubs only. All functions throw `TODO` errors referencing source paths.
+Working implementation. All exported functions are fully implemented: `getSystemContext()` collects live git state via `Bun.spawnSync`, `getUserContext()` returns cached CLAUDE.md content and current date, `appendSystemContext()` and `prependUserContext()` perform string assembly, and `setCachedClaudeMdContent()` manages the circular-dependency cache. Tests verify dual-position injection behavior (see `__tests__/`).

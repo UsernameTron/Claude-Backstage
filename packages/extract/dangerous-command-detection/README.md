@@ -14,4 +14,4 @@ Compound commands are decomposed into individual subcommands before pattern matc
 
 ## Status
 
-Type stubs only. No runtime implementation.
+Working implementation. Exports `decomposeCompoundCommand()` (quote-aware compound splitting), `isDangerousCommand()` (pattern matching per subcommand), `parseForSecurity()` (pipe-to-shell and eval/exec detection), `isCommandSafeForPlanMode()` (read-only whitelist with safe git subcommands), and `isFileDangerousForOperation()`. Tests in `src/dangerous-command-detection.test.ts`.

@@ -41,4 +41,4 @@ Threshold triggers a strategy change, not just an alert. When consecutive breach
 
 ## Status
 
-Type stubs only. All methods raise `NotImplementedError`.
+Working implementation. `ConsecutiveBreachTracker` tracks per-queue SLA breaches with `record_breach()` returning escalation actions, `record_recovery()` resetting consecutive counters, `get_action()` for threshold checks, and `reset()` for shift boundaries. Tests in `src/consecutive_breach_tracker/test_tracker.py`.

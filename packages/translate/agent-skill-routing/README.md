@@ -45,4 +45,4 @@ The deny > ask > allow cascade ensures safety by default. Deny rules are checked
 
 ## Status
 
-Type stubs only. All functions raise `NotImplementedError`.
+Working implementation. `evaluate_rules()` applies the full deny > ask > allow cascade with priority sorting and evaluation chain audit trail. `load_rules()` reads JSON config files. `check_compliance()` verifies agent proficiency and language requirements. Tests in `src/agent_skill_routing/test_routing.py`.

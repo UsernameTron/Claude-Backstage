@@ -37,4 +37,4 @@ None.
 
 ## Status
 
-Type stubs only. All methods throw `TODO` errors referencing implementation notes.
+Working implementation. `SDKBridge` provides functional `connect()` (session establishment), `send()` (NDJSON message framing to outbound buffer), `onMessage()` (handler registration), `handleControlRequest()` (simulated approval flow), and `disconnect()` (cleanup). Tests verify the WebSocket lifecycle and message framing (see `__tests__/`).

@@ -39,4 +39,4 @@ Claude Code tracks costs per model to show session economics. Contact centers ne
 
 ## Status
 
-Type stubs only. All methods raise `NotImplementedError`.
+Working implementation. `ChannelCostAggregator` provides `add_interaction()`, `get_cost_per_contact()` (per-channel average), `get_summary()` (aggregated channel summaries), and `format_total_cost()`. Tests in `src/cost_per_interaction/test_aggregator.py`.

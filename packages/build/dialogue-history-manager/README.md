@@ -36,4 +36,4 @@ None
 
 ## Status
 
-Type stubs only. All methods throw `Error`.
+Working implementation. `DialogueHistoryManager` provides functional `addMessage()`, `persist()` (JSONL serialization), `loadFromDisk()` (JSONL parsing), `getEffectiveMessages()` (compact boundary filtering), and `insertCompactBoundary()`. Tests verify the full message lifecycle (see `__tests__/`).

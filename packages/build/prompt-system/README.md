@@ -52,4 +52,4 @@ Three cache scope tiers control which static content is shared:
 
 ## Status
 
-Type stubs only. All functions throw `TODO` errors referencing source paths.
+Working implementation. All exported functions are fully implemented: `getSystemPrompt()` assembles static sections above the dynamic boundary, `systemPromptSection()` creates typed sections, `resolveSystemPromptSections()` filters and extracts content, and the seven section generators (`getSimpleIntroSection`, `getSimpleSystemSection`, `getSimpleDoingTasksSection`, `getActionsSection`, `getUsingYourToolsSection`, `getSimpleToneAndStyleSection`, `getOutputEfficiencySection`) return prompt content. Tests verify prompt assembly and cache boundary behavior (see `__tests__/`).

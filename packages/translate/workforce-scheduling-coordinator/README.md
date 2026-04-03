@@ -44,4 +44,4 @@ None.
 
 ## Status
 
-Type stubs only. All methods raise `NotImplementedError`.
+Working implementation. `SchedulingCoordinator` provides `dispatch_job()` (execute and collect worker results), `get_active_jobs()`, `cancel_job()`, and `get_shared_context()` for constraint propagation across workers. Tests in `src/workforce_scheduling_coordinator/test_coordinator.py`.

@@ -14,4 +14,4 @@ Auto-compact triggers when token count exceeds `effectiveWindow - 13,000`. The e
 
 ## Status
 
-Type stubs only. No runtime implementation.
+Working implementation. Exports `getEffectiveWindow()`, `shouldAutoCompact()`, `compactConversation()`, and `partialCompactConversation()` with message summarization, boundary markers, and token estimation via the `token-estimation` dependency. Tests in `src/auto-compact.test.ts`.

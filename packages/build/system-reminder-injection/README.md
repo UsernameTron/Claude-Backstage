@@ -43,4 +43,4 @@ None
 
 ## Status
 
-Type stubs only. All functions throw `Error`.
+Working implementation. `wrapInReminderTags()` wraps content in XML tags, `injectReminder()` appends tagged reminders to messages, `extractReminders()` parses `<system-reminder>` tags via regex, and `shouldInjectReminder()` implements per-source injection frequency logic (periodic for mcp_status and deferred_tools, always for others). Tests verify injection and extraction behavior (see `__tests__/`).

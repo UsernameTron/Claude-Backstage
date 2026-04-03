@@ -48,4 +48,4 @@ None.
 
 ## Status
 
-Type stubs only. All methods throw `TODO` errors referencing implementation notes.
+Working implementation. `OnboardingFlowEngine` provides functional `assembleSteps()` (conditional filtering with dependency validation), `runStep()` (execution with error recording), `run()` (full sequential flow), `getState()` (snapshot), and `skipTo()` (jump-ahead with intermediate skip marking). Tests verify the complete onboarding lifecycle (see `__tests__/`).

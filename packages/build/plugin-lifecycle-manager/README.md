@@ -40,4 +40,4 @@ None
 
 ## Status
 
-Type stubs only. All methods throw `Error`.
+Working implementation. `PluginLifecycleManager` provides functional `discover()` (simulated seed directory scan), `loadFromCache()` (cached manifest loading), `cleanupOrphaned()` (orphan removal), `logSessionPlugins()` (telemetry recording), `getState()` (lifecycle state lookup), and `activate()` (state transition to active). Tests verify the four-phase lifecycle (see `__tests__/`).

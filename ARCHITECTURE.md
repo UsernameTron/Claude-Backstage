@@ -6,7 +6,7 @@ Accepted
 
 ## Context
 
-43 Claude Code subsystems extracted from source (~1,900 files, 512K LOC) and Knowledge Base v2.1 need organizing into a buildable monorepo. Packages are type stubs only — no implementations. Three tiers reflect HOW each package is used:
+43 Claude Code subsystems extracted from source (~1,900 files, 512K LOC) and Knowledge Base v2.1 need organizing into a buildable monorepo. All 43 packages now have working implementations (567 tests). Three tiers reflect HOW each package is used:
 
 - **Extract** — Copy from source, adapt imports, ship. Direct extraction targets.
 - **Build** — Use source as design reference. Architectural patterns for new builds.

@@ -14,4 +14,4 @@ The YOLO classifier makes a separate API call with its own prompt to evaluate wh
 
 ## Status
 
-Type stubs only. No runtime implementation.
+Working implementation. Exports `classifierDecision()` (mode-aware risk analysis with dangerous pattern detection), `classifierShared()` (template retrieval for external/Anthropic contexts), and `classifierToPermission()` (result conversion). Tests in `src/yolo-classifier.test.ts`.

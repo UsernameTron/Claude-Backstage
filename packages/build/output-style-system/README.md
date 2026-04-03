@@ -46,4 +46,4 @@ None.
 
 ## Status
 
-Type stubs only. All functions throw `TODO` errors referencing implementation notes.
+Working implementation. `loadOutputStyles()` returns default styles (simulated filesystem), `applyOutputStyle()` performs code-block stripping and plugin-style wrapping, `isPlainText()` implements the 500-char markdown marker sampling fast path, and `createMarkdownCache()` provides a fully functional LRU cache using Map insertion-order tracking. Tests verify all four functions (see `__tests__/`).

@@ -103,7 +103,7 @@ make list-packages   # Enumerate all 43 with tier and priority
 - **Target**: ES2022
 - **Module**: ESNext with Bun module resolution
 - **Types**: `["bun-types"]`
-- **No emit**: Type stubs only, no compilation output
+- **No emit**: Implementations run via Bun; no compilation output required
 
 ### Python Configuration (ruff.toml)
 
@@ -114,7 +114,7 @@ make list-packages   # Enumerate all 43 with tier and priority
 ## 5. Security Notes
 
 - **No secrets, API keys, or credentials** anywhere in the repository
-- **No runtime code** -- all implementations are `throw new Error("TODO")` or `raise NotImplementedError`
+- **No runtime code that connects to external services** -- all packages are self-contained with no outbound network calls
 - **No external service connections** -- no HTTP calls, no database connections, no file I/O
 - **Source file paths** reference Claude Code internals (e.g., `utils/permissions/`) but contain no proprietary source code
 - **No vendored dependencies** beyond standard dev tooling (TypeScript, Biome, Ruff)
@@ -135,11 +135,8 @@ make list-packages   # Enumerate all 43 with tier and priority
 
 | Item | Impact | Notes |
 |------|--------|-------|
-| All implementations are TODO throws | No runtime behavior | By design -- type stubs only |
-| No test suite | No coverage metrics | Nothing to test (stubs have no behavior) |
-| ink-renderer simplified | 19,848 LOC reduced to ~50 lines of type stubs | High-level types only; full render pipeline not modeled |
+| ink-renderer simplified | 19,848 LOC reduced to working subset | High-level types and core render logic; full pipeline not modeled |
 | No CI/CD | No automated checks on push | Acceptable for single-developer reference project |
-| Coverage: N/A | No executable code to cover | Stubs intentionally contain no logic |
 
 ## 8. Package Inventory
 

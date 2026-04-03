@@ -46,4 +46,4 @@ None.
 
 ## Status
 
-Type stubs only. All functions throw `Error("TODO")`.
+Working implementation. `validateFlow()` runs all built-in security rules against an Architect flow graph. `getBuiltInRules()` returns the rule set covering unprotected data actions, PII exposure in logging nodes, and unvalidated external inputs. Tests in `src/genesys-flow-security-validator.test.ts`.

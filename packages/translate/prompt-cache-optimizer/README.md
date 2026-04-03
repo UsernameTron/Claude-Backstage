@@ -48,4 +48,4 @@ Content before the boundary marker is cache-stable. Content after may change per
 
 ## Status
 
-Type stubs only. All functions throw `Error("TODO")`.
+Working implementation. `optimizeCacheOrder()` sorts segments by scope (Global > Org > None) for optimal cache hit rates. `isStableSegment()` classifies segments by cacheability. `estimateCacheSavings()` computes cost reduction ratios. Tests in `src/prompt-cache-optimizer.test.ts`.

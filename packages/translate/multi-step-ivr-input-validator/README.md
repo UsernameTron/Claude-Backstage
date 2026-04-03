@@ -47,4 +47,4 @@ Maps Claude Code's compound command decomposition to multi-step IVR DTMF validat
 
 ## Status
 
-Type stubs only. All functions throw `Error("TODO")`.
+Working implementation. `decomposeInput()` splits raw DTMF strings into individual steps. `validateSequence()` traverses the flow graph step-by-step, reporting the failure point. `generateAllSequences()` enumerates all paths up to a depth limit. `findDeadEndSequences()` identifies sequences terminating at non-terminal nodes. Tests in `src/multi-step-ivr-input-validator.test.ts`.
