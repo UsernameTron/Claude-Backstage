@@ -1,19 +1,18 @@
 # claude-code-patterns
 
-A monorepo organizing 43 buildable systems extracted from Claude Code's source tree (~1,900 files, 512K+ LOC TypeScript) and Knowledge Base v2.1. Each package provides type stubs, source file references, and dependency mappings -- a pattern library for building skills, agents, and operational tools.
+A monorepo of 43 working implementations extracted from Claude Code's source tree (~1,900 files, 512K+ LOC TypeScript) and Knowledge Base v2.1. Each package provides working reference code, tests, source file references, and dependency mappings -- a pattern library for building skills, agents, and operational tools.
 
-**This is NOT a fork of Claude Code.** It is a build reference with type stubs only.
+**This is NOT a fork of Claude Code.** It is a build reference with working implementations.
 
 ## What This Is
 
-Every package maps directly to a real Claude Code subsystem with exact source paths and type signatures, so builders can extract, adapt, or design-from-scratch without reverse-engineering the codebase.
+Every package maps directly to a real Claude Code subsystem with exact source paths, working implementations, and test coverage, so builders can extract, adapt, or design-from-scratch without reverse-engineering the codebase.
 
 ## What This Is NOT
 
 - Not a fork or mirror of Claude Code
-- Not a runtime -- packages contain type stubs and TODO comments only
 - Not published to npm -- packages are consumed by copy, not install
-- Not a test suite -- stubs have no behavior to test
+- Not production runtime -- implementations are reference patterns, not deployment artifacts
 
 ## Quick Start
 
@@ -24,16 +23,20 @@ bun install
 # Check all packages are scaffolded
 make scaffold-check
 
-# Verify type stubs compile
+# Verify all packages compile
 make type-check
+
+# Run all tests (513 TS + 54 Python)
+make test
 ```
 
-### Extract a Single Package
+### Use a Package
 
 1. Navigate to the package: `cd packages/extract/permission-system/`
 2. Read `README.md` for source file paths and type signatures
-3. Copy `src/index.ts` as your starting point
-4. Replace TODO comments with implementations
+3. Read the implementation in `src/index.ts` for working patterns
+4. Run tests: `bun test` to see behavior in action
+5. Copy and adapt for your own project
 
 ## Tier Legend
 
@@ -139,25 +142,16 @@ Key dependency chains:
 make scaffold-check  # Validate all 43 dirs have required files
 make type-check      # tsc --noEmit across all TS packages
 make lint            # Biome (TS) + Ruff (Python)
+make test            # Run all tests (513 TS + 54 Python)
 make list-packages   # Enumerate all 43 with tier and priority
 ```
-
-### Adding a New Package
-
-1. Choose the correct tier: extract (copy from source), build (design reference), translate (cross-domain)
-2. Create directory: `packages/{tier}/{package-name}/`
-3. Add `package.json` with `@claude-patterns/{name}` scope
-4. Add `tsconfig.json` extending `../../tsconfig.base.json` (TS) or `pyproject.toml` (Python)
-5. Create `src/index.ts` or `src/{name}/__init__.py` entry point with type stubs
-6. Add `README.md` documenting source file paths and type signatures
-7. Update workspace globs in root `package.json` if TypeScript
 
 ### Conventions
 
 - Package scope: `@claude-patterns/{name}` -- tier directory invisible to imports
 - TypeScript: strict mode, ES2022, Bun workspaces
 - Python: pip install -e, pyproject.toml
-- All packages: type stubs + TODO comments only. Zero implementations.
+- All packages: working reference implementations with tests (567 tests across 43 packages)
 - Entry points: `src/index.ts` (TS) or `src/{name}/__init__.py` (Python)
 
 ## Project Structure
@@ -170,7 +164,7 @@ claude-code-patterns/
   dependency-graph.md          # Cross-package relationships
   package.json                 # Bun workspace root
   tsconfig.base.json           # Shared TS config (strict, ES2022)
-  Makefile                     # scaffold-check, type-check, lint
+  Makefile                     # scaffold-check, type-check, lint, test
   packages/
     extract/                   # 16 TS packages
     build/                     # 19 TS packages
@@ -179,7 +173,7 @@ claude-code-patterns/
 
 ## Status
 
-Project initialization in progress. GSD workflow active.
+v2.2 complete. All 43 packages implemented with 567 tests. Zero TODO throws. Full monorepo build clean.
 
 ## Author
 
