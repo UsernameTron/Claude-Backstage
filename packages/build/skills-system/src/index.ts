@@ -125,8 +125,8 @@ export async function loadSkill(
     const memoryContent = await readFile(join(skillDir, "MEMORY.md"), "utf-8");
     memoryFiles.push({
       path: join(skillDir, "MEMORY.md"),
+      tier: "project" as const,
       content: memoryContent,
-      sections: [],
     });
   } catch {
     // No memory file
