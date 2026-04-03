@@ -33,54 +33,65 @@ export interface ToolPool {
  */
 export type ToolFilterLayer = "compile" | "runtime_deny" | "assembly";
 
+// --- Module-level registry ---
+
+const registry: Tool[] = [];
+
+/**
+ * Reset the module-level registry (for test isolation).
+ */
+export function resetRegistry(): void {
+  registry.length = 0;
+}
+
 // --- Functions ---
 
 /**
- * Assembles a ToolPool by merging built-in and external tools,
- * then applying deny-rule filtering.
- * TODO: implement three-layer tool assembly from Section 6.2-6.3
- */
-export function assembleToolPool(
-  _builtInTools: Tool[],
-  _externalTools: Tool[],
-  _denyRules: string[],
-): ToolPool {
-  throw new Error(
-    "TODO: implement three-layer tool assembly from Section 6.2-6.3",
-  );
-}
-
-/**
- * Filters tools by deny rules, removing any tool whose name matches a rule.
- * TODO: implement deny-rule filtering from Section 6.3
- */
-export function filterToolsByDenyRules(
-  _tools: Tool[],
-  _denyRules: string[],
-): Tool[] {
-  throw new Error("TODO: implement deny-rule filtering from Section 6.3");
-}
-
-/**
- * Sorts tools in deterministic order for prompt cache stability.
- * TODO: implement stable sort for cache key generation
- */
-export function sortForCacheStability(_tools: Tool[]): Tool[] {
-  throw new Error("TODO: implement stable sort for cache key generation");
-}
-
-/**
  * Registers a tool in the global tool registry.
- * TODO: implement global tool registration
  */
-export function registerTool(_tool: Tool): void {
-  throw new Error("TODO: implement global tool registration");
+export function registerTool(tool: Tool): void {
+  registry.push(tool);
 }
 
 /**
  * Returns all registered tools from the global registry.
- * TODO: implement global tool retrieval
  */
 export function getAllTools(): Tool[] {
-  throw new Error("TODO: implement global tool retrieval");
+  return [...registry];
+}
+
+/**
+ * Filters tools by deny rules, removing any tool whose name matches a rule.
+ */
+export function filterToolsByDenyRules(
+  tools: Tool[],
+  denyRules: string[],
+): Tool[] {
+  return tools.filter((t) => !denyRules.includes(t.name));
+}
+
+/**
+ * Sorts tools in deterministic order for prompt cache stability.
+ */
+export function sortForCacheStability(tools: Tool[]): Tool[] {
+  return [...tools].sort((a, b) => a.name.localeCompare(b.name));
+}
+
+/**
+ * Assembles a ToolPool by merging built-in and external tools,
+ * then applying deny-rule filtering.
+ */
+export function assembleToolPool(
+  builtInTools: Tool[],
+  externalTools: Tool[],
+  denyRules: string[],
+): ToolPool {
+  const merged = [...builtInTools, ...externalTools];
+  const filtered = filterToolsByDenyRules(merged, denyRules);
+  const tools = sortForCacheStability(filtered);
+  return {
+    tools,
+    getByName: (name: string) => tools.find((t) => t.name === name),
+    filter: (predicate: (tool: Tool) => boolean) => tools.filter(predicate),
+  };
 }

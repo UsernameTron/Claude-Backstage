@@ -40,44 +40,47 @@ export interface CachedToolSchema {
  * invalidate the prompt cache prefix.
  */
 export class ToolSchemaCache {
+  private cache = new Map<string, CachedToolSchema>();
+
   /**
    * Retrieve a cached schema by tool name.
-   * TODO: implement cache lookup
    */
-  get(_toolName: string): CachedToolSchema | undefined {
-    throw new Error("TODO: implement cache lookup for tool schema");
+  get(toolName: string): CachedToolSchema | undefined {
+    return this.cache.get(toolName);
   }
 
   /**
    * Store or update a schema in the cache.
-   * TODO: implement cache storage
    */
-  set(_toolName: string, _schema: CachedToolSchema): void {
-    throw new Error("TODO: implement cache storage for tool schema");
+  set(toolName: string, schema: CachedToolSchema): void {
+    this.cache.set(toolName, schema);
   }
 
   /**
    * Refresh cache from a full tool list (e.g., at session start).
-   * TODO: implement bulk cache refresh from tool array
    */
-  refresh(_tools: Tool[]): void {
-    throw new Error("TODO: implement bulk cache refresh from tool array");
+  refresh(tools: Tool[]): void {
+    this.cache.clear();
+    const now = Date.now();
+    for (const tool of tools) {
+      this.cache.set(tool.name, { ...tool, cachedAt: now });
+    }
   }
 
   /**
    * Clear all cached schemas, forcing a re-cache on next refresh.
-   * TODO: implement cache invalidation
    */
   invalidate(): void {
-    throw new Error("TODO: implement cache invalidation");
+    this.cache.clear();
   }
 
   /**
    * Returns all cached schemas in deterministic (sorted) order
    * for stable prompt cache key generation.
-   * TODO: implement stable schema list ordering
    */
   getStableSchemaList(): CachedToolSchema[] {
-    throw new Error("TODO: implement stable schema list ordering");
+    return [...this.cache.values()].sort((a, b) =>
+      a.name.localeCompare(b.name),
+    );
   }
 }
